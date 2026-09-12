@@ -33,7 +33,8 @@ const views = {
   fallrisk:  document.getElementById('view-fallrisk'),
   documentation: document.getElementById('view-documentation'),
   hardware:  document.getElementById('view-hardware'),
-  history:   document.getElementById('view-history')
+  history:   document.getElementById('view-history'),
+  analytics: document.getElementById('view-analytics')
 };
 
 let _currentView = 'landing';
@@ -44,6 +45,12 @@ window.switchView = function (viewName) {
   Object.values(views).forEach(v => v && v.classList.remove('active'));
   if (views[viewName]) views[viewName].classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Hide the landing page header if not on landing
+  const header = document.getElementById('site-header');
+  if (header) {
+    header.style.display = viewName === 'landing' ? 'block' : 'none';
+  }
 
   document.querySelectorAll('[data-view]').forEach(link => {
     link.classList.toggle('active', link.dataset.view === viewName);

@@ -1213,8 +1213,8 @@
             <span class="label-text heading-text">GPS Module</span>
             <p class="caption-text body-text" style="margin-top: 0.5rem;">Provides latitude, longitude, and satellite count for location tracking.</p>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">Ultrasonic Sensor</span>
+          <div class="t3-card" style="border-left: 4px solid #8e9a5a; background: linear-gradient(to right, #f6f8f4, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #8e9a5a; margin-right: 8px;">radar</span><span class="label-text heading-text">Ultrasonic Sensor</span></div>
             <p class="caption-text body-text" style="margin-top: 0.5rem;">Measures distance to nearby obstacles for basic collision awareness.</p>
           </div>
         </div>
@@ -1333,8 +1333,8 @@
 
         <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Sensor Breakdown</h3>
         <div class="tier3-grid" style="margin-bottom: 2rem;">
-          <div class="t3-card">
-            <span class="label-text heading-text">FSR Sensors (x3)</span>
+          <div class="t3-card" style="border-left: 4px solid #d94a61; background: linear-gradient(to right, #fff8f6, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #d94a61; margin-right: 8px;">step</span><span class="label-text heading-text">FSR Sensors (x3)</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Measures:</strong> Pressure/force distribution</li>
               <li><strong>Placement:</strong> Forefoot, midfoot, hindfoot</li>
@@ -1342,24 +1342,24 @@
               <li><strong>Status:</strong> Active</li>
             </ul>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">ESP32 DevKit (WROOM-32)</span>
+          <div class="t3-card" style="border-left: 4px solid #7a2e3a; background: linear-gradient(to right, #fff8f6, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #7a2e3a; margin-right: 8px;">memory</span><span class="label-text heading-text">ESP32 DevKit (WROOM-32)</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Role:</strong> Main controller</li>
               <li><strong>Placement:</strong> Central midfoot, upper side of shoe</li>
               <li><strong>Notes:</strong> Balances wiring runs to front and rear sensors</li>
             </ul>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">MPU6050</span>
+          <div class="t3-card" style="border-left: 4px solid #a35d68; background: linear-gradient(to right, #fff8f6, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #a35d68; margin-right: 8px;">3d_rotation</span><span class="label-text heading-text">MPU6050</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Measures:</strong> Acceleration (X/Y/Z), angular velocity (X/Y/Z)</li>
               <li><strong>Placement:</strong> Built-in/adjacent to main board</li>
               <li><strong>Units:</strong> Raw sensor units</li>
             </ul>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">GPS module + antenna</span>
+          <div class="t3-card" style="border-left: 4px solid #5a8a9a; background: linear-gradient(to right, #f4f8fa, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #5a8a9a; margin-right: 8px;">satellite_alt</span><span class="label-text heading-text">GPS module + antenna</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Measures:</strong> Latitude, longitude, satellite count</li>
               <li><strong>Placement:</strong> Outer/lateral midfoot, front half</li>
@@ -1374,15 +1374,15 @@
               <li><strong>Units:</strong> Centimeters</li>
             </ul>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">Power supply / regulator</span>
+          <div class="t3-card" style="border-left: 4px solid #9a6d5a; background: linear-gradient(to right, #fbf7f5, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #9a6d5a; margin-right: 8px;">battery_charging_full</span><span class="label-text heading-text">Power supply / regulator</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Role:</strong> Regulates battery supply</li>
               <li><strong>Placement:</strong> Outer side, near rear/midfoot</li>
             </ul>
           </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">Wiring harness</span>
+          <div class="t3-card" style="border-left: 4px solid #555; background: linear-gradient(to right, #fafafa, #ffffff);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #555; margin-right: 8px;">cable</span><span class="label-text heading-text">Wiring harness</span></div>
             <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
               <li><strong>Role:</strong> Connects components securely</li>
               <li><strong>Placement:</strong> Along lateral/upper perimeter</li>
@@ -1462,6 +1462,81 @@
           <h2 class="section-heading" style="color: var(--color-primary); margin-bottom: 1rem;">Session History</h2>
           <p class="body-text waiting-text" style="margin-bottom: 2rem;">Session logging is a planned feature — the current build focuses on live real-time telemetry. Check back as this feature is developed.</p>
           <button class="btn-primary" onclick="switchView('dashboard')">View Live Telemetry</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ===== SESSION ANALYTICS VIEW ===== -->
+  <main id="view-analytics" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" onclick="switchView('dashboard')" class="sidebar-link"><span class="material-symbols-outlined">speed</span>Live Telemetry</a>
+            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link"><span class="material-symbols-outlined">crisis_alert</span>Fall Risk Analysis</a>
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link"><span class="material-symbols-outlined">analytics</span>Session Analytics</a>
+            <a href="#" onclick="switchView('history')" class="sidebar-link"><span class="material-symbols-outlined">history</span>Session History</a>
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link"><span class="material-symbols-outlined">sensors</span>Hardware &amp; Insoles</a>
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link"><span class="material-symbols-outlined">library_books</span>Documentation</a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link"><span class="material-symbols-outlined">home</span>Return to Overview</a>
+          </nav>
+        </div>
+      </aside>
+      
+      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <h2 class="section-heading" style="color: var(--color-primary)">Session Analytics</h2>
+          <p class="caption-text muted-text">Aggregate telemetry and historical data trends across your recent recordings.</p>
+        </div>
+        
+        <div class="tier3-grid" style="margin-bottom: 2rem;">
+          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
+            <div class="t3-header">
+              <span class="material-symbols-outlined primary-text">timeline</span>
+              <span class="label-text heading-text" style="margin-left: 8px;">Total Sessions</span>
+            </div>
+            <div>
+              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">12</div>
+              <span class="caption-text muted-text">Across all subjects</span>
+            </div>
+          </div>
+          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
+            <div class="t3-header">
+              <span class="material-symbols-outlined primary-text">speed</span>
+              <span class="label-text heading-text" style="margin-left: 8px;">Avg. Gait Speed</span>
+            </div>
+            <div>
+              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">1.1 <span style="font-size: 1rem;">m/s</span></div>
+              <span class="caption-text muted-text">Calculated from recent logs</span>
+            </div>
+          </div>
+          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
+            <div class="t3-header">
+              <span class="material-symbols-outlined primary-text">directions_walk</span>
+              <span class="label-text heading-text" style="margin-left: 8px;">Avg. Cadence</span>
+            </div>
+            <div>
+              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">105 <span style="font-size: 1rem;">SPM</span></div>
+              <span class="caption-text muted-text">Steps per minute</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="t3-card" style="padding: 3rem 2rem; text-align: center; border: 2px dashed #d1b8bc; background: transparent;">
+          <span class="material-symbols-outlined muted-text" style="font-size: 48px; margin-bottom: 1rem;">construction</span>
+          <h3 class="t2-panel-title">Advanced Metrics Coming Soon</h3>
+          <p class="body-text muted-text" style="max-width: 500px; margin: 0 auto;">The analytics module is currently a mockup for the engineering prototype. Future updates will include longitudinal tracking and symmetry indices.</p>
         </div>
       </div>
     </div>

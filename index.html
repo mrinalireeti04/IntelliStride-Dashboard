@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IntelliStride — Precision Gait Intelligence</title>
-  <meta name="description" content="Next-generation pressure-sensing insoles paired with sub-millimeter inertial measurement units for laboratory-grade gait analysis outside the clinic. FDA-Cleared Class II Medical Biomechanics." />
+  <meta name="description" content="A smart insole system built on ESP32, IMU, and pressure sensing — designed to explore real-time gait and fall-risk monitoring as a student engineering prototype. Engineering Capstone Project." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,28 +34,12 @@
           <a href="#" class="nav-link" data-view="fallrisk" onclick="switchView('fallrisk')">Fall Risk</a>
           <a href="#features" class="nav-link">Technology</a>
           <a href="#how-it-works" class="nav-link">Protocol</a>
-          <a href="#comparison" class="nav-link">Clinical Data</a>
+          
         </nav>
       </div>
       <div class="nav-right">
-        <div class="live-badge">
-          <span class="pulse-dot"></span>
-          <span>Connected: StridePod 4-L/R</span>
-        </div>
-        <div class="user-chip">
-          <div class="avatar-wrap">
-            <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
-              <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
-              <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
-              <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
-            </svg>
-          </div>
-          <div class="user-info">
-            <span class="user-name">Dr. Elena Rostova</span>
-            <span class="user-role">Clinical Biomechanics</span>
-          </div>
-        </div>
-        <button class="btn-primary" onclick="switchView('dashboard')">Launch Session</button>
+        
+        <button class="btn-primary" onclick="switchView('dashboard')">Explore Live Telemetry</button>
         <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
           <span class="material-symbols-outlined">menu</span>
         </button>
@@ -83,11 +67,11 @@
       <div class="container" style="z-index: 2; position: relative; pointer-events: none;">
         <div class="hero-eyebrow fade-in-up">
           <span class="pulse-dot"></span>
-          <span>FDA-Cleared Class II Medical Biomechanics</span>
+          <span>Engineering Capstone Project</span>
         </div>
         <h1 class="hero-headline fade-in-up delay-1">
-          Precision gait intelligence,<br/>
-          <em>captured step by microsecond.</em>
+          Precision gait telemetry,<br/>
+          <em>captured step by step.</em>
         </h1>
         <p class="hero-subhead fade-in-up delay-2">
           Next-generation pressure-sensing insoles paired with sub-millimeter inertial measurement units for laboratory-grade gait analysis outside the clinic.
@@ -99,21 +83,8 @@
           </button>
           <button class="btn-ghost btn-lg landing-btn-secondary" style="pointer-events: auto;">
             <span class="material-symbols-outlined">description</span>
-            CLINICAL WHITEPAPER (PDF)
+            PROJECT REPORT (PDF)
           </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Trust Bar -->
-    <section class="trust-bar">
-      <div class="container">
-        <p class="label-text muted-text upper trust-label">Validated in Leading Biomechanical Research Centers &amp; Clinical Laboratories</p>
-        <div class="trust-logos">
-          <div class="trust-logo">Mayo Clinic Labs</div>
-          <div class="trust-logo">Johns Hopkins Biomechanics</div>
-          <div class="trust-logo">Stanford Sports Medicine</div>
-          <div class="trust-logo">Charité Gait Lab</div>
         </div>
       </div>
     </section>
@@ -133,33 +104,33 @@
             <div class="feature-icon">
               <span class="material-symbols-outlined">speed</span>
             </div>
-            <h3>Sub-millisecond IMU Arrays</h3>
-            <p>9-axis synchronized inertial measurement units capturing micro-tremors, heel-strike shockwaves, and instantaneous angular velocity in real-time.</p>
+            <h3>Real-Time IMU Sensing</h3>
+            <p>MPU6050 6-axis inertial measurement providing accelerometer and gyroscope data for gait and motion analysis.</p>
             <div class="feature-stat">
               <span class="caption-text muted-text block">Sampling Precision</span>
-              <span class="mono-sm primary-text">1,000 Hz Internal / 300 Hz BLE</span>
+              <span class="mono-sm primary-text">to be characterized</span>
             </div>
           </div>
           <div class="feature-card observe">
             <div class="feature-icon">
               <span class="material-symbols-outlined">grid_view</span>
             </div>
-            <h3>Dynamic Plantar Pressure Matrix</h3>
-            <p>64 capacitive pressure sensors per insole mapping micro-force variations across the complete kinetic chain from rearfoot loading to toe-off.</p>
+            <h3>Foot Pressure Mapping</h3>
+            <p>FSR-based pressure sensing across the insole, tracking left/right/total force distribution during gait.</p>
             <div class="feature-stat">
               <span class="caption-text muted-text block">Active Contact Points</span>
-              <span class="mono-sm primary-text">128 Bilateral Force Nodes</span>
+              <span class="mono-sm primary-text">3 FSR Sensors (Prototype)</span>
             </div>
           </div>
           <div class="feature-card observe">
             <div class="feature-icon">
               <span class="material-symbols-outlined">neurology</span>
             </div>
-            <h3>Autonomous Anomaly Detection</h3>
-            <p>Edge machine learning firmware flagging asymmetric gait shifts, freeze-of-gait vulnerabilities, and subtle fatigue-induced pronation changes instantly.</p>
+            <h3>Prototype Fall-Risk Scoring</h3>
+            <p>On-device motion analysis flagging elevated acceleration, angular velocity, and orientation changes — an engineering prototype, not a clinical diagnostic tool.</p>
             <div class="feature-stat">
               <span class="caption-text muted-text block">Classification Accuracy</span>
-              <span class="mono-sm primary-text">99.2% Neurological Fit</span>
+              <span class="mono-sm primary-text">Status: Prototype — Not Clinically Validated</span>
             </div>
           </div>
         </div>
@@ -171,7 +142,7 @@
       <div class="container">
         <div class="section-header center">
           <span class="eyebrow-label">Seamless Protocol</span>
-          <h2 class="section-heading">Ambulatory deployment in 4 clinical steps</h2>
+          <h2 class="section-heading">Ambulatory deployment in 4 steps</h2>
         </div>
         <div class="steps-grid">
           <div class="step-card observe" style="text-align: center;">
@@ -179,8 +150,8 @@
             <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
               <span class="material-symbols-outlined" style="font-size: 48px;">pest_control</span>
             </div>
-            <h4>Slip Insole into Footwear</h4>
-            <p>Ultralight 2.2mm form factor fits standard orthotic depths without disrupting natural foot kinetics.</p>
+            <h4>Attach the Insole</h4>
+            <p>Position the FSR/IMU insole module inside the shoe.</p>
             <div class="step-badge" style="justify-content: center;">
               <span class="material-symbols-outlined">check_circle</span>
               Universal shoe sizing
@@ -191,11 +162,11 @@
             <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
               <span class="material-symbols-outlined" style="font-size: 48px;">bluetooth_connected</span>
             </div>
-            <h4>Zero-Drift BLE Sync</h4>
-            <p>Auto-pairing with the clinician iPad or patient mobile unit via hardware-calibrated Bluetooth 5.3.</p>
+            <h4>Connect to Wi-Fi/Firebase</h4>
+            <p>ESP32 connects to Firebase Realtime Database over Wi-Fi.</p>
             <div class="step-badge" style="justify-content: center;">
-              <span class="material-symbols-outlined">bolt</span>
-              Sub-2ms pairing
+              <span class="material-symbols-outlined">wifi</span>
+              Wi-Fi Sync
             </div>
           </div>
           <div class="step-card observe" style="text-align: center;">
@@ -204,7 +175,7 @@
               <span class="material-symbols-outlined" style="font-size: 48px;">stream</span>
             </div>
             <h4>Live Telemetry Streaming</h4>
-            <p>Continuous multi-plane stance mapping during free-living ambulation, stair ascents, and stress trials.</p>
+            <p>Continuous sensor data streams to the dashboard in real time.</p>
             <div class="step-badge" style="justify-content: center;">
               <span class="material-symbols-outlined">sensors</span>
               Real-time feedback
@@ -215,62 +186,12 @@
             <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
               <span class="material-symbols-outlined" style="font-size: 48px;">description</span>
             </div>
-            <h4>Clinical PDF Reporting</h4>
-            <p>One-touch export compiling kinematic graphs, temporal-spatial variables, and ICD-10 compatible narratives.</p>
+            <h4>Session Export</h4>
+            <p>Export session data as CSV/JSON for later analysis.</p>
             <div class="step-badge" style="justify-content: center;">
               <span class="material-symbols-outlined">summarize</span>
-              Instant EMR export
+              Instant export
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Comparison Table -->
-    <section class="comparison-section" id="comparison">
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow-label">Clinical Validation</span>
-          <h2 class="section-heading">How IntelliStride outpaces traditional motion labs</h2>
-        </div>
-        <div class="table-card">
-          <div class="table-scroll">
-            <table class="compare-table">
-              <thead>
-                <tr>
-                  <th>Feature &amp; Performance Metric</th>
-                  <th class="col-is">IntelliStride Telemetry Insoles</th>
-                  <th>Traditional Force Plate Laboratory</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="row-label">Kinetic &amp; Force Measurement Accuracy</td>
-                  <td class="col-is"><span class="mono-sm primary-text">Lab grade (98.6% R² correlation)</span></td>
-                  <td>Gold standard benchmark</td>
-                </tr>
-                <tr>
-                  <td class="row-label">Ambulatory Environment (24/7 Home &amp; Field)</td>
-                  <td class="col-is"><span class="mono-sm primary-text">Unlimited range (Active cell &amp; store-and-forward)</span></td>
-                  <td class="alert-text">Restricted to 10m catwalk zone</td>
-                </tr>
-                <tr>
-                  <td class="row-label">Setup &amp; Calibration Overhead</td>
-                  <td class="col-is"><span class="mono-sm primary-text">&lt; 60 seconds (Drop insole &amp; walk)</span></td>
-                  <td>45–90 min retro-reflective marker placement</td>
-                </tr>
-                <tr>
-                  <td class="row-label">Continuous Stride Sampling Depth</td>
-                  <td class="col-is"><span class="mono-sm primary-text">10,000+ uninterrupted steps per session</span></td>
-                  <td>6–12 isolated walkway passes</td>
-                </tr>
-                <tr>
-                  <td class="row-label">Clinician Feedback Latency</td>
-                  <td class="col-is"><span class="mono-sm primary-text">Instant real-time HUD + 1-click export</span></td>
-                  <td>2 to 5 business days post-processing</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
@@ -279,17 +200,13 @@
     <!-- CTA Band -->
     <section class="cta-band">
       <div class="container cta-inner">
-        <span class="eyebrow-label">Clinical Evaluation Program</span>
-        <h2 class="section-heading cta-heading">Transform gait rehabilitation into continuous care.</h2>
-        <p class="body-text cta-body">Equip your physical therapy facility or biomechanical research laboratory with our investigational trial kits.</p>
+        <span class="eyebrow-label">Engineering Prototype</span>
+        <h2 class="section-heading cta-heading">Follow the project</h2>
+        <p class="body-text cta-body">IntelliStride is an ongoing capstone engineering project exploring assistive gait telemetry.</p>
         <div class="cta-form">
-          <input type="email" placeholder="Enter institution email..." class="cta-input" />
-          <button class="btn-primary">Request Trial Kit</button>
+          <button class="btn-primary" onclick="window.location.href='https://github.com'">View Project on GitHub</button>
         </div>
-        <div class="cta-trust">
-          <span><span class="material-symbols-outlined sm-icon primary-icon">verified</span> Institutional IRB Support</span>
-          <span><span class="material-symbols-outlined sm-icon primary-icon">lock</span> HIPAA &amp; GDPR Compliant</span>
-        </div>
+        
       </div>
     </section>
 
@@ -306,7 +223,7 @@
             <span class="wordmark sm">IntelliStride</span>
           </div>
           <p>Precision ambulatory plantar pressure mapping, kinematic stride modeling, and dynamic gait metrics for rehabilitative biomechanics.</p>
-          <div class="fda-notice">FDA Class II Medical Device Enclosure Specification. Investigational system calibrated for authorized physical rehabilitation facilities, biomechanical research centers, and sports kinesiology labs.</div>
+          <div class="fda-notice">IntelliStride is a student engineering capstone project. It is a prototype system for educational and research purposes and is not a certified medical device.</div>
         </div>
         <div class="footer-col">
           <span class="footer-col-title">Platform</span>
@@ -316,19 +233,16 @@
           <a href="#how-it-works" class="footer-link">Protocol</a>
         </div>
         <div class="footer-col">
-          <span class="footer-col-title">Clinical &amp; Legal</span>
+          <span class="footer-col-title">Documentation</span>
           <a href="#" class="footer-link">Documentation</a>
-          <a href="#" class="footer-link">Compliance &amp; FDA</a>
-          <a href="#" class="footer-link">Privacy &amp; HIPAA</a>
+          <a href="#" class="footer-link">About This Project</a>
+          
           <a href="#" class="footer-link">Sensor Status</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 IntelliStride Medical Technologies Inc. All rights reserved.</span>
-        <div class="footer-certs">
-          <span>ISO 13485 Certified</span>
-          <span>HIPAA Compliant Cloud</span>
-        </div>
+        <span>© 2026 IntelliStride — Capstone Project.</span>
+        
       </div>
     </footer>
   </main>
@@ -358,11 +272,11 @@
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">analytics</span>
-              Clinical Analytics
+              Session Analytics
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">person</span>
-              Patient Roster
+              Session History
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">sensors</span>
@@ -381,9 +295,9 @@
         <div class="sidebar-hub-card">
           <div class="hub-status">
             <span class="pulse-dot sm"></span>
-            <span class="caption-text primary-text">StridePod Hub 4.2</span>
+            <span class="caption-text primary-text">IntelliStride Insole Module v1</span>
           </div>
-          <p class="caption-text muted-text">Dual wireless insole telemetry synced via 2.4GHz BLE mesh.</p>
+          <p class="caption-text muted-text">ESP32-based dual-sensor telemetry unit.</p>
         </div>
       </aside>
 
@@ -394,11 +308,11 @@
           <div class="dash-topbar-left">
             <div class="dash-connected-pill" id="hub-connection-pill">
               <span class="pulse-dot sm" id="hub-connection-dot"></span>
-              <span class="label-text primary-text" id="hub-connection-text">Connected: StridePod 4-L/R</span>
+              <span class="label-text primary-text" id="hub-connection-text">Connected: ESP32-DevKit-01</span>
             </div>
             <div class="dash-latency">
               <span class="material-symbols-outlined sm-icon">sync</span>
-              <span class="caption-text muted-text">Stream Latency: 12ms</span>
+              <span class="caption-text muted-text">Update Rate: 100ms</span>
             </div>
             <!-- Firebase Connection Status Badge -->
             <div class="fb-badge fb-offline" id="fb-status-badge">
@@ -407,20 +321,7 @@
             </div>
           </div>
           <div class="dash-topbar-right">
-            <div class="user-chip sm">
-              <div class="avatar-wrap sm">
-                <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
-                  <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
-                  <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
-                  <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
-                </svg>
-              </div>
-              <div class="user-info">
-                <span class="user-name">Dr. Elena Rostova</span>
-                <span class="user-role">Clinical Biomechanics</span>
-              </div>
-            </div>
-            <button class="btn-primary sm">Launch Session</button>
+            <div class="user-chip sm"><div class="user-info"><span class="user-name">Demo Session — 2026-09-12</span></div></div><button class="btn-primary sm">Start Demo Session</button>
           </div>
         </div>
 
@@ -432,7 +333,7 @@
                 <span class="material-symbols-outlined primary-icon">badge</span>
                 <div>
                   <span class="caption-text muted-text upper">Active Subject</span>
-                  <span class="label-text heading-text" id="patient-info">Subject #8421 — Marcus Vance (Post-ACL Recon, Wk 6)</span>
+                  <span class="label-text heading-text" id="patient-info">Test Session — Demo Wearer</span>
                 </div>
               </div>
               <div class="live-streaming-pill" id="live-stream-pill">
@@ -484,7 +385,7 @@
                   <svg viewBox="0 0 96 24" fill="none" class="sparkline-svg">
                     <path d="M0 16L16 14L32 18L48 10L64 12L80 7L96 11" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                   </svg>
-                  <span class="caption-text body-text">Normal target: <strong class="heading-text">110–120 SPM</strong></span>
+                  
                 </div>
               </div>
               <!-- Companion Metrics -->
@@ -535,9 +436,9 @@
                 <div class="bilateral-fill right" id="bilateral-fill-right" style="width:50.9%"></div>
               </div>
               <div class="bilateral-sublabels">
-                <span>ACL-R Affected Limb (L)</span>
-                <span>Centerline Deviation: 0.9° rightward</span>
-                <span>Contralateral Uninjured Limb (R)</span>
+                <span>Left Foot</span>
+                <span></span>
+                <span>Right Foot</span>
               </div>
             </div>
           </div>
@@ -549,9 +450,9 @@
               <div class="t2-panel-header">
                 <div>
                   <h2 class="t2-panel-title">Dynamic Plantar Pressure Mapping</h2>
-                  <p class="caption-text muted-text upper">Single-foot sensor array (Right foot active, Left assumed)</p>
+                  <p class="caption-text muted-text upper">Prototype — 3 FSR sensors per insole</p>
                 </div>
-                <span class="badge-pill blush-badge" id="peak-pressure-badge">Peak: 318 kPa (R-Heel)</span>
+                <span class="badge-pill blush-badge" id="peak-pressure-badge">Raw ADC: 3042</span>
               </div>
               <div class="dual-insole-view">
                 <!-- Left Foot Large -->
@@ -570,18 +471,18 @@
                       <ellipse cx="104" cy="175" fill="#F5E9E6" opacity="0.95" rx="11" ry="18"/>
                       <ellipse cx="78" cy="265" fill="#7a2e3a" opacity="0.95" rx="22" ry="20"/>
                     </svg>
-                    <div class="kpa-tag bottom" id="left-pmax-heel">274 kPa</div>
-                    <div class="kpa-tag top-left" id="left-pmax-meta">188 kPa</div>
+                    <div class="kpa-tag bottom" id="left-pmax-heel">ADC: 1024</div>
+                    <div class="kpa-tag top-left" id="left-pmax-meta">ADC: 800</div>
                   </div>
                   <div class="insole-footer">
-                    <span>Contact Area: <strong id="left-contact-area-val">118 cm²</strong></span>
+                    <span>Contact Area: <strong id="left-contact-area-val">N/A</strong></span>
                     <span>•</span>
-                    <span>Pmax: <strong id="left-footer-pmax">274 kPa</strong></span>
+                    <span>Pmax: <strong id="left-footer-pmax">ADC: 1024</strong></span>
                   </div>
                 </div>
                 <!-- Right Foot Large -->
                 <div class="insole-col">
-                  <span class="label-text muted-text upper">Right Insole (Active Sensor) <span class="badge-sm" style="margin-left:8px;background:var(--color-surface-blush);color:var(--color-alert)">SIMULATED DATA</span></span>
+                  <span class="label-text muted-text upper">Right Insole (Active Sensor) </span>
                   <div class="insole-svg-wrap">
                     <svg class="insole-svg" viewBox="0 0 160 320" fill="none">
                       <path d="M82 10C110 10 128 30 130 65C132 100 122 140 128 185C134 230 122 300 82 300C42 300 30 230 36 185C42 140 32 100 34 65C36 30 54 10 82 10Z" fill="#F8ECE9" stroke="#EAD9D4" stroke-width="2"/>
@@ -595,13 +496,13 @@
                       <ellipse cx="56" cy="175" fill="#F5E9E6" opacity="0.9" rx="11" ry="18"/>
                       <ellipse cx="82" cy="265" fill="#5d1825" opacity="1" rx="23" ry="21"/>
                     </svg>
-                    <div class="kpa-tag bottom" id="right-pmax-heel">318 kPa</div>
-                    <div class="kpa-tag top-right" id="right-pmax-meta">215 kPa</div>
+                    <div class="kpa-tag bottom" id="right-pmax-heel">ADC: 3042</div>
+                    <div class="kpa-tag top-right" id="right-pmax-meta">ADC: 1200</div>
                   </div>
                   <div class="insole-footer">
-                    <span>Contact Area: <strong id="right-contact-area-val">124 cm²</strong></span>
+                    <span>Contact Area: <strong id="right-contact-area-val">N/A</strong></span>
                     <span>•</span>
-                    <span>Pmax: <strong id="right-footer-pmax">318 kPa</strong></span>
+                    <span>Pmax: <strong id="right-footer-pmax">ADC: 3042</strong></span>
                   </div>
                 </div>
               </div>
@@ -621,7 +522,7 @@
               <div class="t2-panel-header">
                 <div>
                   <h2 class="t2-panel-title">Kinematic Waveforms</h2>
-                  <p class="caption-text muted-text upper">Ground Reaction Force &amp; Tibial Shock</p>
+                  <p class="caption-text muted-text upper">Raw Accelerometer & Gyroscope Streams</p>
                 </div>
                 <span class="badge-pill blush-badge">Live 120Hz</span>
               </div>
@@ -629,7 +530,7 @@
                 <!-- vGRF Waveform -->
                 <div class="waveform-row">
                   <div class="waveform-label-row">
-                    <span class="caption-text primary-text"><span class="wf-dot primary-dot"></span> Vertical GRF (% Body Weight)</span>
+                    <span class="caption-text primary-text"><span class="wf-dot primary-dot"></span> Raw Accelerometer Magnitude</span>
                     <span class="mono-sm primary-text" id="vgrf-value">1.18 BW</span>
                   </div>
                   <div class="waveform-chart-wrap">
@@ -645,7 +546,7 @@
                 <!-- Tibial Shock Waveform -->
                 <div class="waveform-row">
                   <div class="waveform-label-row">
-                    <span class="caption-text secondary-text"><span class="wf-dot blush-dot"></span> Tibial Shock Acceleration (Axial g)</span>
+                    <span class="caption-text secondary-text"><span class="wf-dot blush-dot"></span> Raw Gyroscope Magnitude</span>
                     <span class="mono-sm heading-text" id="tibial-value">4.8 g</span>
                   </div>
                   <div class="waveform-chart-wrap">
@@ -659,17 +560,6 @@
                 </div>
               </div>
               <!-- Kinematics Metrics -->
-              <div class="kin-metrics-grid">
-                <div class="kin-metric-card">
-                  <span class="caption-text muted-text">Loading Rate</span>
-                  <span class="mono-sm primary-text" id="loading-rate">62.4 BW/s</span>
-                  <span class="caption-text body-text">Symmetric impact rise</span>
-                </div>
-                <div class="kin-metric-card">
-                  <span class="caption-text muted-text">Push-off Impulse</span>
-                  <span class="mono-sm primary-text" id="pushoff-impulse">248 N·s</span>
-                  <span class="caption-text body-text" id="lr-diff">L/R diff: &lt; 2.1%</span>
-                </div>
               </div>
             </div>
           </div>
@@ -681,7 +571,7 @@
               <div class="t3-header">
                 <div class="t3-title">
                   <span class="pulse-dot sm"></span>
-                  <span class="label-text heading-text">Left StridePod 4-L</span>
+                  <span class="label-text heading-text">IntelliStride Module 1</span>
                 </div>
                 <span class="badge-sm" id="left-status-badge">Calibrated</span>
               </div>
@@ -696,7 +586,7 @@
               <div class="t3-header">
                 <div class="t3-title">
                   <span class="pulse-dot sm"></span>
-                  <span class="label-text heading-text">Right StridePod 4-R</span>
+                  <span class="label-text heading-text">IntelliStride Module 2</span>
                 </div>
                 <span class="badge-sm" id="right-status-badge">Calibrated</span>
               </div>
@@ -718,9 +608,9 @@
               <div class="t3-nominal">
                 <div class="nominal-row">
                   <span class="w-dot primary" id="anomaly-dot"></span>
-                  <span class="mono-sm primary-text" id="anomaly-status">STATUS: NOMINAL</span>
+                  <span class="mono-sm primary-text" id="anomaly-status">STATUS: NORMAL</span>
                 </div>
-                <p class="caption-text body-text" id="anomaly-desc">No pathologic gait deviation or asymmetric muscle fatigue detected over last 140 strides.</p>
+                <p class="caption-text body-text" id="anomaly-desc">No threshold-exceeding motion events detected in current session.</p>
               </div>
             </div>
             <!-- Card 4 -->
@@ -796,11 +686,11 @@
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">analytics</span>
-              Clinical Analytics
+              Session Analytics
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">person</span>
-              Patient Roster
+              Session History
             </a>
             <a href="#" class="sidebar-link">
               <span class="material-symbols-outlined">sensors</span>
@@ -841,19 +731,7 @@
             </div>
           </div>
           <div class="dash-topbar-right">
-            <div class="user-chip sm">
-              <div class="avatar-wrap sm">
-                <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
-                  <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
-                  <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
-                  <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
-                </svg>
-              </div>
-              <div class="user-info">
-                <span class="user-name">Dr. Elena Rostova</span>
-                <span class="user-role">Clinical Biomechanics</span>
-              </div>
-            </div>
+            <div class="user-chip sm"><div class="user-info"><span class="user-name">Demo Session — 2026-09-12</span></div></div>
             <button class="btn-ghost sm" onclick="frOpenCalibration()">
               <span class="material-symbols-outlined">tune</span>
               Calibration

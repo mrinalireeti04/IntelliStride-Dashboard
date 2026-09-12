@@ -31,6 +31,9 @@ const views = {
   landing:   document.getElementById('view-landing'),
   dashboard: document.getElementById('view-dashboard'),
   fallrisk:  document.getElementById('view-fallrisk'),
+  documentation: document.getElementById('view-documentation'),
+  hardware:  document.getElementById('view-hardware'),
+  history:   document.getElementById('view-history')
 };
 
 let _currentView = 'landing';

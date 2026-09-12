@@ -270,19 +270,19 @@
               <span class="material-symbols-outlined">crisis_alert</span>
               Fall Risk Analysis
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
               <span class="material-symbols-outlined">analytics</span>
               Session Analytics
             </a>
-            <a href="#" class="sidebar-link">
-              <span class="material-symbols-outlined">person</span>
+            <a href="#" onclick="switchView('history')" class="sidebar-link">
+              <span class="material-symbols-outlined">history</span>
               Session History
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
               <span class="material-symbols-outlined">sensors</span>
               Hardware &amp; Insoles
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
               <span class="material-symbols-outlined">library_books</span>
               Documentation
             </a>
@@ -312,7 +312,7 @@
             </div>
             <div class="dash-latency">
               <span class="material-symbols-outlined sm-icon">sync</span>
-              <span class="caption-text muted-text">Update Rate: 100ms</span>
+              <span class="caption-text muted-text waiting-text">Update Rate: TBD (not yet finalized)</span>
             </div>
             <!-- Firebase Connection Status Badge -->
             <div class="fb-badge fb-offline" id="fb-status-badge">
@@ -471,8 +471,9 @@
                       <ellipse cx="104" cy="175" fill="#F5E9E6" opacity="0.95" rx="11" ry="18"/>
                       <ellipse cx="78" cy="265" fill="#7a2e3a" opacity="0.95" rx="22" ry="20"/>
                     </svg>
-                    <div class="kpa-tag bottom" id="left-pmax-heel">ADC: 1024</div>
-                    <div class="kpa-tag top-left" id="left-pmax-meta">ADC: 800</div>
+                    <div class="kpa-tag" style="top: 50%; left: 10px;" id="left-pmax-mid">Midfoot: ADC 500</div>
+                    <div class="kpa-tag bottom" id="left-pmax-heel">Hindfoot: ADC 1024</div>
+                    <div class="kpa-tag top-left" id="left-pmax-meta">Forefoot: ADC 800</div>
                   </div>
                   <div class="insole-footer">
                     <span>Contact Area: <strong id="left-contact-area-val">N/A</strong></span>
@@ -496,8 +497,9 @@
                       <ellipse cx="56" cy="175" fill="#F5E9E6" opacity="0.9" rx="11" ry="18"/>
                       <ellipse cx="82" cy="265" fill="#5d1825" opacity="1" rx="23" ry="21"/>
                     </svg>
-                    <div class="kpa-tag bottom" id="right-pmax-heel">ADC: 3042</div>
-                    <div class="kpa-tag top-right" id="right-pmax-meta">ADC: 1200</div>
+                    <div class="kpa-tag" style="top: 50%; right: 10px;" id="right-pmax-mid">Midfoot: ADC 700</div>
+                    <div class="kpa-tag bottom" id="right-pmax-heel">Hindfoot: ADC 3042</div>
+                    <div class="kpa-tag top-right" id="right-pmax-meta">Forefoot: ADC 1200</div>
                   </div>
                   <div class="insole-footer">
                     <span>Contact Area: <strong id="right-contact-area-val">N/A</strong></span>
@@ -684,19 +686,19 @@
               <span class="material-symbols-outlined">crisis_alert</span>
               Fall Risk Analysis
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
               <span class="material-symbols-outlined">analytics</span>
               Session Analytics
             </a>
-            <a href="#" class="sidebar-link">
-              <span class="material-symbols-outlined">person</span>
+            <a href="#" onclick="switchView('history')" class="sidebar-link">
+              <span class="material-symbols-outlined">history</span>
               Session History
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
               <span class="material-symbols-outlined">sensors</span>
               Hardware &amp; Insoles
             </a>
-            <a href="#" class="sidebar-link">
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
               <span class="material-symbols-outlined">library_books</span>
               Documentation
             </a>
@@ -1122,5 +1124,348 @@
 
   <script type="module" src="app.js"></script>
   <script type="module" src="particles.js"></script>
+
+  <!-- ===== DOCUMENTATION VIEW ===== -->
+  <main id="view-documentation" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
+              <span class="material-symbols-outlined">speed</span>
+              Live Telemetry
+            </a>
+            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
+              <span class="material-symbols-outlined">crisis_alert</span>
+              Fall Risk Analysis
+            </a>
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
+              <span class="material-symbols-outlined">analytics</span>
+              Session Analytics
+            </a>
+            <a href="#" onclick="switchView('history')" class="sidebar-link">
+              <span class="material-symbols-outlined">history</span>
+              Session History
+            </a>
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
+              <span class="material-symbols-outlined">sensors</span>
+              Hardware &amp; Insoles
+            </a>
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
+              <span class="material-symbols-outlined">library_books</span>
+              Documentation
+            </a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link">
+              <span class="material-symbols-outlined">home</span>
+              Return to Overview
+            </a>
+          </nav>
+        </div>
+
+      </aside>
+      
+      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
+        <div class="section-header">
+          <h2 class="section-heading" style="color: var(--color-primary)">Documentation</h2>
+          <p class="caption-text muted-text">How IntelliStride works, what it currently does, and what's still in progress.</p>
+        </div>
+        
+        <div class="t3-card" style="margin-bottom: 2rem;">
+          <h3 class="t2-panel-title">About This Project</h3>
+          <p class="body-text">IntelliStride is a capstone engineering project exploring smart assistive footwear. It combines pressure sensing, inertial motion tracking, obstacle detection, and location data into a real-time telemetry dashboard, with an experimental prototype for fall-risk scoring.</p>
+          <p class="caption-text muted-text" style="margin-top: 1rem;">Built by [Team Name(s)], [Program], [Semester/Year] — fill in before final submission.</p>
+        </div>
+
+        <div class="t3-card" style="margin-bottom: 2rem;">
+          <h3 class="t2-panel-title">How Data Flows</h3>
+          <div style="padding: 1rem; background: var(--color-surface-blush); border-radius: 8px; margin-bottom: 1rem;">
+            <code class="mono-sm primary-text">ESP32 + Sensors → Firebase Realtime Database → Web Dashboard → Real-Time Visualization</code>
+          </div>
+          <ol class="body-text" style="padding-left: 1.5rem; line-height: 1.8;">
+            <li>ESP32 reads sensor values from FSR, MPU6050, GPS, and ultrasonic modules on a <span class="muted-text waiting-text">[TBD - to be confirmed from firmware]</span> cycle.</li>
+            <li>Sensor readings are written to Firebase Realtime Database over <span class="muted-text waiting-text">[TBD - to be confirmed from firmware]</span>.</li>
+            <li>The web dashboard listens for database changes using Firebase's real-time listeners.</li>
+            <li>New data updates the dashboard instantly, without a page refresh.</li>
+          </ol>
+        </div>
+
+        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Hardware Components</h3>
+        <div class="tier3-grid" style="margin-bottom: 2rem;">
+          <div class="t3-card">
+            <span class="label-text heading-text">FSR (Force Sensitive Resistors)</span>
+            <p class="caption-text body-text" style="margin-top: 0.5rem;">Measures pressure/force distribution across the foot. Current build: 3 sensors (Forefoot, Midfoot, Hindfoot).</p>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">MPU6050 (6-Axis IMU)</span>
+            <p class="caption-text body-text" style="margin-top: 0.5rem;">Provides accelerometer (X/Y/Z) and gyroscope (X/Y/Z) readings for motion and orientation tracking.</p>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">GPS Module</span>
+            <p class="caption-text body-text" style="margin-top: 0.5rem;">Provides latitude, longitude, and satellite count for location tracking.</p>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">Ultrasonic Sensor</span>
+            <p class="caption-text body-text" style="margin-top: 0.5rem;">Measures distance to nearby obstacles for basic collision awareness.</p>
+          </div>
+        </div>
+
+        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Current Capabilities vs. Planned Work</h3>
+        <div class="table-card" style="margin-bottom: 2rem;">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Working Today</th>
+                <th>In Progress / Planned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Real-time FSR, IMU, GPS, and ultrasonic telemetry</td>
+                <td class="muted-text">Derived gait metrics (cadence, symmetry, stride length)</td>
+              </tr>
+              <tr>
+                <td>Live Firebase-synced dashboard</td>
+                <td class="muted-text">On-device fall detection with validated thresholds</td>
+              </tr>
+              <tr>
+                <td>Prototype fall-risk scoring (simulated/threshold-based)</td>
+                <td class="muted-text">Calibrated pressure-to-force conversion (kPa)</td>
+              </tr>
+              <tr>
+                <td>—</td>
+                <td class="muted-text">Clinical-style PDF session export</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="t3-card" style="margin-bottom: 2rem; border-left: 4px solid var(--color-primary);">
+          <h3 class="t2-panel-title">What This Is — and Isn't</h3>
+          <p class="body-text">IntelliStride is a student engineering prototype built for a capstone course. It is not a certified medical device, has not undergone clinical validation, and its fall-risk scoring uses prototype thresholds that require further calibration with real experimental data. Nothing in this system should be used for medical diagnosis or treatment decisions.</p>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn-primary sm" onclick="window.location.href='https://github.com'">View Source on GitHub</button>
+          <button class="btn-ghost sm">Project Report / Poster</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== HARDWARE & INSOLES VIEW ===== -->
+  <main id="view-hardware" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
+              <span class="material-symbols-outlined">speed</span>
+              Live Telemetry
+            </a>
+            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
+              <span class="material-symbols-outlined">crisis_alert</span>
+              Fall Risk Analysis
+            </a>
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
+              <span class="material-symbols-outlined">analytics</span>
+              Session Analytics
+            </a>
+            <a href="#" onclick="switchView('history')" class="sidebar-link">
+              <span class="material-symbols-outlined">history</span>
+              Session History
+            </a>
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
+              <span class="material-symbols-outlined">sensors</span>
+              Hardware &amp; Insoles
+            </a>
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
+              <span class="material-symbols-outlined">library_books</span>
+              Documentation
+            </a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link">
+              <span class="material-symbols-outlined">home</span>
+              Return to Overview
+            </a>
+          </nav>
+        </div>
+
+      </aside>
+      
+      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
+        <div class="section-header">
+          <h2 class="section-heading" style="color: var(--color-primary)">Hardware & Insoles</h2>
+          <p class="caption-text muted-text">The physical sensor module and its current build status.</p>
+        </div>
+
+        <div class="t3-card" style="margin-bottom: 2rem; max-width: 600px;">
+          <div class="t3-header">
+            <div class="t3-title">
+              <span class="pulse-dot sm" style="background: var(--color-waiting)"></span>
+              <span class="label-text heading-text">IntelliStride Insole Module</span>
+            </div>
+          </div>
+          <div class="t3-rows">
+            <div class="t3-row"><span class="caption-text muted-text">Device Status</span><span class="mono-sm waiting-text">Offline</span></div>
+            <div class="t3-row"><span class="caption-text muted-text">Last Update</span><span class="mono-sm waiting-text">— (Awaiting Data)</span></div>
+            <div class="t3-row"><span class="caption-text muted-text">Firebase Connection</span><span class="mono-sm waiting-text">Disconnected</span></div>
+          </div>
+        </div>
+
+        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Sensor Breakdown</h3>
+        <div class="tier3-grid" style="margin-bottom: 2rem;">
+          <div class="t3-card">
+            <span class="label-text heading-text">FSR Sensors (x3)</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Measures:</strong> Pressure/force distribution</li>
+              <li><strong>Placement:</strong> Forefoot, midfoot, hindfoot</li>
+              <li><strong>Units:</strong> Raw ADC (0–4095) — kg/N conversion pending calibration</li>
+              <li><strong>Status:</strong> Active</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">ESP32 DevKit (WROOM-32)</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Role:</strong> Main controller</li>
+              <li><strong>Placement:</strong> Central midfoot, upper side of shoe</li>
+              <li><strong>Notes:</strong> Balances wiring runs to front and rear sensors</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">MPU6050</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Measures:</strong> Acceleration (X/Y/Z), angular velocity (X/Y/Z)</li>
+              <li><strong>Placement:</strong> Built-in/adjacent to main board</li>
+              <li><strong>Units:</strong> Raw sensor units</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">GPS module + antenna</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Measures:</strong> Latitude, longitude, satellite count</li>
+              <li><strong>Placement:</strong> Outer/lateral midfoot, front half</li>
+              <li><strong>Notes:</strong> Antenna exposed toward top/outside for reception</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">Ultrasonic Sensor</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Measures:</strong> Distance to obstacle</li>
+              <li><strong>Placement:</strong> Front/upper shoe region (toe area)</li>
+              <li><strong>Units:</strong> Centimeters</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">Power supply / regulator</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Role:</strong> Regulates battery supply</li>
+              <li><strong>Placement:</strong> Outer side, near rear/midfoot</li>
+            </ul>
+          </div>
+          <div class="t3-card">
+            <span class="label-text heading-text">Wiring harness</span>
+            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
+              <li><strong>Role:</strong> Connects components securely</li>
+              <li><strong>Placement:</strong> Along lateral/upper perimeter</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="t3-card" style="margin-bottom: 2rem;">
+          <h3 class="t2-panel-title">Firmware & Data Pipeline</h3>
+          <p class="body-text">ESP32 firmware reads all sensors on a <span class="waiting-text muted-text">[TBD - to be confirmed from firmware]</span> cycle and writes values to Firebase Realtime Database over <span class="waiting-text muted-text">[TBD - to be confirmed from firmware]</span>. No on-device processing is currently performed beyond raw sensor reads.</p>
+        </div>
+
+        <div class="t3-card" style="margin-bottom: 2rem;">
+          <h3 class="t2-panel-title">Known Limitations</h3>
+          <ul class="body-text" style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
+            <li>GPS accuracy is reduced indoors — outdoor testing recommended for location features.</li>
+            <li>FSR values are currently raw ADC readings; force/pressure calibration (kg or kPa) is planned but not yet implemented.</li>
+            <li>Battery monitoring is not yet implemented in firmware.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== SESSION HISTORY VIEW ===== -->
+  <main id="view-history" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
+              <span class="material-symbols-outlined">speed</span>
+              Live Telemetry
+            </a>
+            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
+              <span class="material-symbols-outlined">crisis_alert</span>
+              Fall Risk Analysis
+            </a>
+            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
+              <span class="material-symbols-outlined">analytics</span>
+              Session Analytics
+            </a>
+            <a href="#" onclick="switchView('history')" class="sidebar-link">
+              <span class="material-symbols-outlined">history</span>
+              Session History
+            </a>
+            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
+              <span class="material-symbols-outlined">sensors</span>
+              Hardware &amp; Insoles
+            </a>
+            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
+              <span class="material-symbols-outlined">library_books</span>
+              Documentation
+            </a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link">
+              <span class="material-symbols-outlined">home</span>
+              Return to Overview
+            </a>
+          </nav>
+        </div>
+
+      </aside>
+      
+      <div class="dash-content" style="padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+        <div style="text-align: center; max-width: 400px;">
+          <span class="material-symbols-outlined waiting-text" style="font-size: 64px; margin-bottom: 1rem;">history</span>
+          <h2 class="section-heading" style="color: var(--color-primary); margin-bottom: 1rem;">Session History</h2>
+          <p class="body-text waiting-text" style="margin-bottom: 2rem;">Session logging is a planned feature — the current build focuses on live real-time telemetry. Check back as this feature is developed.</p>
+          <button class="btn-primary" onclick="switchView('dashboard')">View Live Telemetry</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
 </body>
 </html>

@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IntelliStride — Precision Gait Intelligence</title>
+  <meta name="description" content="Next-generation pressure-sensing insoles paired with sub-millimeter inertial measurement units for laboratory-grade gait analysis outside the clinic. FDA-Cleared Class II Medical Biomechanics." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header id="site-header">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="#" class="wordmark-link" data-view="landing" onclick="switchView('landing')">
+          <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+            <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="wordmark">IntelliStride</span>
+        </a>
+        <nav class="desktop-nav">
+          <a href="#" class="nav-link active" data-view="landing" onclick="switchView('landing')">Overview</a>
+          <a href="#" class="nav-link" data-view="dashboard" onclick="switchView('dashboard')">Live Telemetry</a>
+          <a href="#" class="nav-link" data-view="fallrisk" onclick="switchView('fallrisk')">Fall Risk</a>
+          <a href="#features" class="nav-link">Technology</a>
+          <a href="#how-it-works" class="nav-link">Protocol</a>
+          <a href="#comparison" class="nav-link">Clinical Data</a>
+        </nav>
+      </div>
+      <div class="nav-right">
+        <div class="live-badge">
+          <span class="pulse-dot"></span>
+          <span>Connected: StridePod 4-L/R</span>
+        </div>
+        <div class="user-chip">
+          <div class="avatar-wrap">
+            <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
+              <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
+              <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
+              <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
+            </svg>
+          </div>
+          <div class="user-info">
+            <span class="user-name">Dr. Elena Rostova</span>
+            <span class="user-role">Clinical Biomechanics</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="switchView('dashboard')">Launch Session</button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#" onclick="switchView('landing'); toggleMobileMenu()" class="mobile-nav-link">Overview</a>
+      <a href="#" onclick="switchView('dashboard'); toggleMobileMenu()" class="mobile-nav-link">Live Telemetry</a>
+      <a href="#" onclick="switchView('fallrisk'); toggleMobileMenu()" class="mobile-nav-link">Fall Risk Analysis</a>
+      <a href="#features" onclick="toggleMobileMenu()" class="mobile-nav-link">Technology</a>
+      <a href="#how-it-works" onclick="toggleMobileMenu()" class="mobile-nav-link">Protocol</a>
+    </div>
+  </header>
+
+  <!-- ===== LANDING VIEW ===== -->
+  <main id="view-landing" class="view active">
+    <!-- Magical Constellation Mesh Background -->
+    <canvas id="magic-mesh-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <section class="hero-section dark-mode-hero">
+      <div class="hero-bg-blob blob-1"></div>
+      <div class="hero-bg-blob blob-2"></div>
+      <div class="container" style="z-index: 2; position: relative; pointer-events: none;">
+        <div class="hero-eyebrow fade-in-up">
+          <span class="pulse-dot"></span>
+          <span>FDA-Cleared Class II Medical Biomechanics</span>
+        </div>
+        <h1 class="hero-headline fade-in-up delay-1">
+          Precision gait intelligence,<br/>
+          <em>captured step by microsecond.</em>
+        </h1>
+        <p class="hero-subhead fade-in-up delay-2">
+          Next-generation pressure-sensing insoles paired with sub-millimeter inertial measurement units for laboratory-grade gait analysis outside the clinic.
+        </p>
+        <div class="hero-ctas fade-in-up delay-3">
+          <button class="btn-primary btn-lg landing-btn-primary" onclick="switchView('dashboard')" style="pointer-events: auto;">
+            EXPLORE LIVE TELEMETRY
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <button class="btn-ghost btn-lg landing-btn-secondary" style="pointer-events: auto;">
+            <span class="material-symbols-outlined">description</span>
+            CLINICAL WHITEPAPER (PDF)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+      <div class="container">
+        <p class="label-text muted-text upper trust-label">Validated in Leading Biomechanical Research Centers &amp; Clinical Laboratories</p>
+        <div class="trust-logos">
+          <div class="trust-logo">Mayo Clinic Labs</div>
+          <div class="trust-logo">Johns Hopkins Biomechanics</div>
+          <div class="trust-logo">Stanford Sports Medicine</div>
+          <div class="trust-logo">Charité Gait Lab</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="section-header two-col">
+          <div>
+            <span class="eyebrow-label">Engineered Precision</span>
+            <h2 class="section-heading">Sub-surface biomechanics.<br/>No laboratory ceiling.</h2>
+          </div>
+          <p class="section-body">Medical hardware engineered to survive hundreds of thousands of strike cycles while retaining sub-millivolt sensing fidelity.</p>
+        </div>
+        <div class="feature-cards">
+          <div class="feature-card observe">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">speed</span>
+            </div>
+            <h3>Sub-millisecond IMU Arrays</h3>
+            <p>9-axis synchronized inertial measurement units capturing micro-tremors, heel-strike shockwaves, and instantaneous angular velocity in real-time.</p>
+            <div class="feature-stat">
+              <span class="caption-text muted-text block">Sampling Precision</span>
+              <span class="mono-sm primary-text">1,000 Hz Internal / 300 Hz BLE</span>
+            </div>
+          </div>
+          <div class="feature-card observe">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">grid_view</span>
+            </div>
+            <h3>Dynamic Plantar Pressure Matrix</h3>
+            <p>64 capacitive pressure sensors per insole mapping micro-force variations across the complete kinetic chain from rearfoot loading to toe-off.</p>
+            <div class="feature-stat">
+              <span class="caption-text muted-text block">Active Contact Points</span>
+              <span class="mono-sm primary-text">128 Bilateral Force Nodes</span>
+            </div>
+          </div>
+          <div class="feature-card observe">
+            <div class="feature-icon">
+              <span class="material-symbols-outlined">neurology</span>
+            </div>
+            <h3>Autonomous Anomaly Detection</h3>
+            <p>Edge machine learning firmware flagging asymmetric gait shifts, freeze-of-gait vulnerabilities, and subtle fatigue-induced pronation changes instantly.</p>
+            <div class="feature-stat">
+              <span class="caption-text muted-text block">Classification Accuracy</span>
+              <span class="mono-sm primary-text">99.2% Neurological Fit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section" id="how-it-works">
+      <div class="container">
+        <div class="section-header center">
+          <span class="eyebrow-label">Seamless Protocol</span>
+          <h2 class="section-heading">Ambulatory deployment in 4 clinical steps</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card observe" style="text-align: center;">
+            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">01</span>
+            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
+              <span class="material-symbols-outlined" style="font-size: 48px;">pest_control</span>
+            </div>
+            <h4>Slip Insole into Footwear</h4>
+            <p>Ultralight 2.2mm form factor fits standard orthotic depths without disrupting natural foot kinetics.</p>
+            <div class="step-badge" style="justify-content: center;">
+              <span class="material-symbols-outlined">check_circle</span>
+              Universal shoe sizing
+            </div>
+          </div>
+          <div class="step-card observe" style="text-align: center;">
+            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">02</span>
+            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
+              <span class="material-symbols-outlined" style="font-size: 48px;">bluetooth_connected</span>
+            </div>
+            <h4>Zero-Drift BLE Sync</h4>
+            <p>Auto-pairing with the clinician iPad or patient mobile unit via hardware-calibrated Bluetooth 5.3.</p>
+            <div class="step-badge" style="justify-content: center;">
+              <span class="material-symbols-outlined">bolt</span>
+              Sub-2ms pairing
+            </div>
+          </div>
+          <div class="step-card observe" style="text-align: center;">
+            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">03</span>
+            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
+              <span class="material-symbols-outlined" style="font-size: 48px;">stream</span>
+            </div>
+            <h4>Live Telemetry Streaming</h4>
+            <p>Continuous multi-plane stance mapping during free-living ambulation, stair ascents, and stress trials.</p>
+            <div class="step-badge" style="justify-content: center;">
+              <span class="material-symbols-outlined">sensors</span>
+              Real-time feedback
+            </div>
+          </div>
+          <div class="step-card observe" style="text-align: center;">
+            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">04</span>
+            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
+              <span class="material-symbols-outlined" style="font-size: 48px;">description</span>
+            </div>
+            <h4>Clinical PDF Reporting</h4>
+            <p>One-touch export compiling kinematic graphs, temporal-spatial variables, and ICD-10 compatible narratives.</p>
+            <div class="step-badge" style="justify-content: center;">
+              <span class="material-symbols-outlined">summarize</span>
+              Instant EMR export
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section" id="comparison">
+      <div class="container">
+        <div class="section-header center">
+          <span class="eyebrow-label">Clinical Validation</span>
+          <h2 class="section-heading">How IntelliStride outpaces traditional motion labs</h2>
+        </div>
+        <div class="table-card">
+          <div class="table-scroll">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Feature &amp; Performance Metric</th>
+                  <th class="col-is">IntelliStride Telemetry Insoles</th>
+                  <th>Traditional Force Plate Laboratory</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-label">Kinetic &amp; Force Measurement Accuracy</td>
+                  <td class="col-is"><span class="mono-sm primary-text">Lab grade (98.6% R² correlation)</span></td>
+                  <td>Gold standard benchmark</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Ambulatory Environment (24/7 Home &amp; Field)</td>
+                  <td class="col-is"><span class="mono-sm primary-text">Unlimited range (Active cell &amp; store-and-forward)</span></td>
+                  <td class="alert-text">Restricted to 10m catwalk zone</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Setup &amp; Calibration Overhead</td>
+                  <td class="col-is"><span class="mono-sm primary-text">&lt; 60 seconds (Drop insole &amp; walk)</span></td>
+                  <td>45–90 min retro-reflective marker placement</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Continuous Stride Sampling Depth</td>
+                  <td class="col-is"><span class="mono-sm primary-text">10,000+ uninterrupted steps per session</span></td>
+                  <td>6–12 isolated walkway passes</td>
+                </tr>
+                <tr>
+                  <td class="row-label">Clinician Feedback Latency</td>
+                  <td class="col-is"><span class="mono-sm primary-text">Instant real-time HUD + 1-click export</span></td>
+                  <td>2 to 5 business days post-processing</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Band -->
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <span class="eyebrow-label">Clinical Evaluation Program</span>
+        <h2 class="section-heading cta-heading">Transform gait rehabilitation into continuous care.</h2>
+        <p class="body-text cta-body">Equip your physical therapy facility or biomechanical research laboratory with our investigational trial kits.</p>
+        <div class="cta-form">
+          <input type="email" placeholder="Enter institution email..." class="cta-input" />
+          <button class="btn-primary">Request Trial Kit</button>
+        </div>
+        <div class="cta-trust">
+          <span><span class="material-symbols-outlined sm-icon primary-icon">verified</span> Institutional IRB Support</span>
+          <span><span class="material-symbols-outlined sm-icon primary-icon">lock</span> HIPAA &amp; GDPR Compliant</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="footer-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <p>Precision ambulatory plantar pressure mapping, kinematic stride modeling, and dynamic gait metrics for rehabilitative biomechanics.</p>
+          <div class="fda-notice">FDA Class II Medical Device Enclosure Specification. Investigational system calibrated for authorized physical rehabilitation facilities, biomechanical research centers, and sports kinesiology labs.</div>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Platform</span>
+          <a href="#" onclick="switchView('landing')" class="footer-link">Overview</a>
+          <a href="#" onclick="switchView('dashboard')" class="footer-link">Live Telemetry</a>
+          <a href="#features" class="footer-link">Technology</a>
+          <a href="#how-it-works" class="footer-link">Protocol</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Clinical &amp; Legal</span>
+          <a href="#" class="footer-link">Documentation</a>
+          <a href="#" class="footer-link">Compliance &amp; FDA</a>
+          <a href="#" class="footer-link">Privacy &amp; HIPAA</a>
+          <a href="#" class="footer-link">Sensor Status</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 IntelliStride Medical Technologies Inc. All rights reserved.</span>
+        <div class="footer-certs">
+          <span>ISO 13485 Certified</span>
+          <span>HIPAA Compliant Cloud</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===== DASHBOARD VIEW ===== -->
+  <main id="view-dashboard" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active">
+              <span class="material-symbols-outlined">speed</span>
+              Live Telemetry
+            </a>
+            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
+              <span class="material-symbols-outlined">crisis_alert</span>
+              Fall Risk Analysis
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">analytics</span>
+              Clinical Analytics
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">person</span>
+              Patient Roster
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">sensors</span>
+              Hardware &amp; Insoles
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">library_books</span>
+              Documentation
+            </a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link">
+              <span class="material-symbols-outlined">home</span>
+              Return to Overview
+            </a>
+          </nav>
+        </div>
+        <div class="sidebar-hub-card">
+          <div class="hub-status">
+            <span class="pulse-dot sm"></span>
+            <span class="caption-text primary-text">StridePod Hub 4.2</span>
+          </div>
+          <p class="caption-text muted-text">Dual wireless insole telemetry synced via 2.4GHz BLE mesh.</p>
+        </div>
+      </aside>
+
+      <!-- Dashboard Main Content -->
+      <div class="dash-content">
+        <!-- Dashboard Header Bar -->
+        <div class="dash-topbar">
+          <div class="dash-topbar-left">
+            <div class="dash-connected-pill" id="hub-connection-pill">
+              <span class="pulse-dot sm" id="hub-connection-dot"></span>
+              <span class="label-text primary-text" id="hub-connection-text">Connected: StridePod 4-L/R</span>
+            </div>
+            <div class="dash-latency">
+              <span class="material-symbols-outlined sm-icon">sync</span>
+              <span class="caption-text muted-text">Stream Latency: 12ms</span>
+            </div>
+            <!-- Firebase Connection Status Badge -->
+            <div class="fb-badge fb-offline" id="fb-status-badge">
+              <span class="fb-dot fb-dot-offline" id="fb-status-dot"></span>
+              <span id="fb-status-label" class="caption-text">Firebase: Connecting…</span>
+            </div>
+          </div>
+          <div class="dash-topbar-right">
+            <div class="user-chip sm">
+              <div class="avatar-wrap sm">
+                <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
+                  <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
+                  <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
+                  <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
+                </svg>
+              </div>
+              <div class="user-info">
+                <span class="user-name">Dr. Elena Rostova</span>
+                <span class="user-role">Clinical Biomechanics</span>
+              </div>
+            </div>
+            <button class="btn-primary sm">Launch Session</button>
+          </div>
+        </div>
+
+        <div class="dash-scroll">
+          <!-- Control Bar (Tier 0) -->
+          <div class="dash-control-bar">
+            <div class="control-left">
+              <div class="subject-chip">
+                <span class="material-symbols-outlined primary-icon">badge</span>
+                <div>
+                  <span class="caption-text muted-text upper">Active Subject</span>
+                  <span class="label-text heading-text" id="patient-info">Subject #8421 — Marcus Vance (Post-ACL Recon, Wk 6)</span>
+                </div>
+              </div>
+              <div class="live-streaming-pill" id="live-stream-pill">
+                <span class="pulse-dot ping-wrap" id="live-stream-dot">
+                  <span class="ping-anim"></span>
+                  <span class="ping-core"></span>
+                </span>
+                <span class="label-text white-text upper" id="live-stream-label">LIVE STREAMING — 120 Hz</span>
+              </div>
+            </div>
+            <div class="control-right">
+              <div class="session-timer-wrap">
+                <span class="material-symbols-outlined sm-icon">timer</span>
+                <span class="caption-text muted-text upper">T+</span>
+                <span class="mono-sm primary-text" id="session-timer">00:24:18.42</span>
+              </div>
+              <div class="action-btns">
+                <button class="btn-ghost sm" id="btn-pause">
+                  <span class="material-symbols-outlined">pause</span>
+                  Pause Capture
+                </button>
+                <button class="btn-ghost sm" id="btn-flag">
+                  <span class="material-symbols-outlined">flag</span>
+                  Mark Event Flag
+                </button>
+                <button class="btn-primary sm">
+                  <span class="material-symbols-outlined">ios_share</span>
+                  Export Session
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 1: Hero Telemetry Band -->
+          <div class="tier1-band">
+            <div class="tier1-top">
+              <!-- Cadence Hero -->
+              <div class="cadence-hero">
+                <div class="cadence-label-row">
+                  <span class="label-text muted-text upper">Gait Cadence</span>
+                  <span class="w-dot"></span>
+                  <span class="caption-text primary-text">Steady State</span>
+                </div>
+                <div class="cadence-value-row">
+                  <span class="mono-readout-hero primary-text" id="cadence-readout">114</span>
+                  <span class="mono-md blush-text">SPM</span>
+                </div>
+                <div class="cadence-sparkline">
+                  <svg viewBox="0 0 96 24" fill="none" class="sparkline-svg">
+                    <path d="M0 16L16 14L32 18L48 10L64 12L80 7L96 11" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  </svg>
+                  <span class="caption-text body-text">Normal target: <strong class="heading-text">110–120 SPM</strong></span>
+                </div>
+              </div>
+              <!-- Companion Metrics -->
+              <div class="companion-metrics">
+                <div class="companion-card">
+                  <div class="comp-header">
+                    <span class="label-text muted-text upper">Gait Symmetry</span>
+                    <span class="material-symbols-outlined sm-icon primary-icon">balance</span>
+                  </div>
+                  <span class="mono-md heading-text"><span id="symmetry-value">98.2</span><span class="primary-text label-text">%</span></span>
+                  <div class="comp-footer">
+                    <span>Left: <strong class="heading-text" id="bilateral-left-pct">49.1%</strong></span>
+                    <span>Right: <strong class="heading-text" id="bilateral-right-pct">50.9%</strong></span>
+                  </div>
+                </div>
+                <div class="companion-card">
+                  <div class="comp-header">
+                    <span class="label-text muted-text upper">Mean Stride</span>
+                    <span class="material-symbols-outlined sm-icon primary-icon">straighten</span>
+                  </div>
+                  <span class="mono-md heading-text"><span id="stride-value">1.42</span><span class="primary-text label-text"> m</span></span>
+                  <div class="comp-footer">
+                    <span class="primary-text" id="stride-variance">±0.03m</span>
+                    <span>stride variance</span>
+                  </div>
+                </div>
+                <div class="companion-card">
+                  <div class="comp-header">
+                    <span class="label-text muted-text upper">Stance Duration</span>
+                    <span class="material-symbols-outlined sm-icon primary-icon">hourglass_top</span>
+                  </div>
+                  <span class="mono-md heading-text"><span id="stance-value">0.68</span><span class="primary-text label-text"> s</span></span>
+                  <div class="comp-footer">
+                    <span id="stance-cycle-pct">61.4% cycle phase</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Bilateral Balance Bar -->
+            <div class="bilateral-bar-section">
+              <div class="bilateral-labels">
+                <span><span class="w-dot primary"></span><span id="bilateral-label-left"> Left Stride (49.1%)</span></span>
+                <span class="caption-text muted-text upper">Dynamic Bilateral Equilibrium</span>
+                <span><span id="bilateral-label-right">Right Stride (50.9%) </span><span class="w-dot blush"></span></span>
+              </div>
+              <div class="bilateral-track">
+                <div class="bilateral-fill left" id="bilateral-fill-left" style="width:49.1%"></div>
+                <div class="bilateral-fill right" id="bilateral-fill-right" style="width:50.9%"></div>
+              </div>
+              <div class="bilateral-sublabels">
+                <span>ACL-R Affected Limb (L)</span>
+                <span>Centerline Deviation: 0.9° rightward</span>
+                <span>Contralateral Uninjured Limb (R)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 2: Panels -->
+          <div class="tier2-grid">
+            <!-- Plantar Pressure Panel -->
+            <div class="t2-panel wide">
+              <div class="t2-panel-header">
+                <div>
+                  <h2 class="t2-panel-title">Dynamic Plantar Pressure Mapping</h2>
+                  <p class="caption-text muted-text upper">Single-foot sensor array (Right foot active, Left assumed)</p>
+                </div>
+                <span class="badge-pill blush-badge" id="peak-pressure-badge">Peak: 318 kPa (R-Heel)</span>
+              </div>
+              <div class="dual-insole-view">
+                <!-- Left Foot Large -->
+                <div class="insole-col">
+                  <span class="label-text muted-text upper">Left Insole (Assumed)</span>
+                  <div class="insole-svg-wrap">
+                    <svg class="insole-svg" viewBox="0 0 160 320" fill="none">
+                      <path d="M78 10C50 10 32 30 30 65C28 100 38 140 32 185C26 230 38 300 78 300C118 300 130 230 124 185C118 140 128 100 126 65C124 30 106 10 78 10Z" fill="#F8ECE9" stroke="#EAD9D4" stroke-width="2"/>
+                      <path d="M78 265 C76 220, 84 180, 70 120 C62 90, 74 60, 68 38" fill="none" stroke="#5d1825" stroke-dasharray="3 3" stroke-width="2.5"/>
+                      <circle cx="68" cy="38" fill="#5d1825" r="4"/>
+                      <ellipse cx="68" cy="38" fill="#7a2e3a" opacity="0.85" rx="14" ry="12"/>
+                      <ellipse cx="98" cy="48" fill="#dec0b9" opacity="0.85" rx="10" ry="9"/>
+                      <ellipse cx="56" cy="115" fill="#7a2e3a" opacity="0.9" rx="15" ry="12"/>
+                      <ellipse cx="82" cy="112" fill="#7a2e3a" opacity="0.8" rx="13" ry="11"/>
+                      <ellipse cx="106" cy="118" fill="#dec0b9" opacity="0.9" rx="12" ry="10"/>
+                      <ellipse cx="104" cy="175" fill="#F5E9E6" opacity="0.95" rx="11" ry="18"/>
+                      <ellipse cx="78" cy="265" fill="#7a2e3a" opacity="0.95" rx="22" ry="20"/>
+                    </svg>
+                    <div class="kpa-tag bottom" id="left-pmax-heel">274 kPa</div>
+                    <div class="kpa-tag top-left" id="left-pmax-meta">188 kPa</div>
+                  </div>
+                  <div class="insole-footer">
+                    <span>Contact Area: <strong id="left-contact-area-val">118 cm²</strong></span>
+                    <span>•</span>
+                    <span>Pmax: <strong id="left-footer-pmax">274 kPa</strong></span>
+                  </div>
+                </div>
+                <!-- Right Foot Large -->
+                <div class="insole-col">
+                  <span class="label-text muted-text upper">Right Insole (Active Sensor) <span class="badge-sm" style="margin-left:8px;background:var(--color-surface-blush);color:var(--color-alert)">SIMULATED DATA</span></span>
+                  <div class="insole-svg-wrap">
+                    <svg class="insole-svg" viewBox="0 0 160 320" fill="none">
+                      <path d="M82 10C110 10 128 30 130 65C132 100 122 140 128 185C134 230 122 300 82 300C42 300 30 230 36 185C42 140 32 100 34 65C36 30 54 10 82 10Z" fill="#F8ECE9" stroke="#EAD9D4" stroke-width="2"/>
+                      <path d="M82 265 C84 220, 76 180, 90 120 C98 90, 86 60, 92 38" fill="none" stroke="#5d1825" stroke-dasharray="3 3" stroke-width="2.5"/>
+                      <circle cx="92" cy="38" fill="#5d1825" r="4"/>
+                      <ellipse cx="92" cy="38" fill="#7a2e3a" opacity="0.95" rx="14" ry="12"/>
+                      <ellipse cx="62" cy="48" fill="#dec0b9" opacity="0.8" rx="10" ry="9"/>
+                      <ellipse cx="104" cy="115" fill="#7a2e3a" opacity="1" rx="16" ry="13"/>
+                      <ellipse cx="78" cy="112" fill="#7a2e3a" opacity="0.85" rx="13" ry="11"/>
+                      <ellipse cx="54" cy="118" fill="#dec0b9" opacity="0.8" rx="12" ry="10"/>
+                      <ellipse cx="56" cy="175" fill="#F5E9E6" opacity="0.9" rx="11" ry="18"/>
+                      <ellipse cx="82" cy="265" fill="#5d1825" opacity="1" rx="23" ry="21"/>
+                    </svg>
+                    <div class="kpa-tag bottom" id="right-pmax-heel">318 kPa</div>
+                    <div class="kpa-tag top-right" id="right-pmax-meta">215 kPa</div>
+                  </div>
+                  <div class="insole-footer">
+                    <span>Contact Area: <strong id="right-contact-area-val">124 cm²</strong></span>
+                    <span>•</span>
+                    <span>Pmax: <strong id="right-footer-pmax">318 kPa</strong></span>
+                  </div>
+                </div>
+              </div>
+              <!-- Legend -->
+              <div class="insole-legend">
+                <div class="legend-item"><span class="legend-line primary"></span> Center of Pressure (CoP) Path</div>
+                <div class="pressure-gradient-wrap">
+                  <span class="caption-text muted-text">Pressure Gradient:</span>
+                  <div class="pressure-gradient-bar"></div>
+                  <span class="mono-sm muted-text">400 kPa</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kinematic Waveforms Panel -->
+            <div class="t2-panel narrow">
+              <div class="t2-panel-header">
+                <div>
+                  <h2 class="t2-panel-title">Kinematic Waveforms</h2>
+                  <p class="caption-text muted-text upper">Ground Reaction Force &amp; Tibial Shock</p>
+                </div>
+                <span class="badge-pill blush-badge">Live 120Hz</span>
+              </div>
+              <div class="waveform-container">
+                <!-- vGRF Waveform -->
+                <div class="waveform-row">
+                  <div class="waveform-label-row">
+                    <span class="caption-text primary-text"><span class="wf-dot primary-dot"></span> Vertical GRF (% Body Weight)</span>
+                    <span class="mono-sm primary-text" id="vgrf-value">1.18 BW</span>
+                  </div>
+                  <div class="waveform-chart-wrap">
+                    <svg class="waveform-svg" viewBox="0 0 320 80" preserveAspectRatio="none">
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="20" y2="20"/>
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="40" y2="40"/>
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="60" y2="60"/>
+                      <path d="M0 70 Q 20 68, 30 55 T 45 15 Q 60 28, 75 35 Q 90 20, 105 18 Q 120 40, 130 70 L 160 70 Q 180 68, 190 55 T 205 14 Q 220 28, 235 34 Q 250 19, 265 17 Q 280 40, 290 70 L 320 70" fill="none" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
+                      <path d="M0 70 Q 20 68, 30 58 T 45 22 Q 60 32, 75 38 Q 90 24, 105 20 Q 120 45, 130 70 L 160 70 Q 180 68, 190 58 T 205 20 Q 220 32, 235 37 Q 250 22, 265 19 Q 280 45, 290 70 L 320 70" fill="none" opacity="0.8" stroke="#dec0b9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                </div>
+                <!-- Tibial Shock Waveform -->
+                <div class="waveform-row">
+                  <div class="waveform-label-row">
+                    <span class="caption-text secondary-text"><span class="wf-dot blush-dot"></span> Tibial Shock Acceleration (Axial g)</span>
+                    <span class="mono-sm heading-text" id="tibial-value">4.8 g</span>
+                  </div>
+                  <div class="waveform-chart-wrap">
+                    <svg class="waveform-svg sm" viewBox="0 0 320 60" preserveAspectRatio="none">
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="15" y2="15"/>
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="30" y2="30"/>
+                      <line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="45" y2="45"/>
+                      <path d="M0 30 Q 35 30, 42 28 L 47 6 L 52 44 L 56 24 L 60 32 L 80 30 L 160 30 Q 195 30, 202 28 L 207 4 L 212 46 L 216 22 L 220 32 L 240 30 L 320 30" fill="none" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <!-- Kinematics Metrics -->
+              <div class="kin-metrics-grid">
+                <div class="kin-metric-card">
+                  <span class="caption-text muted-text">Loading Rate</span>
+                  <span class="mono-sm primary-text" id="loading-rate">62.4 BW/s</span>
+                  <span class="caption-text body-text">Symmetric impact rise</span>
+                </div>
+                <div class="kin-metric-card">
+                  <span class="caption-text muted-text">Push-off Impulse</span>
+                  <span class="mono-sm primary-text" id="pushoff-impulse">248 N·s</span>
+                  <span class="caption-text body-text" id="lr-diff">L/R diff: &lt; 2.1%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 3: IMU Sensor Cards -->
+          <div class="tier3-grid">
+            <!-- Card 1 -->
+            <div class="t3-card">
+              <div class="t3-header">
+                <div class="t3-title">
+                  <span class="pulse-dot sm"></span>
+                  <span class="label-text heading-text">Left StridePod 4-L</span>
+                </div>
+                <span class="badge-sm" id="left-status-badge">Calibrated</span>
+              </div>
+              <div class="t3-rows">
+                <div class="t3-row"><span class="caption-text muted-text">Battery State</span><span class="mono-sm heading-text" id="left-battery">88%</span></div>
+                <div class="t3-row"><span class="caption-text muted-text">Signal RSSI</span><span class="mono-sm heading-text" id="left-rssi">-42 dBm</span></div>
+                <div class="t3-row"><span class="caption-text muted-text">IMU Core Temp</span><span class="mono-sm heading-text" id="left-temp">24.2°C</span></div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="t3-card">
+              <div class="t3-header">
+                <div class="t3-title">
+                  <span class="pulse-dot sm"></span>
+                  <span class="label-text heading-text">Right StridePod 4-R</span>
+                </div>
+                <span class="badge-sm" id="right-status-badge">Calibrated</span>
+              </div>
+              <div class="t3-rows">
+                <div class="t3-row"><span class="caption-text muted-text">Battery State</span><span class="mono-sm heading-text" id="right-battery">84%</span></div>
+                <div class="t3-row"><span class="caption-text muted-text">Signal RSSI</span><span class="mono-sm heading-text" id="right-rssi">-45 dBm</span></div>
+                <div class="t3-row"><span class="caption-text muted-text">IMU Core Temp</span><span class="mono-sm heading-text" id="right-temp">24.5°C</span></div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="t3-card">
+              <div class="t3-header">
+                <div class="t3-title">
+                  <span class="material-symbols-outlined sm-icon primary-icon">verified_user</span>
+                  <span class="label-text heading-text">Anomaly Monitor</span>
+                </div>
+                <span class="badge-sm">Real-Time</span>
+              </div>
+              <div class="t3-nominal">
+                <div class="nominal-row">
+                  <span class="w-dot primary" id="anomaly-dot"></span>
+                  <span class="mono-sm primary-text" id="anomaly-status">STATUS: NOMINAL</span>
+                </div>
+                <p class="caption-text body-text" id="anomaly-desc">No pathologic gait deviation or asymmetric muscle fatigue detected over last 140 strides.</p>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="t3-card">
+              <div class="t3-header">
+                <div class="t3-title">
+                  <span class="material-symbols-outlined sm-icon secondary-icon">explore</span>
+                  <span class="label-text heading-text">Orientation &amp; Gyro</span>
+                </div>
+                <span class="caption-text muted-text" id="gyro-heading">142° SE</span>
+              </div>
+              <div class="gyro-grid">
+                <div class="gyro-item"><span class="caption-text muted-text upper block">Yaw</span><span class="mono-sm primary-text" id="gyro-yaw">+2.4°/s</span></div>
+                <div class="gyro-item"><span class="caption-text muted-text upper block">Pitch</span><span class="mono-sm primary-text" id="gyro-pitch">-0.8°/s</span></div>
+                <div class="gyro-item"><span class="caption-text muted-text upper block">Roll</span><span class="mono-sm primary-text" id="gyro-roll">+1.2°/s</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Waiting Signal State -->
+          <div class="awaiting-banner">
+            <div class="awaiting-left">
+              <div class="awaiting-gauge">
+                <svg viewBox="0 0 48 48" class="gauge-svg">
+                  <circle cx="24" cy="24" fill="none" r="18" stroke="#F5E9E6" stroke-width="3"/>
+                  <circle cx="24" cy="24" fill="none" r="18" stroke="#C9B8B2" stroke-dasharray="113" stroke-dashoffset="95" stroke-linecap="round" stroke-width="3" class="gauge-ring"/>
+                </svg>
+                <span class="material-symbols-outlined waiting-icon">sensors_off</span>
+              </div>
+              <div>
+                <div class="awaiting-title-row">
+                  <span class="label-text heading-text">Auxiliary Sensor Channel: Surface EMG Pod 3</span>
+                  <span class="badge-waiting">Awaiting Signal</span>
+                </div>
+                <span class="caption-text waiting-text">Awaiting auxiliary EMG sensor 3 sync on medial gastrocnemius. Broadcast search active.</span>
+              </div>
+            </div>
+            <div class="awaiting-actions">
+              <button class="btn-ghost sm">
+                <span class="material-symbols-outlined">refresh</span>
+                Retry Pairing
+              </button>
+              <button class="btn-ghost sm muted-btn">Skip Sensor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FALL RISK ANALYSIS VIEW ===== -->
+  <main id="view-fallrisk" class="view">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
+              <span class="material-symbols-outlined">speed</span>
+              Live Telemetry
+            </a>
+            <a href="#" class="sidebar-link active">
+              <span class="material-symbols-outlined">crisis_alert</span>
+              Fall Risk Analysis
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">analytics</span>
+              Clinical Analytics
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">person</span>
+              Patient Roster
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">sensors</span>
+              Hardware &amp; Insoles
+            </a>
+            <a href="#" class="sidebar-link">
+              <span class="material-symbols-outlined">library_books</span>
+              Documentation
+            </a>
+            <a href="#" onclick="switchView('landing')" class="sidebar-link">
+              <span class="material-symbols-outlined">home</span>
+              Return to Overview
+            </a>
+          </nav>
+        </div>
+        <div class="sidebar-hub-card">
+          <div class="hub-status">
+            <span class="pulse-dot sm"></span>
+            <span class="caption-text primary-text">MPU6050 Fall Monitor</span>
+          </div>
+          <p class="caption-text muted-text">Real-time inertial data via ESP32. Fall-risk computed on device edge.</p>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="dash-content">
+        <!-- Top Bar -->
+        <div class="dash-topbar">
+          <div class="dash-topbar-left">
+            <div id="fr-mpu-badge" class="badge-pill blush-badge" style="border:1px solid var(--color-border);font-size:.7rem;padding:3px 12px;">MPU6050 • CONNECTING…</div>
+            <div class="fb-badge fb-offline" id="fr-fb-badge">
+              <span class="fb-dot fb-dot-offline" id="fr-fb-dot"></span>
+              <span id="fr-fb-label" class="caption-text">Firebase: Connecting…</span>
+            </div>
+            <div class="dash-latency">
+              <span class="material-symbols-outlined sm-icon">sync</span>
+              <span class="caption-text muted-text">Update Rate: 2.5 Hz</span>
+            </div>
+          </div>
+          <div class="dash-topbar-right">
+            <div class="user-chip sm">
+              <div class="avatar-wrap sm">
+                <svg viewBox="0 0 32 32" fill="none" class="avatar-svg">
+                  <circle cx="16" cy="16" r="16" fill="#F8ECE9"/>
+                  <circle cx="16" cy="13" r="5" fill="#dec0b9"/>
+                  <ellipse cx="16" cy="26" rx="9" ry="6" fill="#dec0b9"/>
+                </svg>
+              </div>
+              <div class="user-info">
+                <span class="user-name">Dr. Elena Rostova</span>
+                <span class="user-role">Clinical Biomechanics</span>
+              </div>
+            </div>
+            <button class="btn-ghost sm" onclick="frOpenCalibration()">
+              <span class="material-symbols-outlined">tune</span>
+              Calibration
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="dash-scroll">
+
+          <!-- Simulated Data Warning -->
+          <div class="fr-sim-banner visible" id="fr-sim-banner">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;flex-shrink:0;">science</span>
+            <span><strong>SIMULATED DATA</strong> — Hardware not connected. Values are algorithmically generated for demonstration. Connect MPU6050 via ESP32 for live sensor readings.</span>
+          </div>
+
+          <!-- Page Header -->
+          <div class="fr-page-header">
+            <div>
+              <h1 class="fr-page-title">Fall Risk Analysis</h1>
+              <p class="fr-page-subtitle">Real-time MPU6050-based gait instability and fall-risk monitoring</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div class="live-streaming-pill" style="background:var(--color-primary);padding:4px 14px;">
+                <span class="ping-wrap" style="display:inline-flex;align-items:center;justify-content:center;width:10px;height:10px;margin-right:6px;">
+                  <span class="ping-anim"></span><span class="ping-core"></span>
+                </span>
+                <span class="label-text white-text upper" style="font-size:.65rem;">MPU6050 • Live</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TOP ROW: Risk Card + Side Column -->
+          <div class="fr-top-row">
+
+            <!-- Current Fall Risk Card -->
+            <div class="fr-risk-card">
+              <div style="width:100%;display:flex;align-items:center;justify-content:space-between;">
+                <span class="eyebrow-label" style="margin:0;">Current Fall Risk</span>
+                <span class="badge-pill blush-badge">Prototype Score</span>
+              </div>
+
+              <!-- SVG Gauge: semi-circle from 9 o'clock → top → 3 o'clock -->
+              <!-- Gauge maths: r=100, circumference=628.32, half=314.16            -->
+              <!-- stroke-dashoffset=314.16 starts dash at 9 o'clock (left)        -->
+              <!-- LOW zone 0–39% → len=122.52  offset=314.16                      -->
+              <!-- MOD zone 39–70% → len=97.39  offset=436.68 (314.16+122.52)     -->
+              <!-- HIGH zone 70–100% → len=94.25 offset=534.07 (436.68+97.39)     -->
+              <div class="fr-gauge-wrap">
+                <svg viewBox="0 0 240 148" class="fr-gauge-svg" aria-label="Fall risk gauge">
+                  <!-- Grey background track -->
+                  <circle cx="120" cy="132" r="100" fill="none" stroke="#EAD9D4" stroke-width="20"
+                    stroke-dasharray="314.16 628.32" stroke-dashoffset="314.16" stroke-linecap="butt"/>
+                  <!-- LOW zone (0–39%) -->
+                  <circle cx="120" cy="132" r="100" fill="none" stroke="#5a9a6e" stroke-width="20" opacity="0.3"
+                    stroke-dasharray="122.52 628.32" stroke-dashoffset="314.16" stroke-linecap="butt"/>
+                  <!-- MODERATE zone (39–70%) -->
+                  <circle cx="120" cy="132" r="100" fill="none" stroke="#B8722A" stroke-width="20" opacity="0.25"
+                    stroke-dasharray="97.39 628.32" stroke-dashoffset="436.68" stroke-linecap="butt"/>
+                  <!-- HIGH zone (70–100%) -->
+                  <circle cx="120" cy="132" r="100" fill="none" stroke="#A13B3B" stroke-width="20" opacity="0.25"
+                    stroke-dasharray="94.25 628.32" stroke-dashoffset="534.07" stroke-linecap="butt"/>
+                  <!-- Dynamic fill arc -->
+                  <circle id="fr-gauge-fill" cx="120" cy="132" r="100" fill="none"
+                    stroke="#7a2e3a" stroke-width="18"
+                    stroke-dasharray="0 628.32" stroke-dashoffset="314.16" stroke-linecap="round"
+                    style="transition:stroke-dasharray 500ms ease,stroke 400ms ease;"/>
+                  <!-- Zone labels -->
+                  <text x="26" y="140" font-family="'Inter',sans-serif" font-size="9" font-weight="600" fill="#A6968F" text-anchor="middle">LOW</text>
+                  <text x="120" y="24" font-family="'Inter',sans-serif" font-size="9" font-weight="600" fill="#A6968F" text-anchor="middle">MOD</text>
+                  <text x="214" y="140" font-family="'Inter',sans-serif" font-size="9" font-weight="600" fill="#A6968F" text-anchor="middle">HIGH</text>
+                </svg>
+                <div class="fr-gauge-score-row">
+                  <span class="mono-readout-hero primary-text" id="fr-risk-score">—</span>
+                  <span class="mono-md muted-text">/ 100</span>
+                </div>
+              </div>
+
+              <span class="fr-risk-badge low" id="fr-risk-level-badge">LOW RISK</span>
+              <p class="fr-explanation" id="fr-risk-explanation">Awaiting sensor data…</p>
+            </div>
+
+            <!-- Side Column -->
+            <div class="fr-side-column">
+              <!-- Haptic Feedback -->
+              <div class="fr-status-card">
+                <div class="fr-status-header">
+                  <h2 class="fr-status-title">Haptic Feedback</h2>
+                  <div class="fr-status-icon" id="fr-haptic-icon">
+                    <span class="material-symbols-outlined">vibration</span>
+                  </div>
+                </div>
+                <div>
+                  <span class="caption-text muted-text upper block">Vibration Motor</span>
+                  <span class="fr-status-value primary-text" id="fr-haptic-status">READY</span>
+                </div>
+                <p class="fr-status-desc" id="fr-haptic-desc">Vibration motor standby. No alert condition active.</p>
+              </div>
+              <!-- Emergency Alert -->
+              <div class="fr-status-card">
+                <div class="fr-status-header">
+                  <h2 class="fr-status-title">Emergency Alert</h2>
+                  <div class="fr-status-icon">
+                    <span class="material-symbols-outlined">emergency</span>
+                  </div>
+                </div>
+                <div>
+                  <span class="caption-text muted-text upper block">Alert Status</span>
+                  <span class="fr-status-value fr-emergency-safe" id="fr-emergency-status">SAFE</span>
+                </div>
+                <p class="fr-status-desc" id="fr-emergency-desc">No emergency condition detected.</p>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:auto;">
+                  <span class="caption-text muted-text">Last Event:</span>
+                  <span class="caption-text heading-text" id="fr-emergency-last">None recorded</span>
+                </div>
+              </div>
+            </div>
+          </div><!-- /fr-top-row -->
+
+          <!-- IMU SENSOR TELEMETRY -->
+          <div class="t2-panel">
+            <div class="t2-panel-header">
+              <div>
+                <h2 class="t2-panel-title">IMU Sensor Telemetry</h2>
+                <p class="caption-text muted-text upper">MPU6050 9-axis inertial measurement unit — raw sensor readings</p>
+              </div>
+              <span class="badge-pill blush-badge">MPU6050</span>
+            </div>
+            <div class="fr-imu-grid">
+              <!-- Accelerometer -->
+              <div class="fr-imu-card">
+                <div class="fr-imu-card-title">Accelerometer</div>
+                <div class="fr-imu-rows">
+                  <div class="fr-imu-row"><span class="fr-imu-label">Ax</span><span class="fr-imu-value" id="fr-accel-x">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Ay</span><span class="fr-imu-value" id="fr-accel-y">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Az</span><span class="fr-imu-value" id="fr-accel-z">—</span></div>
+                </div>
+                <div class="fr-imu-mag">
+                  <span class="caption-text muted-text">Magnitude</span>
+                  <span class="mono-sm primary-text" id="fr-accel-mag">— g</span>
+                </div>
+              </div>
+              <!-- Gyroscope -->
+              <div class="fr-imu-card">
+                <div class="fr-imu-card-title">Gyroscope</div>
+                <div class="fr-imu-rows">
+                  <div class="fr-imu-row"><span class="fr-imu-label">Gx</span><span class="fr-imu-value" id="fr-gyro-x">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Gy</span><span class="fr-imu-value" id="fr-gyro-y">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Gz</span><span class="fr-imu-value" id="fr-gyro-z">—</span></div>
+                </div>
+                <div class="fr-imu-mag">
+                  <span class="caption-text muted-text">Magnitude</span>
+                  <span class="mono-sm primary-text" id="fr-gyro-mag">— °/s</span>
+                </div>
+              </div>
+              <!-- Orientation -->
+              <div class="fr-imu-card">
+                <div class="fr-imu-card-title">Orientation</div>
+                <div class="fr-imu-rows">
+                  <div class="fr-imu-row"><span class="fr-imu-label">Pitch</span><span class="fr-imu-value" id="fr-orient-pitch">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Roll</span><span class="fr-imu-value" id="fr-orient-roll">—</span></div>
+                  <div class="fr-imu-row"><span class="fr-imu-label">Yaw</span><span class="fr-imu-value" id="fr-orient-yaw">—</span></div>
+                </div>
+                <div class="fr-imu-mag">
+                  <span class="caption-text muted-text">Combined Tilt</span>
+                  <span class="mono-sm primary-text" id="fr-orient-tilt">— °</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REAL-TIME CHARTS -->
+          <div class="fr-charts-row">
+            <!-- Acceleration -->
+            <div class="fr-chart-card">
+              <div class="fr-chart-header">
+                <div>
+                  <h2 class="fr-chart-title">Real-Time Acceleration</h2>
+                  <p class="caption-text muted-text upper">3-axis accelerometer rolling window</p>
+                </div>
+                <span class="fr-live-pill">&#9679; LIVE</span>
+              </div>
+              <div class="fr-chart-legend">
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#7a2e3a;"></div> Ax</div>
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#dec0b9;"></div> Ay</div>
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#c9b8b2;"></div> Az</div>
+              </div>
+              <div class="fr-chart-canvas-wrap">
+                <span class="fr-chart-unit">g</span>
+                <canvas class="fr-chart-canvas" id="fr-accel-canvas"></canvas>
+              </div>
+            </div>
+            <!-- Gyroscope -->
+            <div class="fr-chart-card">
+              <div class="fr-chart-header">
+                <div>
+                  <h2 class="fr-chart-title">Angular Velocity</h2>
+                  <p class="caption-text muted-text upper">3-axis gyroscope rolling window</p>
+                </div>
+                <span class="fr-live-pill">&#9679; LIVE</span>
+              </div>
+              <div class="fr-chart-legend">
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#7a2e3a;"></div> Gx</div>
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#dec0b9;"></div> Gy</div>
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:#c9b8b2;"></div> Gz</div>
+              </div>
+              <div class="fr-chart-canvas-wrap">
+                <span class="fr-chart-unit">°/s</span>
+                <canvas class="fr-chart-canvas" id="fr-gyro-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANALYSIS ROW -->
+          <div class="fr-analysis-row">
+            <!-- Risk Feature Analysis -->
+            <div class="t2-panel">
+              <div class="t2-panel-header">
+                <div>
+                  <h2 class="t2-panel-title">Risk Feature Analysis</h2>
+                  <p class="caption-text muted-text upper">Prototype features — engineering evaluation only</p>
+                </div>
+                <span class="badge-pill blush-badge">5 Features</span>
+              </div>
+              <div class="fr-feature-grid">
+                <div class="fr-feature-row">
+                  <span class="fr-feature-name">Acceleration Magnitude</span>
+                  <div class="fr-feature-right">
+                    <span class="fr-feature-val" id="fr-feat-accel-val">—</span>
+                    <span class="fr-feature-status fr-status-normal" id="fr-feat-accel-status">NORMAL</span>
+                  </div>
+                </div>
+                <div class="fr-feature-row">
+                  <span class="fr-feature-name">Angular Velocity</span>
+                  <div class="fr-feature-right">
+                    <span class="fr-feature-val" id="fr-feat-gyro-val">—</span>
+                    <span class="fr-feature-status fr-status-normal" id="fr-feat-gyro-status">NORMAL</span>
+                  </div>
+                </div>
+                <div class="fr-feature-row">
+                  <span class="fr-feature-name">Orientation Tilt</span>
+                  <div class="fr-feature-right">
+                    <span class="fr-feature-val" id="fr-feat-tilt-val">—</span>
+                    <span class="fr-feature-status fr-status-normal" id="fr-feat-tilt-status">NORMAL</span>
+                  </div>
+                </div>
+                <div class="fr-feature-row">
+                  <span class="fr-feature-name">Motion Instability</span>
+                  <div class="fr-feature-right">
+                    <span class="fr-feature-val" id="fr-feat-instability-val">LOW</span>
+                    <span class="fr-feature-status fr-status-normal" id="fr-feat-instability-status">NORMAL</span>
+                  </div>
+                </div>
+                <div class="fr-feature-row">
+                  <span class="fr-feature-name">Sudden Motion Event</span>
+                  <div class="fr-feature-right">
+                    <span class="fr-feature-val muted-text" id="fr-feat-sudden-val">—</span>
+                    <span class="fr-feature-status fr-status-nd" id="fr-feat-sudden-status">NOT DETECTED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Risk Thresholds -->
+            <div class="t2-panel">
+              <div class="t2-panel-header">
+                <div>
+                  <h2 class="t2-panel-title">Risk Thresholds</h2>
+                  <p class="caption-text muted-text upper">Configurable prototype values</p>
+                </div>
+              </div>
+              <div class="fr-threshold-grid">
+                <div class="fr-threshold-row low">
+                  <span class="fr-threshold-label">NORMAL</span>
+                  <span class="fr-threshold-range">0 – 39</span>
+                </div>
+                <div class="fr-threshold-row moderate">
+                  <span class="fr-threshold-label">MODERATE</span>
+                  <span class="fr-threshold-range">40 – 69</span>
+                </div>
+                <div class="fr-threshold-row high">
+                  <span class="fr-threshold-label">HIGH</span>
+                  <span class="fr-threshold-range">70 – 100</span>
+                </div>
+              </div>
+              <p class="fr-threshold-note">Prototype thresholds. Final values require calibration and validation using experimental sensor data collected from the target population.</p>
+              <button class="btn-ghost sm" onclick="frOpenCalibration()" style="margin-top:16px;width:100%;justify-content:center;">
+                <span class="material-symbols-outlined">tune</span>
+                View Calibration Details
+              </button>
+            </div>
+          </div>
+
+          <!-- FALL-RISK TREND -->
+          <div class="t2-panel">
+            <div class="t2-panel-header">
+              <div>
+                <h2 class="t2-panel-title">Fall-Risk Trend</h2>
+                <p class="caption-text muted-text upper">Historical risk score — current session</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:rgba(184,114,42,.7);"></div>&nbsp;Moderate ≥40</div>
+                <div class="fr-legend-item"><div class="fr-legend-dot" style="background:rgba(161,59,59,.7);"></div>&nbsp;High ≥70</div>
+              </div>
+            </div>
+            <div class="fr-trend-canvas-wrap">
+              <canvas class="fr-trend-canvas" id="fr-trend-canvas"></canvas>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.6875rem;color:var(--color-text-muted);padding-top:4px;">
+              <span>&larr; Older</span>
+              <span>Risk Score (0–100)</span>
+              <span>Now &rarr;</span>
+            </div>
+          </div>
+
+          <!-- RECENT EVENTS TABLE -->
+          <div class="t2-panel">
+            <div class="t2-panel-header">
+              <div>
+                <h2 class="t2-panel-title">Recent Risk Events</h2>
+                <p class="caption-text muted-text upper">Last <span id="fr-events-count">1</span> events — current session</p>
+              </div>
+              <span class="badge-pill blush-badge" id="fr-events-badge">SIMULATED DATA</span>
+            </div>
+            <div class="fr-events-table-wrap">
+              <table class="fr-events-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th><th>Risk Score</th><th>Risk Level</th>
+                    <th>Acceleration</th><th>Angular Vel.</th><th>Action Taken</th>
+                  </tr>
+                </thead>
+                <tbody id="fr-events-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- DISCLAIMER -->
+          <div class="fr-disclaimer">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;flex-shrink:0;margin-top:1px;">info</span>
+            <span><strong>Prototype monitoring system.</strong> Risk thresholds and algorithms are intended for engineering evaluation and require further validation before clinical use. This system does not constitute a medical diagnosis, clinically validated fall prediction, or guaranteed fall-prevention mechanism. Consult a qualified engineer or clinician before deploying in any research or clinical setting.</span>
+          </div>
+
+        </div><!-- /dash-scroll -->
+      </div><!-- /dash-content -->
+    </div><!-- /dashboard-layout -->
+  </main><!-- /#view-fallrisk -->
+
+  <!-- Calibration Modal -->
+  <div class="fr-modal-overlay" id="fr-cal-modal" onclick="if(event.target===this)frCloseCalibration()">
+    <div class="fr-modal">
+      <div class="fr-modal-header">
+        <h2 class="fr-modal-title">Calibration Details</h2>
+        <button class="fr-modal-close" onclick="frCloseCalibration()">
+          <span class="material-symbols-outlined" style="font-size:1.125rem;">close</span>
+        </button>
+      </div>
+      <div class="fr-modal-section">
+        <div class="fr-modal-section-title">Risk Score Thresholds</div>
+        <div class="fr-cal-row"><span class="fr-cal-label">LOW Risk Maximum</span><span class="fr-cal-value">39 / 100</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">MODERATE Risk Range</span><span class="fr-cal-value">40 – 69</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">HIGH Risk Minimum</span><span class="fr-cal-value">70 / 100</span></div>
+      </div>
+      <div class="fr-modal-section">
+        <div class="fr-modal-section-title">Normal Walking Baseline (Prototype)</div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Acceleration Magnitude</span><span class="fr-cal-value">0.9 – 1.3 g</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Angular Velocity</span><span class="fr-cal-value">0 – 20 °/s</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Combined Tilt</span><span class="fr-cal-value">0 – 8°</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Sudden Accel. Delta</span><span class="fr-cal-value">&lt; 0.40 g</span></div>
+      </div>
+      <div class="fr-modal-section">
+        <div class="fr-modal-section-title">Risk Score Weights (Prototype)</div>
+        <div class="fr-cal-row"><span class="fr-cal-label">High Acceleration (&ge; 2.5 g)</span><span class="fr-cal-value">+40 pts</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Elevated Acceleration (&ge; 1.5 g)</span><span class="fr-cal-value">+25 pts</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">High Angular Velocity (&ge; 80 °/s)</span><span class="fr-cal-value">+40 pts</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Elevated Angular Velocity (&ge; 30 °/s)</span><span class="fr-cal-value">+20 pts</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">Sudden Acceleration (&ge; 0.4 g delta)</span><span class="fr-cal-value">+15 pts</span></div>
+        <div class="fr-cal-row"><span class="fr-cal-label">High Tilt (&ge; 15°)</span><span class="fr-cal-value">+10 pts</span></div>
+      </div>
+      <p class="fr-modal-note">These are prototype engineering values. To calibrate, collect MPU6050 readings during controlled walking trials and falls in a laboratory setting. Use the resulting data distribution to set optimal thresholds for the target population and sensor placement.</p>
+      <div style="display:flex;justify-content:flex-end;margin-top:24px;">
+        <button class="btn-primary sm" onclick="frCloseCalibration()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container"></div>
+
+  <script type="module" src="app.js"></script>
+  <script type="module" src="particles.js"></script>
+</body>
+</html>

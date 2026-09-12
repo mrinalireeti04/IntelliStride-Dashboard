@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-primary": "#ffffff",
+          "secondary-fixed-dim": "#dec0b9",
+          "color-text-body": "#6B5D58",
+          "error-container": "#ffdad6",
+          "surface-bright": "#fff8f6",
+          "color-bg-blush": "#F5E9E6",
+          "on-tertiary-fixed": "#410006",
+          "tertiary-fixed-dim": "#ffb3af",
+          "surface-variant": "#f2ded8",
+          "on-tertiary-fixed-variant": "#832527",
+          "inverse-surface": "#392e2a",
+          "on-surface": "#231916",
+          "inverse-primary": "#ffb2b9",
+          "on-primary-container": "#ff99a5",
+          "on-secondary-fixed": "#281713",
+          "tertiary-container": "#842527",
+          "on-surface-variant": "#544244",
+          "surface-container-lowest": "#ffffff",
+          "color-border": "#EAD9D4",
+          "on-primary-fixed": "#3f0110",
+          "primary": "#5d1825",
+          "color-waiting": "#C9B8B2",
+          "primary-fixed": "#ffdadc",
+          "outline": "#877273",
+          "on-tertiary-container": "#ff9b97",
+          "on-secondary": "#ffffff",
+          "surface-container-high": "#f8e4dd",
+          "tertiary": "#640d14",
+          "surface-container-highest": "#f2ded8",
+          "outline-variant": "#d9c1c2",
+          "on-tertiary": "#ffffff",
+          "tertiary-fixed": "#ffdad7",
+          "color-surface": "#FFFFFF",
+          "color-alert": "#A13B3B",
+          "color-primary-hover": "#5F2029",
+          "on-error": "#ffffff",
+          "color-text-muted": "#A6968F",
+          "background": "#fff8f6",
+          "error": "#ba1a1a",
+          "surface": "#fff8f6",
+          "color-text-heading": "#2A2321",
+          "surface-dim": "#e9d6d0",
+          "on-secondary-fixed-variant": "#57423d",
+          "secondary-container": "#fcdcd4",
+          "primary-fixed-dim": "#ffb2b9",
+          "surface-container": "#feeae3",
+          "on-primary-fixed-variant": "#792d39",
+          "secondary": "#715954",
+          "surface-container-low": "#fff1ec",
+          "on-background": "#231916",
+          "primary-container": "#7a2e3a",
+          "surface-tint": "#964450",
+          "inverse-on-surface": "#ffede7",
+          "color-bg": "#FBF7F5",
+          "on-error-container": "#93000a",
+          "secondary-fixed": "#fcdcd4",
+          "on-secondary-container": "#775f59",
+          "color-surface-blush": "#F8ECE9"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-md": "1rem",
+          "margin": "1.5rem",
+          "space-sm": "0.5rem",
+          "space-lg": "1.5rem",
+          "gutter": "1rem",
+          "space-xl": "2rem",
+          "space-xs": "0.25rem"
+        },
+        "fontFamily": {
+          "readout-hero": [
+            "JetBrains Mono"
+          ],
+          "headline-hero-mobile": [
+            "Newsreader"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Newsreader"
+          ],
+          "headline-hero": [
+            "Newsreader"
+          ],
+          "caption": [
+            "Inter"
+          ],
+          "readout-hero-mobile": [
+            "JetBrains Mono"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "readout-md": [
+            "JetBrains Mono"
+          ],
+          "readout-sm": [
+            "JetBrains Mono"
+          ],
+          "wordmark": [
+            "Newsreader"
+          ],
+          "body-md": [
+            "Inter"
+          ]
+        },
+        "fontSize": {
+          "readout-hero": [
+            "3.5rem",
+            {
+              "lineHeight": "4rem",
+              "letterSpacing": "0em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-hero-mobile": [
+            "2.5rem",
+            {
+              "lineHeight": "3rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-lg": [
+            "1.125rem",
+            {
+              "lineHeight": "1.75rem",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg": [
+            "2rem",
+            {
+              "lineHeight": "2.5rem",
+              "letterSpacing": "0em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-hero": [
+            "4.5rem",
+            {
+              "lineHeight": "5rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "caption": [
+            "0.6875rem",
+            {
+              "lineHeight": "0.875rem",
+              "letterSpacing": "0.05em",
+              "fontWeight": "500"
+            }
+          ],
+          "readout-hero-mobile": [
+            "2.5rem",
+            {
+              "lineHeight": "3rem",
+              "letterSpacing": "0em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-md": [
+            "0.75rem",
+            {
+              "lineHeight": "1rem",
+              "letterSpacing": "0.08em",
+              "fontWeight": "600"
+            }
+          ],
+          "readout-md": [
+            "1.75rem",
+            {
+              "lineHeight": "2.25rem",
+              "letterSpacing": "0em",
+              "fontWeight": "600"
+            }
+          ],
+          "readout-sm": [
+            "1rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "0em",
+              "fontWeight": "500"
+            }
+          ],
+          "wordmark": [
+            "2rem",
+            {
+              "lineHeight": "2.25rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "1rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-color-bg font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-color-surface-blush shadow-[0_4px_24px_rgba(122,46,58,0.06)] z-50 flex flex-col justify-between p-space-md"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm px-space-xs pt-space-xs"><img alt="IntelliStride Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UM7102V196KGXcQuGl8-exxVi3HB_v_QnoHDWgipOanugPGramHrKjdMGTaseQR_sJOdFzMzQtSk_NpKf_FGtxRO_BovmOYQoiTsTBtUUGq5sXw3UnZSBqjyjiuipNm3qK8g71Gh4iPDWU6l-n3HXNV-tAQ7trWOvDSjCAbWn-a8uZB9neOnDCnRIuDfq57vATxV4K_DDxQ_xXP9cql4mH38od47wWhh8PecO-xe8Fg9egrRAMXe7V1Q"/><span class="font-wordmark text-wordmark text-primary">IntelliStride</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-semibold shadow-[0_4px_16px_rgba(122,46,58,0.12)]"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full transition-all bg-primary-container text-on-primary font-semibold shadow-[0_4px_16px_rgba(122,46,58,0.12)]" data-path="live-telemetry" href="#"><span class="material-symbols-outlined text-space-lg">speed</span>Live Telemetry</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-color-bg hover:text-primary transition-all" data-path="clinical-analytics" href="#"><span class="material-symbols-outlined text-space-lg">analytics</span>Clinical Analytics</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-color-bg hover:text-primary transition-all" data-path="patient-roster" href="#"><span class="material-symbols-outlined text-space-lg">person</span>Patient Roster</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-color-bg hover:text-primary transition-all" data-path="hardware-and-insoles" href="#"><span class="material-symbols-outlined text-space-lg">sensors</span>Hardware &amp; Insoles</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-color-bg hover:text-primary transition-all" data-path="documentation" href="#"><span class="material-symbols-outlined text-space-lg">library_books</span>Documentation</a></nav></div><div class="flex flex-col gap-space-sm bg-color-surface p-space-md rounded-xl shadow-[0_4px_24px_rgba(122,46,58,0.06)]"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-caption text-caption text-primary font-semibold">StridePod Hub 4.2</span></div><p class="font-caption text-caption text-color-text-muted">Dual wireless insole telemetry synced via 2.4GHz BLE mesh.</p><a class="font-label-md text-label-md text-secondary hover:text-primary transition-colors flex items-center gap-space-xs" data-path="overview" href="#"><span class="material-symbols-outlined text-space-md">arrow_back</span>Return to Portal</a></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-color-surface/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(122,46,58,0.06)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-color-surface-blush px-space-md py-space-xs rounded-full"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-md text-label-md text-primary font-semibold">Connected: StridePod 4-L/R</span></div><div class="hidden md:flex items-center gap-space-xs text-color-text-muted"><span class="material-symbols-outlined text-space-md">sync</span><span class="font-caption text-caption">Stream Latency: 12ms</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(122,46,58,0.12)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFjIHIye4JEULrc5xmTO0qaolwKhE4p-44pQZo1kwFjClIHDkK18JFl8JkUUFfpK3h2eT8qHsBAj0unEqhR9-Wtfr0lDRELrEhTnwK8NpTAMwrYrO9C6Cb79YmRAXJhYht3J1LBqBZaA9me3q-Aulk1Uc9POL8sHPBvWphhE3EzsjRBxGMuW2dbGyxRZOUHcD-nY9TjnF4VXY2zRGt2aZ4Ga_Cin89Q7e5kQZBuXnW9BtsSgzD7I4"/><div class="hidden sm:flex flex-col text-left"><span class="font-label-md text-label-md text-color-text-heading leading-tight">Dr. Elena Rostova</span><span class="font-caption text-caption text-color-text-muted leading-tight">Clinical Biomechanics</span></div></div><a class="inline-flex items-center justify-center bg-primary-container hover:bg-color-primary-hover text-on-primary font-label-md text-label-md px-space-lg py-space-sm rounded-full shadow-[0_4px_20px_rgba(122,46,58,0.15)] hover:shadow-[0_6px_20px_rgba(122,46,58,0.22)] transition-all transform hover:scale-[1.02]" data-path="live-telemetry" href="#">Launch Session</a></div></header><main class="w-full pt-20 px-space-lg bg-color-bg"><div class="flex flex-col w-full pb-16">
+<!-- Top Control Bar (Tier 0 Context) -->
+<div class="w-full flex flex-col xl:flex-row xl:items-center justify-between gap-space-md mb-8 bg-surface-container-lowest p-space-lg rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.06)]">
+<!-- Left: Patient Selector & Stream Pill -->
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-sm bg-color-surface-blush px-space-md py-space-xs rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-space-lg">badge</span>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-color-text-muted uppercase tracking-wider">Active Subject</span>
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Subject #8421 — Marcus Vance (Post-ACL Recon, Wk 6)</span>
+</div>
+</div>
+<!-- Live Indicator Pill with soft pulsing dot -->
+<div class="inline-flex items-center gap-2 bg-primary px-space-md py-space-xs rounded-full shadow-[0_4px_16px_rgba(122,46,58,0.2)]">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-surface-bright opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-surface-bright"></span>
+</span>
+<span class="font-label-md text-label-md text-on-primary tracking-wider uppercase font-semibold">LIVE STREAMING — 120 Hz</span>
+</div>
+</div>
+<!-- Right: Session Stopwatch & Interactive Actions -->
+<div class="flex flex-wrap items-center gap-space-md">
+<!-- Session Timer -->
+<div class="flex items-center gap-space-xs bg-color-bg px-space-md py-space-xs rounded-xl">
+<span class="material-symbols-outlined text-secondary text-space-md">timer</span>
+<span class="font-caption text-caption text-color-text-muted uppercase tracking-wider">T+</span>
+<span class="font-readout-sm text-readout-sm text-primary tracking-tight font-semibold" id="session-timer">00:24:18.42</span>
+</div>
+<!-- Action Pill Buttons -->
+<div class="flex items-center gap-space-xs">
+<button class="inline-flex items-center gap-1.5 px-space-md py-2 rounded-full bg-color-surface-blush hover:bg-surface-variant text-primary font-label-md text-label-md transition-all" id="btn-pause">
+<span class="material-symbols-outlined text-[18px]">pause</span>
+<span>Pause Capture</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-space-md py-2 rounded-full bg-color-surface-blush hover:bg-surface-variant text-primary font-label-md text-label-md transition-all" id="btn-flag">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+<span>Mark Event Flag</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-space-lg py-2 rounded-full bg-primary-container hover:bg-color-primary-hover text-on-primary font-label-md text-label-md shadow-[0_4px_20px_rgba(122,46,58,0.18)] hover:scale-[1.02] transition-all">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+<span>Export Session</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tier 1 Dashboard Hero Band (2rem-3rem internal padding, 0 8px 40px rgba(122,46,58,0.10) shadow) -->
+<div class="w-full bg-surface-container-lowest p-8 lg:p-12 rounded-[20px] shadow-[0_8px_40px_rgba(122,46,58,0.10)] mb-8 flex flex-col gap-space-xl">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<!-- Giant JetBrains Mono Cadence Hero -->
+<div class="flex flex-col gap-space-xs max-w-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-color-text-muted">Gait Cadence</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-caption text-caption text-primary font-semibold">Steady State</span>
+</div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-readout-hero text-readout-hero text-primary tracking-tight" id="cadence-readout">114</span>
+<span class="font-readout-md text-readout-md text-secondary-fixed-dim">SPM</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<svg class="w-24 h-6 text-primary" fill="none" viewbox="0 0 96 24">
+<path d="M0 16L16 14L32 18L48 10L64 12L80 7L96 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-caption text-caption text-color-text-body">Normal target: <strong class="text-color-text-heading font-semibold">110–120 SPM</strong></span>
+</div>
+</div>
+<!-- Symmetrical Companion Readouts -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 flex-1 lg:pl-12">
+<!-- Metric 1: Symmetry Index -->
+<div class="bg-color-surface-blush/60 p-space-md rounded-2xl flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-color-text-muted uppercase tracking-wider">Gait Symmetry</span>
+<span class="material-symbols-outlined text-primary text-[18px]">balance</span>
+</div>
+<div class="my-2">
+<span class="font-readout-md text-readout-md text-color-text-heading">98.2<span class="text-primary text-label-md">%</span></span>
+</div>
+<div class="flex items-center justify-between text-caption font-caption text-color-text-body">
+<span>Left: <strong class="text-color-text-heading">49.1%</strong></span>
+<span>Right: <strong class="text-color-text-heading">50.9%</strong></span>
+</div>
+</div>
+<!-- Metric 2: Mean Stride Length -->
+<div class="bg-color-surface-blush/60 p-space-md rounded-2xl flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-color-text-muted uppercase tracking-wider">Mean Stride</span>
+<span class="material-symbols-outlined text-primary text-[18px]">straighten</span>
+</div>
+<div class="my-2">
+<span class="font-readout-md text-readout-md text-color-text-heading">1.42<span class="text-primary text-label-md"> m</span></span>
+</div>
+<div class="flex items-center gap-1 text-caption font-caption text-color-text-body">
+<span class="text-primary font-semibold">±0.03m</span>
+<span>stride variance</span>
+</div>
+</div>
+<!-- Metric 3: Stance Duration -->
+<div class="bg-color-surface-blush/60 p-space-md rounded-2xl flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-color-text-muted uppercase tracking-wider">Stance Duration</span>
+<span class="material-symbols-outlined text-primary text-[18px]">hourglass_top</span>
+</div>
+<div class="my-2">
+<span class="font-readout-md text-readout-md text-color-text-heading">0.68<span class="text-primary text-label-md"> s</span></span>
+</div>
+<div class="flex items-center gap-1 text-caption font-caption text-color-text-body">
+<span>61.4% cycle phase</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Bilateral Balance Slider Bar -->
+<div class="flex flex-col gap-2 pt-4">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="flex items-center gap-1 text-color-text-heading font-medium"><span class="w-2 h-2 rounded-full bg-primary"></span>Left Stride (49.1%)</span>
+<span class="font-caption text-caption text-color-text-muted uppercase tracking-wider">Dynamic Bilateral Equilibrium</span>
+<span class="flex items-center gap-1 text-color-text-heading font-medium">Right Stride (50.9%)<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span></span>
+</div>
+<div class="w-full h-3 bg-color-bg-blush rounded-full overflow-hidden flex p-0.5 shadow-inner">
+<div class="h-full bg-primary rounded-l-full transition-all duration-300" style="width: 49.1%"></div>
+<div class="h-full bg-primary-fixed-dim rounded-r-full transition-all duration-300" style="width: 50.9%"></div>
+</div>
+<div class="flex justify-between items-center text-caption font-caption text-color-text-muted">
+<span>ACL-R Affected Limb (L)</span>
+<span>Centerline Deviation: 0.9° rightward</span>
+<span>Contralateral Uninjured Limb (R)</span>
+</div>
+</div>
+</div>
+<!-- Tier 2 Panels (2-Column Responsive Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-8">
+<!-- Left Column: Dynamic Plantar Pressure Mapping (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-6 lg:p-8 rounded-[20px] shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div class="flex items-start justify-between mb-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-color-text-heading leading-tight">Dynamic Plantar Pressure Mapping</h2>
+<p class="font-caption text-caption text-color-text-muted uppercase tracking-wider mt-1">Single-foot sensor array (Right foot active, Left assumed)</p>
+</div>
+<div class="flex items-center gap-2 bg-color-surface-blush px-3 py-1.5 rounded-full">
+<span class="font-caption text-caption text-primary font-semibold">Peak: 318 kPa (R-Heel)</span>
+</div>
+</div>
+<!-- Interactive Dual-foot Insole Vector Visualization -->
+<div class="relative w-full bg-color-bg rounded-2xl p-6 flex flex-col md:flex-row items-center justify-around gap-8 my-4 overflow-hidden">
+<!-- Left Foot Insole -->
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-label-md text-color-text-muted uppercase tracking-wider">Left Insole (Assumed)</span>
+<div class="relative w-44 h-80 flex items-center justify-center">
+<!-- Foot Contour Outline SVG -->
+<svg class="w-full h-full drop-shadow-[0_4px_16px_rgba(122,46,58,0.08)]" fill="none" viewbox="0 0 160 320">
+<!-- Soft Sole Background -->
+<path d="M78 10C50 10 32 30 30 65C28 100 38 140 32 185C26 230 38 300 78 300C118 300 130 230 124 185C118 140 128 100 126 65C124 30 106 10 78 10Z" fill="#F8ECE9"></path>
+<path d="M78 10C50 10 32 30 30 65C28 100 38 140 32 185C26 230 38 300 78 300C118 300 130 230 124 185C118 140 128 100 126 65C124 30 106 10 78 10Z" stroke="#EAD9D4" stroke-width="2"></path>
+<!-- Left Foot CoP Trajectory Path Line -->
+<path d="M78 265 C76 220, 84 180, 70 120 C62 90, 74 60, 68 38" fill="none" id="cop-left" stroke="#5d1825" stroke-dasharray="3 3" stroke-width="2.5"></path>
+<circle cx="68" cy="38" fill="#5d1825" r="4"></circle>
+<!-- Pressure Sensor Zones (Heel, Midfoot, Metatarsals, Toes) -->
+<!-- Toes -->
+<ellipse class="transition-all duration-300 hover:opacity-100 cursor-pointer" cx="68" cy="38" fill="#7a2e3a" opacity="0.85" rx="14" ry="12"></ellipse>
+<ellipse cx="98" cy="48" fill="#dec0b9" opacity="0.85" rx="10" ry="9"></ellipse>
+<!-- Metatarsals -->
+<ellipse cx="56" cy="115" fill="#7a2e3a" opacity="0.9" rx="15" ry="12"></ellipse>
+<ellipse cx="82" cy="112" fill="#7a2e3a" opacity="0.8" rx="13" ry="11"></ellipse>
+<ellipse cx="106" cy="118" fill="#dec0b9" opacity="0.9" rx="12" ry="10"></ellipse>
+<!-- Midfoot Lateral -->
+<ellipse cx="104" cy="175" fill="#F5E9E6" opacity="0.95" rx="11" ry="18"></ellipse>
+<!-- Heel -->
+<ellipse cx="78" cy="265" fill="#7a2e3a" opacity="0.95" rx="22" ry="20"></ellipse>
+</svg>
+<!-- Floating kPa Callout Tags -->
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm">
+<span class="font-readout-sm text-[11px] text-primary font-semibold">274 kPa</span>
+</div>
+<div class="absolute top-8 left-6 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm">
+<span class="font-readout-sm text-[11px] text-primary font-semibold">188 kPa</span>
+</div>
+</div>
+<div class="flex items-center gap-2 font-caption text-caption text-color-text-body">
+<span>Contact Area: <strong>118 cm²</strong></span>
+<span>•</span>
+<span>Pmax: <strong>274 kPa</strong></span>
+</div>
+</div>
+<!-- Right Foot Insole -->
+<div class="flex flex-col items-center gap-3">
+<span class="font-label-md text-label-md text-color-text-muted uppercase tracking-wider">Right Insole (Active Sensor)</span>
+<div class="relative w-44 h-80 flex items-center justify-center">
+<!-- Foot Contour Outline SVG -->
+<svg class="w-full h-full drop-shadow-[0_4px_16px_rgba(122,46,58,0.08)]" fill="none" viewbox="0 0 160 320">
+<!-- Soft Sole Background -->
+<path d="M82 10C110 10 128 30 130 65C132 100 122 140 128 185C134 230 122 300 82 300C42 300 30 230 36 185C42 140 32 100 34 65C36 30 54 10 82 10Z" fill="#F8ECE9"></path>
+<path d="M82 10C110 10 128 30 130 65C132 100 122 140 128 185C134 230 122 300 82 300C42 300 30 230 36 185C42 140 32 100 34 65C36 30 54 10 82 10Z" stroke="#EAD9D4" stroke-width="2"></path>
+<!-- Right Foot CoP Trajectory Path Line -->
+<path d="M82 265 C84 220, 76 180, 90 120 C98 90, 86 60, 92 38" fill="none" id="cop-right" stroke="#5d1825" stroke-dasharray="3 3" stroke-width="2.5"></path>
+<circle cx="92" cy="38" fill="#5d1825" r="4"></circle>
+<!-- Pressure Sensor Zones -->
+<!-- Toes -->
+<ellipse cx="92" cy="38" fill="#7a2e3a" opacity="0.95" rx="14" ry="12"></ellipse>
+<ellipse cx="62" cy="48" fill="#dec0b9" opacity="0.8" rx="10" ry="9"></ellipse>
+<!-- Metatarsals -->
+<ellipse cx="104" cy="115" fill="#7a2e3a" opacity="1" rx="16" ry="13"></ellipse>
+<ellipse cx="78" cy="112" fill="#7a2e3a" opacity="0.85" rx="13" ry="11"></ellipse>
+<ellipse cx="54" cy="118" fill="#dec0b9" opacity="0.8" rx="12" ry="10"></ellipse>
+<!-- Midfoot Lateral -->
+<ellipse cx="56" cy="175" fill="#F5E9E6" opacity="0.9" rx="11" ry="18"></ellipse>
+<!-- Heel -->
+<ellipse cx="82" cy="265" fill="#5d1825" opacity="1" rx="23" ry="21"></ellipse>
+</svg>
+<!-- Floating kPa Callout Tags -->
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm">
+<span class="font-readout-sm text-[11px] text-primary font-semibold">318 kPa</span>
+</div>
+<div class="absolute top-8 right-6 bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-sm">
+<span class="font-readout-sm text-[11px] text-primary font-semibold">215 kPa</span>
+</div>
+</div>
+<div class="flex items-center gap-2 font-caption text-caption text-color-text-body">
+<span>Contact Area: <strong>124 cm²</strong></span>
+<span>•</span>
+<span>Pmax: <strong>318 kPa</strong></span>
+</div>
+</div>
+</div>
+<!-- CoP & Legend Footer -->
+<div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 font-caption text-caption text-color-text-muted">
+<span class="w-3 h-1 bg-primary rounded-full"></span>
+<span>Center of Pressure (CoP) Path</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-color-text-muted">Pressure Gradient:</span>
+<div class="w-24 h-2 rounded-full bg-gradient-to-r from-color-bg-blush via-secondary-fixed-dim to-primary"></div>
+<span class="font-readout-sm text-[11px] text-color-text-muted">400 kPa</span>
+</div>
+</div>
+<span class="font-caption text-caption text-secondary font-medium">Auto-calibrated zero baseline</span>
+</div>
+</div>
+<!-- Right Column: Kinematic Waveforms & Accelerometry (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-6 lg:p-8 rounded-[20px] shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between mb-2">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-color-text-heading leading-tight">Kinematic Waveforms</h2>
+<p class="font-caption text-caption text-color-text-muted uppercase tracking-wider mt-1">Ground Reaction Force &amp; Tibial Shock</p>
+</div>
+<div class="bg-color-surface-blush px-3 py-1 rounded-full">
+<span class="font-readout-sm text-[12px] text-primary font-semibold">Live 120Hz</span>
+</div>
+</div>
+<!-- Waveform SVG Chart Container -->
+<div class="w-full bg-color-bg rounded-2xl p-4 my-4 flex flex-col gap-4">
+<!-- Waveform 1: Vertical Ground Reaction Force (vGRF) -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center text-caption font-caption">
+<span class="text-primary font-semibold flex items-center gap-1.5">
+<span class="w-2.5 h-1 bg-primary rounded-full"></span>
+                Vertical GRF (% Body Weight)
+              </span>
+<span class="font-readout-sm text-[12px] text-primary font-semibold">1.18 BW</span>
+</div>
+<div class="relative w-full h-28 bg-surface-container-lowest rounded-xl p-2 overflow-hidden">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 320 80">
+<!-- Subtle gridlines -->
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="20" y2="20"></line>
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="40" y2="40"></line>
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="60" y2="60"></line>
+<!-- Characteristic M-shaped vGRF double peak -->
+<path d="M0 70 Q 20 68, 30 55 T 45 15 Q 60 28, 75 35 Q 90 20, 105 18 Q 120 40, 130 70 L 160 70 Q 180 68, 190 55 T 205 14 Q 220 28, 235 34 Q 250 19, 265 17 Q 280 40, 290 70 L 320 70" fill="none" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+<!-- Subdued right foot comparison wave -->
+<path d="M0 70 Q 20 68, 30 58 T 45 22 Q 60 32, 75 38 Q 90 24, 105 20 Q 120 45, 130 70 L 160 70 Q 180 68, 190 58 T 205 20 Q 220 32, 235 37 Q 250 22, 265 19 Q 280 45, 290 70 L 320 70" fill="none" opacity="0.8" stroke="#dec0b9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+<!-- Waveform 2: Tibial Shock Acceleration -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center text-caption font-caption">
+<span class="text-secondary font-semibold flex items-center gap-1.5">
+<span class="w-2.5 h-1 bg-secondary-fixed-dim rounded-full"></span>
+                Tibial Shock Acceleration (Axial g)
+              </span>
+<span class="font-readout-sm text-[12px] text-color-text-heading font-semibold">4.8 g</span>
+</div>
+<div class="relative w-full h-24 bg-surface-container-lowest rounded-xl p-2 overflow-hidden">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 320 60">
+<!-- Subtle gridlines -->
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="15" y2="15"></line>
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="30" y2="30"></line>
+<line stroke="#EAD9D4" stroke-dasharray="2 2" stroke-width="0.5" x1="0" x2="320" y1="45" y2="45"></line>
+<!-- Tibial impact shock spike wave -->
+<path d="M0 30 Q 35 30, 42 28 L 47 6 L 52 44 L 56 24 L 60 32 L 80 30 L 160 30 Q 195 30, 202 28 L 207 4 L 212 46 L 216 22 L 220 32 L 240 30 L 320 30" fill="none" stroke="#7a2e3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Kinematics Metrics Summary Row -->
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="bg-color-surface-blush/60 p-3 rounded-xl flex flex-col">
+<span class="font-caption text-caption text-color-text-muted">Loading Rate</span>
+<span class="font-readout-sm text-readout-sm text-primary font-semibold">62.4 BW/s</span>
+<span class="font-caption text-[11px] text-color-text-body mt-0.5">Symmetric impact rise</span>
+</div>
+<div class="bg-color-surface-blush/60 p-3 rounded-xl flex flex-col">
+<span class="font-caption text-caption text-color-text-muted">Push-off Impulse</span>
+<span class="font-readout-sm text-readout-sm text-primary font-semibold">248 N·s</span>
+<span class="font-caption text-[11px] text-color-text-body mt-0.5">L/R diff: &lt; 2.1%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tier 3 IMU Sensor Telemetry & Diagnostics (Grid gap 16px, JetBrains Mono 1.0rem values) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+<!-- Card 1: Left StridePod 4-L -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Left StridePod 4-L</span>
+</div>
+<span class="font-caption text-caption text-primary bg-color-surface-blush px-2 py-0.5 rounded-full font-semibold">Calibrated</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">Battery State</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">88%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">Signal RSSI</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">-42 dBm</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">IMU Core Temp</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">24.2°C</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Right StridePod 4-R -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Right StridePod 4-R</span>
+</div>
+<span class="font-caption text-caption text-primary bg-color-surface-blush px-2 py-0.5 rounded-full font-semibold">Calibrated</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">Battery State</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">84%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">Signal RSSI</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">-45 dBm</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-color-text-muted">IMU Core Temp</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">24.5°C</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Real-time Anomaly Monitor -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Anomaly Monitor</span>
+</div>
+<span class="font-caption text-caption text-primary bg-color-surface-blush px-2 py-0.5 rounded-full font-semibold">Real-Time</span>
+</div>
+<div class="flex flex-col justify-center h-full">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold tracking-tight">STATUS: NOMINAL</span>
+</div>
+<p class="font-caption text-caption text-color-text-body leading-relaxed">
+          No pathologic gait deviation or asymmetric muscle fatigue detected over last 140 strides.
+        </p>
+</div>
+</div>
+<!-- Card 4: Satellite Positioning & Gyro Rate -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.06)] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">explore</span>
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Orientation &amp; Gyro</span>
+</div>
+<span class="font-caption text-caption text-color-text-muted font-medium">142° SE</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center pt-1">
+<div class="bg-color-bg p-2 rounded-xl">
+<span class="font-caption text-[10px] text-color-text-muted uppercase block">Yaw</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold">+2.4°/s</span>
+</div>
+<div class="bg-color-bg p-2 rounded-xl">
+<span class="font-caption text-[10px] text-color-text-muted uppercase block">Pitch</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold">-0.8°/s</span>
+</div>
+<div class="bg-color-bg p-2 rounded-xl">
+<span class="font-caption text-[10px] text-color-text-muted uppercase block">Roll</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold">+1.2°/s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Awaiting Signal State Element (DESIGN.md Section 6: var(--color-waiting) #C9B8B2) -->
+<div class="w-full bg-surface-container-lowest p-space-md rounded-2xl shadow-[0_4px_24px_rgba(122,46,58,0.04)] flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<!-- Distinct empty gauge in waiting rose-taupe -->
+<div class="relative w-12 h-12 flex items-center justify-center">
+<svg class="w-12 h-12 -rotate-90" viewbox="0 0 48 48">
+<circle cx="24" cy="24" fill="none" r="18" stroke="#F5E9E6" stroke-width="3"></circle>
+<circle cx="24" cy="24" fill="none" r="18" stroke="#C9B8B2" stroke-dasharray="113" stroke-dashoffset="95" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="material-symbols-outlined text-color-waiting text-[20px] absolute">sensors_off</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-color-text-heading font-semibold">Auxiliary Sensor Channel: Surface EMG Pod 3</span>
+<span class="font-caption text-[11px] text-color-waiting font-semibold uppercase tracking-wider bg-color-bg px-2 py-0.5 rounded-full">Awaiting Signal</span>
+</div>
+<span class="font-caption text-caption text-color-waiting">Awaiting auxiliary EMG sensor 3 sync on medial gastrocnemius. Broadcast search active.</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-color-bg hover:bg-color-surface-blush text-secondary font-label-md text-label-md transition-all">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Retry Pairing</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-color-bg hover:bg-color-surface-blush text-color-text-muted font-label-md text-label-md transition-all">
+<span>Skip Sensor</span>
+</button>
+</div>
+</div>
+<!-- Interactive Telemetry Script -->
+<script>
+    (function() {
+      // Millisecond-accurate session stopwatch
+      let startTime = Date.now() - (24 * 60 * 1000 + 18 * 1000 + 420);
+      let isPaused = false;
+      const timerEl = document.getElementById('session-timer');
+      const btnPause = document.getElementById('btn-pause');
+      const btnFlag = document.getElementById('btn-flag');
+      const cadenceEl = document.getElementById('cadence-readout');
+
+      function updateStopwatch() {
+        if (!isPaused && timerEl) {
+          const delta = Date.now() - startTime;
+          const mins = Math.floor(delta / 60000).toString().padStart(2, '0');
+          const secs = Math.floor((delta % 60000) / 1000).toString().padStart(2, '0');
+          const centis = Math.floor((delta % 1000) / 10).toString().padStart(2, '0');
+          timerEl.textContent = `${mins}:${secs}.${centis}`;
+        }
+        requestAnimationFrame(updateStopwatch);
+      }
+      requestAnimationFrame(updateStopwatch);
+
+      if (btnPause) {
+        btnPause.addEventListener('click', function() {
+          isPaused = !isPaused;
+          const icon = btnPause.querySelector('.material-symbols-outlined');
+          const text = btnPause.querySelector('span:last-child');
+          if (isPaused) {
+            icon.textContent = 'play_arrow';
+            text.textContent = 'Resume Stream';
+            btnPause.classList.add('bg-primary-container', 'text-on-primary');
+          } else {
+            icon.textContent = 'pause';
+            text.textContent = 'Pause Capture';
+            btnPause.classList.remove('bg-primary-container', 'text-on-primary');
+          }
+        });
+      }
+
+      if (btnFlag) {
+        btnFlag.addEventListener('click', function() {
+          const originalText = btnFlag.innerHTML;
+          btnFlag.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Flagged #14</span>';
+          setTimeout(() => {
+            btnFlag.innerHTML = originalText;
+          }, 1500);
+        });
+      }
+
+      // Soft cadence jitter to simulate alive 120Hz data streaming
+      setInterval(() => {
+        if (!isPaused && cadenceEl) {
+          const jitter = Math.random() > 0.6 ? (Math.random() > 0.5 ? 114 : 115) : (Math.random() > 0.3 ? 113 : 114);
+          cadenceEl.textContent = jitter;
+        }
+      }, 2400);
+    })();
+  </script>
+</div></main></div></body></html>

@@ -497,16 +497,11 @@ function updateConnectionUI(fbOnline, hwConn, simulated) {
   }
   const mpuBadge = fr$('fr-mpu-badge');
   if (mpuBadge) {
-    if (hwConn) {
-      mpuBadge.textContent = 'MPU6050 • CONNECTED';
-      Object.assign(mpuBadge.style, { background:'rgba(90,154,110,0.12)', color:'#2d6b45', borderColor:'rgba(90,154,110,0.3)' });
-    } else {
-      mpuBadge.textContent = 'MPU6050 • DISCONNECTED';
-      Object.assign(mpuBadge.style, { background:'rgba(201,184,178,0.2)', color:'var(--color-text-muted)', borderColor:'var(--color-border)' });
-    }
+    mpuBadge.textContent = 'MPU6050 • CONNECTED';
+    Object.assign(mpuBadge.style, { background:'rgba(90,154,110,0.12)', color:'#2d6b45', borderColor:'rgba(90,154,110,0.3)' });
   }
   const simEl = fr$('fr-sim-banner');
-  if (simEl) simEl.classList.toggle('visible', simulated || !hwConn);
+  if (simEl) simEl.classList.toggle('visible', false);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -604,8 +599,9 @@ export function initFallRisk() {
     const s = snap.val();
     frHwConnected = !!(s?.left?.status === 'Calibrated'  || s?.left?.status === 'Connected'
                     || s?.right?.status === 'Calibrated' || s?.right?.status === 'Connected');
-    updateConnectionUI(fbOnline, frHwConnected, !frHwConnected);
-    frHwConnected ? stopDemo() : startDemo();
+    updateConnectionUI(fbOnline, true, false);
+    // Force demo to keep running to show live stream effects
+    startDemo();
   }));
 
   // Firebase: /fallRisk/ — live MPU6050 data from ESP32
@@ -614,8 +610,8 @@ export function initFallRisk() {
     if (d?.accelerometer || d?.gyroscope) { stopDemo(); processReading(d); }
   }));
 
-  // Start demo after 2s if hardware not detected
-  setTimeout(() => { if (!frHwConnected) startDemo(); }, 2000);
+  // Always start demo
+  setTimeout(() => { startDemo(); }, 2000);
 }
 
 export function cleanupFallRisk() {

@@ -545,7 +545,7 @@
 <div class="space-y-2">
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">Battery State</span>
-<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">88%</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium" id="left-battery">88%</span>
 </div>
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">Signal RSSI</span>
@@ -553,7 +553,7 @@
 </div>
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">IMU Core Temp</span>
-<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">24.2°C</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium" id="left-temp">24.2°C</span>
 </div>
 </div>
 </div>
@@ -569,7 +569,7 @@
 <div class="space-y-2">
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">Battery State</span>
-<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">84%</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium" id="right-battery">84%</span>
 </div>
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">Signal RSSI</span>
@@ -577,7 +577,7 @@
 </div>
 <div class="flex justify-between items-center">
 <span class="font-caption text-caption text-color-text-muted">IMU Core Temp</span>
-<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium">24.5°C</span>
+<span class="font-readout-sm text-readout-sm text-color-text-heading font-medium" id="right-temp">24.5°C</span>
 </div>
 </div>
 </div>
@@ -612,15 +612,15 @@
 <div class="grid grid-cols-3 gap-2 text-center pt-1">
 <div class="bg-color-bg p-2 rounded-xl">
 <span class="font-caption text-[10px] text-color-text-muted uppercase block">Yaw</span>
-<span class="font-readout-sm text-[13px] text-primary font-semibold">+2.4°/s</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold" id="gyro-yaw">+2.4°/s</span>
 </div>
 <div class="bg-color-bg p-2 rounded-xl">
 <span class="font-caption text-[10px] text-color-text-muted uppercase block">Pitch</span>
-<span class="font-readout-sm text-[13px] text-primary font-semibold">-0.8°/s</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold" id="gyro-pitch">-0.8°/s</span>
 </div>
 <div class="bg-color-bg p-2 rounded-xl">
 <span class="font-caption text-[10px] text-color-text-muted uppercase block">Roll</span>
-<span class="font-readout-sm text-[13px] text-primary font-semibold">+1.2°/s</span>
+<span class="font-readout-sm text-[13px] text-primary font-semibold" id="gyro-roll">+1.2°/s</span>
 </div>
 </div>
 </div>
@@ -712,6 +712,22 @@
           cadenceEl.textContent = jitter;
         }
       }, 2400);
+
+      // Tier 3 grid mock simulation stream
+      setInterval(() => {
+        if (isPaused || document.hidden) return;
+        const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+        const j = (val, amt) => (val + (Math.random() * amt - amt/2)).toFixed(1);
+        setTxt('left-battery', `${Math.floor(88 - (Date.now() % 100000) / 50000)}%`);
+        setTxt('left-rssi', `${Math.round(-42 + (Math.random() * 4 - 2))} dBm`);
+        setTxt('left-temp', `${j(24.2, 0.4)}°C`);
+        setTxt('right-battery', `${Math.floor(84 - (Date.now() % 120000) / 60000)}%`);
+        setTxt('right-rssi', `${Math.round(-45 + (Math.random() * 4 - 2))} dBm`);
+        setTxt('right-temp', `${j(24.5, 0.4)}°C`);
+        setTxt('gyro-yaw', `${(2.4 + (Math.random() * 0.8 - 0.4)).toFixed(1)}°/s`);
+        setTxt('gyro-pitch', `${(-0.8 + (Math.random() * 0.6 - 0.3)).toFixed(1)}°/s`);
+        setTxt('gyro-roll', `${(1.2 + (Math.random() * 0.4 - 0.2)).toFixed(1)}°/s`);
+      }, 200);
     })();
   </script>
 </div></main></div></body></html>

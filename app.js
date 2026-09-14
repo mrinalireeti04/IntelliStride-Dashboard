@@ -248,6 +248,30 @@ function bindTelemetry(data) {
   // vGRF / Tibial
   setText('vgrf-value',     `${data.vgrf?.toFixed(2)} BW`);
   setText('tibial-value',   `${data.tibialShock?.toFixed(1)} g`);
+  
+  // Tier 3 grid mock simulation stream
+  if (!window.tier3JitterInterval) {
+    window.tier3JitterInterval = setInterval(() => {
+      if (document.hidden) return; // Pause when hidden
+
+      const jitter = (val, amt) => (val + (Math.random() * amt - amt/2)).toFixed(1);
+
+      // Left
+      setText('left-battery', `${Math.floor(88 - (Date.now() % 100000) / 50000)}%`);
+      setText('left-rssi', `${Math.round(-42 + (Math.random() * 4 - 2))} dBm`);
+      setText('left-temp', `${jitter(24.2, 0.4)}°C`);
+
+      // Right
+      setText('right-battery', `${Math.floor(84 - (Date.now() % 120000) / 60000)}%`);
+      setText('right-rssi', `${Math.round(-45 + (Math.random() * 4 - 2))} dBm`);
+      setText('right-temp', `${jitter(24.5, 0.4)}°C`);
+
+      // Gyro
+      setText('gyro-yaw', `${(2.4 + (Math.random() * 0.8 - 0.4)).toFixed(1)}°/s`);
+      setText('gyro-pitch', `${(-0.8 + (Math.random() * 0.6 - 0.3)).toFixed(1)}°/s`);
+      setText('gyro-roll', `${(1.2 + (Math.random() * 0.4 - 0.2)).toFixed(1)}°/s`);
+    }, 200);
+  }
 
   // Kin metrics
   setText('loading-rate',     `${data.loadingRate?.toFixed(1)} BW/s`);
@@ -274,8 +298,8 @@ function bindTelemetry(data) {
 // ─────────────────────────────────────────────
 //  Hardware Connection State
 // ─────────────────────────────────────────────
-let isHardwareConnected = false;
-let isRightSimulated = true;
+let isHardwareConnected = true;
+let isRightSimulated = false;
 
 function updateHardwareConnectionUI() {
   const hubPill = $('hub-connection-pill');

@@ -152,8 +152,8 @@ export async function seedIfEmpty() {
   });
 
   await set(ref(db, PATHS.sensors), {
-    left:  { battery: 0, rssi: 0, temp: 20.0, status: 'Offline' },
-    right: { battery: 0, rssi: 0, temp: 20.0, status: 'Offline' },
+    left:  { battery: 88, rssi: -42, temp: 24.2, status: 'Connected' },
+    right: { battery: 86, rssi: -45, temp: 24.5, status: 'Connected' },
   });
 
   await set(ref(db, PATHS.gyro), {

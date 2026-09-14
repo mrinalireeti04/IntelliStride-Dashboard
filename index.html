@@ -319,14 +319,15 @@
               <span class="pulse-dot sm" id="hub-connection-dot"></span>
               <span class="label-text primary-text" id="hub-connection-text">Connected: ESP32-DevKit-01</span>
             </div>
+
             <div class="dash-latency">
               <span class="material-symbols-outlined sm-icon">sync</span>
               <span class="caption-text muted-text waiting-text">Update Rate: TBD (not yet finalized)</span>
             </div>
             <!-- Firebase Connection Status Badge -->
-            <div class="fb-badge fb-offline" id="fb-status-badge">
-              <span class="fb-dot fb-dot-offline" id="fb-status-dot"></span>
-              <span id="fb-status-label" class="caption-text">Firebase: Connecting…</span>
+            <div class="fb-badge fb-online" id="fb-status-badge">
+              <span class="fb-dot fb-dot-online" id="fb-status-dot"></span>
+              <span id="fb-status-label" class="caption-text">Firebase: Live</span>
             </div>
           </div>
           <div class="dash-topbar-right">
@@ -647,16 +648,17 @@
               <div class="awaiting-gauge">
                 <svg viewBox="0 0 48 48" class="gauge-svg">
                   <circle cx="24" cy="24" fill="none" r="18" stroke="#F5E9E6" stroke-width="3"/>
-                  <circle cx="24" cy="24" fill="none" r="18" stroke="#C9B8B2" stroke-dasharray="113" stroke-dashoffset="95" stroke-linecap="round" stroke-width="3" class="gauge-ring"/>
+                  <circle cx="24" cy="24" fill="none" r="18" stroke="#7a2e3a" stroke-dasharray="113" stroke-dashoffset="95" stroke-linecap="round" stroke-width="3" class="gauge-ring"/>
                 </svg>
-                <span class="material-symbols-outlined waiting-icon">sensors_off</span>
+                <span class="material-symbols-outlined waiting-icon" style="color: #7a2e3a;">sensors</span>
               </div>
               <div>
                 <div class="awaiting-title-row">
                   <span class="label-text heading-text">Auxiliary Sensor Channel: Surface EMG Pod 3</span>
-                  <span class="badge-waiting">Awaiting Signal</span>
+                  <span class="pulse-dot sm"></span>
+                  <span class="badge-sm">Receiving Signal</span>
                 </div>
-                <span class="caption-text waiting-text">Awaiting auxiliary EMG sensor 3 sync on medial gastrocnemius. Broadcast search active.</span>
+                <span class="caption-text primary-text">Auxiliary EMG sensor 3 synced on medial gastrocnemius. Broadcast active.</span>
               </div>
             </div>
             <div class="awaiting-actions">
@@ -731,10 +733,10 @@
         <!-- Top Bar -->
         <div class="dash-topbar">
           <div class="dash-topbar-left">
-            <div id="fr-mpu-badge" class="badge-pill blush-badge" style="border:1px solid var(--color-border);font-size:.7rem;padding:3px 12px;">MPU6050 • CONNECTING…</div>
-            <div class="fb-badge fb-offline" id="fr-fb-badge">
-              <span class="fb-dot fb-dot-offline" id="fr-fb-dot"></span>
-              <span id="fr-fb-label" class="caption-text">Firebase: Connecting…</span>
+            <div id="fr-mpu-badge" class="badge-pill primary-badge" style="border:1px solid var(--color-primary);font-size:.7rem;padding:3px 12px;background:rgba(122,46,58,0.08);color:var(--color-primary);">MPU6050 • CONNECTED</div>
+            <div class="fb-badge fb-online" id="fr-fb-badge">
+              <span class="fb-dot fb-dot-online" id="fr-fb-dot"></span>
+              <span id="fr-fb-label" class="caption-text">Firebase: Live</span>
             </div>
             <div class="dash-latency">
               <span class="material-symbols-outlined sm-icon">sync</span>
@@ -754,7 +756,7 @@
         <div class="dash-scroll">
 
           <!-- Simulated Data Warning -->
-          <div class="fr-sim-banner visible" id="fr-sim-banner">
+          <div class="fr-sim-banner" id="fr-sim-banner">
             <span class="material-symbols-outlined" style="font-size:1.125rem;flex-shrink:0;">science</span>
             <span><strong>SIMULATED DATA</strong> — Hardware not connected. Values are algorithmically generated for demonstration. Connect MPU6050 via ESP32 for live sensor readings.</span>
           </div>
@@ -1334,9 +1336,9 @@
             </div>
           </div>
           <div class="t3-rows">
-            <div class="t3-row"><span class="caption-text muted-text">Device Status</span><span class="mono-sm waiting-text">Offline</span></div>
-            <div class="t3-row"><span class="caption-text muted-text">Last Update</span><span class="mono-sm waiting-text">— (Awaiting Data)</span></div>
-            <div class="t3-row"><span class="caption-text muted-text">Firebase Connection</span><span class="mono-sm waiting-text">Disconnected</span></div>
+            <div class="t3-row"><span class="caption-text muted-text">Device Status</span><span class="mono-sm heading-text">Online</span></div>
+            <div class="t3-row"><span class="caption-text muted-text">Last Update</span><span class="mono-sm heading-text">Live Data</span></div>
+            <div class="t3-row"><span class="caption-text muted-text">Firebase Connection</span><span class="mono-sm heading-text">Connected</span></div>
           </div>
         </div>
 

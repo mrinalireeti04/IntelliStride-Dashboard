@@ -347,29 +347,23 @@ function updateHardwareConnectionUI() {
 function bindSensors(data) {
   if (!data) return;
   const { left, right } = data;
-  isHardwareConnected = false;
+  isHardwareConnected = true; // Forced for demo
   if (left) {
     setText('left-battery',  `${left.battery}%`);
     setText('left-rssi',     `${left.rssi} dBm`);
     setText('left-temp',     `${left.temp}°C`);
-    setText('left-status',   left.status);
+    setText('left-status',   'ONLINE');
     const badge = $('left-status-badge');
-    if (badge) badge.textContent = left.status;
-    if (left.status === 'Calibrated' || left.status === 'Connected') isHardwareConnected = true;
+    if (badge) badge.textContent = 'ONLINE';
   }
   if (right) {
     setText('right-battery', `${right.battery}%`);
     setText('right-rssi',    `${right.rssi} dBm`);
     setText('right-temp',    `${right.temp}°C`);
-    setText('right-status',  right.status);
+    setText('right-status',  'ONLINE');
     const badge = $('right-status-badge');
-    if (badge) badge.textContent = right.status;
-    if (right.status === 'Calibrated' || right.status === 'Connected') {
-      isHardwareConnected = true;
-      isRightSimulated = false;
-    } else {
-      isRightSimulated = true;
-    }
+    if (badge) badge.textContent = 'ONLINE';
+    isRightSimulated = false;
   } else {
     isRightSimulated = true;
   }

@@ -3,7 +3,7 @@
  * Thresholds come from FR_CONFIG (the code is the truth). No Firebase.
  */
 import { FR_CONFIG as C, fallRiskEngine } from './fall-risk-engine.js';
-import { PEOPLE } from './live-readings-data.js';
+import { PEOPLE } from './live-readings-data.js?v=2';
 
 const $ = id => document.getElementById(id);
 
@@ -146,8 +146,8 @@ function renderScore(exp) {
 
 // ── Selector ──
 const sel = $('trace-select');
-sel.innerHTML = PEOPLE.map(p => `<optgroup label="${p.id} · ${p.scenario}">` +
-  p.readings.map(r => `<option value="${p.id}|${r.t}">${p.id} · ${r.t} · ${r.phase}</option>`).join('') + '</optgroup>').join('');
+sel.innerHTML = PEOPLE.map(p => `<optgroup label="${p.id} · ${p.name} (${p.scenario})">` +
+  p.readings.map(r => `<option value="${p.id}|${r.t}">${p.id} · ${p.name} · ${r.t} · ${r.phase}</option>`).join('') + '</optgroup>').join('');
 function trace(key) {
   const x = readings.find(r => r.key === key);
   const exp = explainScore(x.r, x.prev);

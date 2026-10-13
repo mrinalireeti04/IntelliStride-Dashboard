@@ -11,7 +11,7 @@
  *  • Soft telemetry flash on value update
  */
 
-import { initLiveReadings } from './live-readings.js';
+import { initLiveReadings } from './live-readings.js?v=2';
 
 // Firebase is loaded lazily so the router and all static pages keep working
 // even if the network blocks the Firebase CDN.

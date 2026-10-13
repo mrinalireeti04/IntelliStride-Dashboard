@@ -1547,6 +1547,16 @@ canvas.fr-trend-canvas { width: 100%; height: 150px; display: block; }
 .lr-tag.warn { background: var(--risk-mod-bg); color: var(--risk-mod-text); }
 .lr-tag.alert { background: var(--risk-high-bg); color: var(--risk-high-text); }
 .lr-tag.waiting { background: transparent; border: 1px dashed var(--color-waiting); color: var(--color-text-muted); }
+.lr-bio-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 2px 0; }
+.lr-bio-pill {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+  padding: 2px 7px; border-radius: var(--r-pill);
+  background: var(--color-surface-blush); color: var(--color-primary);
+  border: 1px solid rgba(122, 46, 58, 0.12);
+}
+.lr-bio-icon { font-size: 0.75rem; line-height: 1; vertical-align: middle; }
+.lr-sub-biometrics { border-left: 3px solid var(--color-primary); }
 
 .lr-detail { gap: var(--sp-5, 20px); transition: opacity 200ms ease; }
 .lr-detail.fading { opacity: .6; }

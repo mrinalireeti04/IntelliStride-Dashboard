@@ -3,7 +3,7 @@
  * All scores come from the real fallRiskEngine; nothing here is measured.
  */
 import { fallRiskEngine } from './fall-risk-engine.js';
-import { PEOPLE, READINGS_DATE } from './live-readings-data.js';
+import { PEOPLE, READINGS_DATE } from './live-readings-data.js?v=2';
 
 // ── Derived values ───────────────────────────────────────
 // Score each person's readings IN ORDER so "sudden change" uses the previous reading.
@@ -31,7 +31,13 @@ const toSec = t => { const [h, m, s] = t.split(':').map(Number); return h * 3600
 const $ = id => document.getElementById(id);
 const LEVEL_COLOR = { LOW: '#5a9a6e', MODERATE: '#B8722A', HIGH: '#A13B3B' };
 const fixed = (v, n) => (+v).toFixed(n);
-const initials = p => (p.name.startsWith('[') ? p.id : p.name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase());
+const initials = p => {
+  if (p.name.startsWith('[')) return p.id;
+  const parts = p.name.trim().split(/\s+/);
+  return parts.length > 1
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : parts[0].slice(0, 2).toUpperCase();
+};
 const scenarioText = p => p.scenario;
 const riskBadge = (level, small) =>
   `<span class="fr-risk-badge ${level.toLowerCase()}"${small ? ' style="font-size:.6rem;padding:2px 8px;"' : ''}>${small ? level : level + ' RISK'}</span>`;
@@ -62,6 +68,13 @@ function renderCards() {
         <div class="lr-card-top">
           <div class="lr-avatar" aria-hidden="true">${initials(p)}</div>
           <div><h3 class="lr-name">${p.name}</h3><span class="lr-tag">${scenarioText(p)}</span></div>
+        </div>
+        <div class="lr-bio-row">
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">female</span>${p.sex || 'Female'} · ${p.age}y</span>
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">straighten</span>${p.heightCm} cm</span>
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">monitor_weight</span>${p.weightKg} kg</span>
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">speed</span>BMI ${p.bmi}</span>
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">footprint</span>UK ${p.footSize}</span>
         </div>
         <div class="lr-window">${first.t} → ${last.t}</div>
         <div class="lr-risk-row">${riskBadge(last.result.level)}<span class="lr-score">${last.result.score} / 100</span></div>
@@ -135,6 +148,20 @@ function renderDetail(animate) {
       <p class="lr-phase"><strong>${r.t}</strong> · ${r.phase}</p>
     </div>
     <div class="lr-subgrid">
+      <div class="lr-sub lr-sub-biometrics">
+        <h3>Participant profile</h3>
+        <div class="lr-kv">
+          <span>Biological Sex</span><span>${p.sex || 'Female'}</span>
+          <span>Age</span><span>${p.age} years</span>
+          <span>Height</span><span>${p.heightCm} cm</span>
+          <span>Weight</span><span>${p.weightKg} kg</span>
+          <span>BMI Index</span><span>${p.bmi} kg/m²</span>
+          <span>Classification</span><span>${p.bmiCategory || 'Normal'} (WHO)</span>
+          <span>Foot Size</span><span>UK ${p.footSize}</span>
+          <span>Protocol / Notes</span><span>${p.scenario}</span>
+        </div>
+        <p class="cap">Parameters from participant evaluation sheet</p>
+      </div>
       <div class="lr-sub">
         <h3>Foot pressure (FSR)</h3>
         ${fsrRows}
@@ -201,7 +228,7 @@ function renderDetail(animate) {
 
 // ── Log table ────────────────────────────────────────────
 function renderChips() {
-  const items = [['all', 'All'], ...people.map(p => [p.id, p.id])];
+  const items = [['all', 'All'], ...people.map(p => [p.id, `${p.name} (${p.id})`])];
   $('lr-chips').innerHTML = items.map(([id, lab]) =>
     `<button type="button" class="lr-chip" data-f="${id}" aria-pressed="${filter === id}">${lab}</button>`).join('');
   $('lr-chips').querySelectorAll('.lr-chip').forEach(b => b.addEventListener('click', () => {
@@ -216,7 +243,7 @@ function renderTable() {
   $('lr-tbody').innerHTML = rows.filter(x => filter === 'all' || x.p.id === filter).map(({ p, r, i }) => {
     const sel = p.id === selPerson && i === selIdx;
     return `<tr tabindex="0" data-id="${p.id}" data-i="${i}" class="${sel ? 'selected' : ''}">
-      <td class="fr-td-mono">${r.t}</td><td>${p.id}</td><td>${r.phase}</td>
+      <td class="fr-td-mono">${r.t}</td><td><strong>${p.name}</strong> <span class="muted-text">(${p.id})</span></td><td>${r.phase}</td>
       <td class="fr-td-mono">${r.fsr.forefoot}/${r.fsr.midfoot}/${r.fsr.hindfoot}</td>
       <td class="fr-td-mono">${fixed(r.result.accelMag, 2)}</td><td class="fr-td-mono">${fixed(r.result.gyroMag, 1)}</td>
       <td class="fr-td-mono">${fixed(r.result.features.tilt.value, 1)}</td><td class="fr-td-mono">${r.distanceCm}</td>

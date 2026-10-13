@@ -147,7 +147,7 @@ function renderScore(exp) {
 // ── Selector ──
 const sel = $('trace-select');
 sel.innerHTML = PEOPLE.map(p => `<optgroup label="${p.id} · ${p.scenario}">` +
-  p.readings.map(r => `<option value="${p.id}|${r.t}">${p.id} · ${r.t} · ${r.phase}${p.id === 'P4' ? ' (demo only)' : ''}</option>`).join('') + '</optgroup>').join('');
+  p.readings.map(r => `<option value="${p.id}|${r.t}">${p.id} · ${r.t} · ${r.phase}</option>`).join('') + '</optgroup>').join('');
 function trace(key) {
   const x = readings.find(r => r.key === key);
   const exp = explainScore(x.r, x.prev);

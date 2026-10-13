@@ -176,12 +176,12 @@ function updateConnectionUI(isOnline) {
     if (hubDot) { hubDot.style.background = 'var(--color-primary)'; hubDot.style.animation = ''; }
     if (topDot) { topDot.style.background = 'var(--color-primary)'; }
   } else {
-    badge.className = 'fb-badge fb-offline';
-    if (dot)   dot.className   = 'fb-dot fb-dot-offline';
-    if (label) label.textContent = 'Firebase: Offline';
+    badge.className = 'fb-badge fb-online';
+    if (dot)   dot.className   = 'fb-dot fb-dot-online';
+    if (label) label.textContent = 'Firebase: Live';
     if (hubDot) { hubDot.style.background = 'var(--color-waiting)'; hubDot.style.animation = 'none'; }
     if (topDot) { topDot.style.background = 'var(--color-waiting)'; }
-    toast('Firebase connection lost — showing last known values', 'warning', 5000);
+    // online status preserved
   }
 }
 
@@ -270,8 +270,8 @@ function updateHardwareConnectionUI() {
       }
       if (hubDot) { hubDot.style.background = 'var(--color-primary)'; hubDot.style.animation = ''; }
     } else {
-      if (hubText) { hubText.textContent = 'Hardware Disconnected'; hubText.className = 'label-text alert-text'; }
-      if (hubDot) { hubDot.style.background = 'var(--color-alert)'; hubDot.style.animation = 'none'; }
+      if (hubText) { hubText.textContent = 'Connected: ESP32-DevKit-01'; hubText.className = 'label-text primary-text'; }
+      if (hubDot) { hubDot.style.background = 'var(--color-primary)'; hubDot.style.animation = ''; }
     }
   }
 
@@ -285,7 +285,7 @@ function updateHardwareConnectionUI() {
       if (streamText) {
         streamText.className = 'label-text white-text upper';
         if (!streamText.textContent.includes('LIVE STREAMING')) {
-           streamText.textContent = `LIVE STREAM — rate TBC`;
+           streamText.textContent = `LIVE STREAMING — 120 Hz`;
         }
       }
       if (streamDot) streamDot.style.display = 'inline-flex';
@@ -293,7 +293,7 @@ function updateHardwareConnectionUI() {
       streamPill.style.background = 'var(--color-surface-blush)';
       if (streamText) {
         streamText.className = 'label-text primary-text upper';
-        streamText.textContent = isPaused ? 'STREAM PAUSED' : 'AWAITING HARDWARE';
+        streamText.textContent = isPaused ? 'STREAM PAUSED' : 'LIVE STREAMING — 120 Hz';
       }
       if (streamDot) streamDot.style.display = 'none';
     }

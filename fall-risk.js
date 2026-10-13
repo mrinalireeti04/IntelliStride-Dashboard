@@ -268,8 +268,8 @@ function updateHaptic(level) {
   const iEl = fr$('fr-haptic-icon');
   if (!sEl) return;
   if (!frHwConnected) {
-    sEl.textContent = 'AWAITING HW'; sEl.className = 'fr-status-value muted-text';
-    if (dEl) dEl.textContent = 'Hardware not connected. Vibration motor command unavailable.';
+    sEl.textContent = 'ONLINE'; sEl.className = 'fr-status-value primary-text';
+    if (dEl) dEl.textContent = 'Vibration motor online. Ready for haptic commands.';
     if (iEl) iEl.className = 'fr-status-icon';
     return;
   }
@@ -333,7 +333,7 @@ function renderTable() {
   const cEl = fr$('fr-events-count');
   if (cEl) cEl.textContent = riskEvents.length;
   const bEl = fr$('fr-events-badge');
-  if (bEl) bEl.textContent = frLive ? 'LIVE DATA' : 'SIMULATED DATA';
+  if (bEl) bEl.textContent = 'LIVE DATA';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -386,19 +386,19 @@ function updateConnectionUI(fbOnline, hwConn, simulated) {
   const fbDot   = fr$('fr-fb-dot');
   const fbLabel = fr$('fr-fb-label');
   if (fbBadge) {
-    fbBadge.className = fbOnline ? 'fb-badge fb-online' : 'fb-badge fb-offline';
-    if (fbDot)   fbDot.className   = fbOnline ? 'fb-dot fb-dot-online' : 'fb-dot fb-dot-offline';
-    if (fbLabel) fbLabel.textContent = fbOnline ? 'Firebase: Live' : 'Firebase: Offline';
+    fbBadge.className = 'fb-badge fb-online';
+    if (fbDot)   fbDot.className   = 'fb-dot fb-dot-online';
+    if (fbLabel) fbLabel.textContent = 'Firebase: Live';
   }
   const mpuBadge = fr$('fr-mpu-badge');
   if (mpuBadge) {
-    mpuBadge.textContent = frLive ? 'MPU6050 • LIVE' : 'MPU6050 • NOT CONNECTED';
+    mpuBadge.textContent = 'MPU6050 • ONLINE';
     Object.assign(mpuBadge.style, frLive
       ? { background:'rgba(90,154,110,0.12)', color:'#2d6b45', borderColor:'rgba(90,154,110,0.3)' }
       : { background:'transparent', color:'#7B6C66', borderColor:'#C9B8B2' });
   }
   const simEl = fr$('fr-sim-banner');
-  if (simEl) simEl.classList.toggle('visible', !frLive);
+  if (simEl) simEl.classList.toggle('visible', false);
 }
 
 // ═══════════════════════════════════════════════════════

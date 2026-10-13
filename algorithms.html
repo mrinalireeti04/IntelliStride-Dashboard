@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How IntelliStride Decides — Algorithm Diagrams</title>
+  <meta name="description" content="The rule-based fall-risk algorithm used by the IntelliStride prototype, drawn as labelled decision trees. Prototype thresholds, not clinically validated." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="algorithms.css" />
+</head>
+<body>
+  <nav class="dots" id="dots" aria-label="Sections"></nav>
+
+  <main class="deck" id="deck">
+
+    <!-- 0 · HERO -->
+    <section class="slide hero" data-note="This is the decision logic behind the prototype's fall-risk score. It is rule-based, built on thresholds we chose; it is not a trained model.">
+      <div class="reveal">
+        <p class="eyebrow">IntelliStride · Algorithm walk-through</p>
+        <h1>How IntelliStride decides</h1>
+        <p class="lede">Four small decision trees turn raw motion-sensor numbers into points. The points are added, capped and sorted into a risk level.</p>
+        <div class="chips">
+          <span class="chip">Rule-based</span><span class="chip">Prototype thresholds</span><span class="chip">Not clinically validated</span>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span class="material-symbols-outlined">keyboard_arrow_down</span></div>
+    </section>
+
+    <!-- 1 · PIPELINE -->
+    <section class="slide" data-note="Sensors feed the ESP32, which writes to Firebase. The dashboard listens and runs the scoring in the browser.">
+      <div class="slide-inner reveal">
+        <h2>Where the algorithm sits</h2>
+        <p class="sub">From foot to alert card.</p>
+        <div class="pipeline" id="pipeline"></div>
+        <p class="waiting">Sampling interval and Wi-Fi vs BLE: to be confirmed from firmware.</p>
+      </div>
+    </section>
+
+    <!-- 2 · FEATURES -->
+    <section class="slide" data-note="Four numbers are computed from the motion sensor stream. Resting, the shoe reads about 1 g.">
+      <div class="slide-inner reveal">
+        <h2>What we compute</h2>
+        <p class="sub">Four features from the MPU6050 stream.</p>
+        <div class="features" id="features"></div>
+        <p class="baseline"><strong>Normal-walking baseline (prototype):</strong> <code>|a|</code> 0.9–1.3 g · <code>|ω|</code> 0–20 °/s · tilt 0–8° · Δ &lt; 0.40 g</p>
+      </div>
+    </section>
+
+    <!-- 3 · TREES -->
+    <section class="slide" data-note="Each feature has its own small decision tree. Pick a reading and watch the path light up.">
+      <div class="slide-inner wide reveal">
+        <div class="trees-head">
+          <div><h2>Four decision trees</h2><p class="sub">Largest threshold is tested first. Tiers inside one feature do not add up.</p></div>
+          <label class="trace">Trace a reading
+            <select id="trace-select" aria-label="Trace a reading"></select>
+          </label>
+        </div>
+        <div class="trees" id="trees"></div>
+      </div>
+    </section>
+
+    <!-- 4 · SCORE -->
+    <section class="slide" data-note="Points add up, are capped at 100, then sorted into low, moderate or high, which drives the alert cards.">
+      <div class="slide-inner wide reveal">
+        <h2>From points to a decision</h2>
+        <p class="sub">Add · cap · band, for the traced reading.</p>
+        <div class="score-row">
+          <div class="sum-chips" id="sum-chips"></div>
+          <div class="node big" id="sum-node"><span class="sig">Σ</span><b id="raw-val">0</b><small>max possible raw = 105</small></div>
+          <div class="node big" id="cap-node"><span class="sig mono">min(100, raw)</span><b id="score-val">0</b><small>Score is capped at 100</small></div>
+          <div class="band-tree" id="band-tree"></div>
+        </div>
+        <div class="bandbar-wrap">
+          <div class="bandbar" id="bandbar"><i class="marker" id="band-marker"></i></div>
+          <div class="ticks"><span style="left:0">0</span><span style="left:40%">40</span><span style="left:70%">70</span><span style="left:100%">100</span></div>
+        </div>
+        <table class="outputs">
+          <thead><tr><th>Level</th><th>Risk badge</th><th>Haptic card</th><th>Emergency card</th><th>Event-log action</th></tr></thead>
+          <tbody>
+            <tr><td>LOW</td><td><span class="pill low">LOW RISK</span></td><td>READY</td><td>SAFE</td><td>None</td></tr>
+            <tr><td>MODERATE</td><td><span class="pill mod">MODERATE RISK</span></td><td>WARNING</td><td>WARNING</td><td>Vibration</td></tr>
+            <tr><td>HIGH</td><td><span class="pill high">HIGH RISK</span></td><td>ACTIVE</td><td>EMERGENCY</td><td>Emergency Alert</td></tr>
+          </tbody>
+        </table>
+        <p class="cap">Dashboard states. Hardware alert output not yet confirmed.</p>
+      </div>
+    </section>
+
+    <!-- 5 · NEXT -->
+    <section class="slide" data-note="Thresholds are starting estimates. Next step is trials to calibrate them; a trained model only makes sense once we have real data.">
+      <div class="slide-inner reveal planned">
+        <span class="corner-tag">PLANNED — NOT IMPLEMENTED</span>
+        <h2>What comes next</h2>
+        <div class="roadmap">
+          <div class="stage built"><b>Now</b><span>Rule-based scoring</span><em>Built</em></div>
+          <div class="stage"><b>Next</b><span>Calibrate thresholds from controlled walking and staged-fall trials</span></div>
+          <div class="stage"><b>Later</b><span>A trained model on windowed IMU + FSR features: random forest or 1D CNN</span><em>Needs real trial data</em></div>
+        </div>
+        <div class="forest" aria-label="Illustration of three small trees voting">
+          <div class="mini"><b>Tree 1</b><span>|a| &gt; ?</span><span>tilt &gt; ?</span><i>stable / at risk</i></div>
+          <div class="mini"><b>Tree 2</b><span>|ω| &gt; ?</span><span>heel/toe ratio &gt; ?</span><i>stable / at risk</i></div>
+          <div class="mini"><b>Tree 3</b><span>tilt &gt; ?</span><span>|a| &gt; ?</span><i>stable / at risk</i></div>
+          <div class="vote">majority vote → class</div>
+        </div>
+        <p class="cap">Illustration of the idea only. No model has been trained and no dataset has been collected.</p>
+        <p class="cap">Data needed: controlled walking trials, staged falls, labelled windows. Deploy option later: TensorFlow Lite Micro on the ESP32.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside class="notes" id="notes" hidden role="note" aria-live="polite"></aside>
+
+  <footer class="foot">
+    <a href="index.html" class="back">← Back to dashboard</a>
+    <span><strong>Prototype monitoring system.</strong> Risk thresholds and algorithms are intended for engineering evaluation and require further validation before clinical use. This system does not constitute a medical diagnosis, clinically validated fall prediction, or guaranteed fall-prevention mechanism. Consult a qualified engineer or clinician before deploying in any research or clinical setting.</span>
+    <span class="keys">← → sections · N notes</span>
+  </footer>
+
+  <script type="module" src="algorithms.js"></script>
+</body>
+</html>

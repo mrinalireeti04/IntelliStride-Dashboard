@@ -1,30 +1,21 @@
-# IntelliStride — Precision Gait Intelligence
+# IntelliStride
 
-IntelliStride is a front-end web application dashboard designed for laboratory-grade gait analysis and biomechanical telemetry. The platform provides an interface for pressure-sensing insoles paired with sub-millimeter inertial measurement units (IMUs) to display real-time clinical data outside the traditional laboratory environment.
+A student capstone **prototype** for foot-pressure and gait monitoring. It is **not a medical device**, is not certified or clinically validated, and must not be used for diagnosis or treatment.
 
-## Key Features
+## Hardware (prototype)
+- ESP32 microcontroller
+- 3 x FSR (force-sensing resistor) zones: forefoot, midfoot, hindfoot (raw ADC, uncalibrated)
+- MPU6050 accelerometer + gyroscope (6-axis)
+- GPS module and ultrasonic distance sensor
+- Data sent to Firebase Realtime Database
 
-- **Live Telemetry Dashboard**: Monitor real-time gait cadence, symmetry, stride length, and stance duration.
-- **Dynamic Plantar Pressure Mapping**: Visualizes pressure across capacitive sensors, displaying peak pressures and center of pressure (CoP) paths using dynamic SVG rendering.
-- **Kinematic Waveforms**: View real-time graphs of vertical ground reaction force (vGRF) and tibial shock acceleration.
-- **IMU Sensor Status**: Monitor battery life, signal RSSI, and internal temperatures of the connected StridePod hardware.
-- **Fall Risk Analysis**: Advanced analytics view to monitor pathologic gait deviations or asymmetric muscle fatigue.
-- **Clinical Validation Interface**: Designed for seamless deployment in physical therapy facilities, biomechanical research centers, and sports kinesiology labs.
+## Web dashboard
+Plain HTML, CSS and JavaScript (ES modules), deployed as static files on Vercel.
+- Live Telemetry, Fall Risk Analysis (rule-based, prototype thresholds), Live Readings (hard-coded sample data), Session pages, Documentation
+- `algorithms.html`: the rule-based algorithm drawn as decision trees
 
-## Architecture & Tech Stack
+## Setup
+Copy `env.example.js` to `env.js` and add your Firebase web config.
 
-- **HTML5**: Semantic structure with modular views (Landing, Dashboard, Fall Risk).
-- **CSS3**: Custom styling, responsive grid layouts, dark mode aesthetics, and smooth UI animations (`styles.css`).
-- **JavaScript**: Handles view switching, simulated telemetry data rendering, and mobile navigation.
-- **SVG Graphics**: Inline scalable vector graphics used extensively for insole pressure maps, UI iconography, and waveform charts.
-- **Typography**: Integrates Google Fonts (Newsreader, Inter, JetBrains Mono) and Material Symbols for a premium medical software aesthetic.
-
-## Getting Started
-
-1. Clone or download the repository.
-2. Open `index.html` in any modern web browser (Chrome, Firefox, Safari, Edge).
-3. Use the top navigation or sidebar to switch between the **Overview** landing page, the **Live Telemetry** dashboard, and the **Fall Risk** analysis modules.
-4. Interact with the Dashboard to explore the simulated live streams of biomechanical data.
-
-## Disclaimer
-This interface is a simulated dashboard representing an FDA Class II Medical Device Enclosure Specification. It is intended for demonstration and developmental purposes.
+## Status
+Fall-risk scoring uses engineering-estimate thresholds that still need calibration with real trial data.

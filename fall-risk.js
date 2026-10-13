@@ -7,6 +7,8 @@
  */
 
 import { db } from './firebase.js';
+import { FR_CONFIG, fallRiskEngine } from './fall-risk-engine.js';
+export { FR_CONFIG, fallRiskEngine };
 import {
   ref, onValue,
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
@@ -14,39 +16,6 @@ import {
 // ═══════════════════════════════════════════════════════
 //  CONFIGURATION — all thresholds in one place
 // ═══════════════════════════════════════════════════════
-export const FR_CONFIG = {
-  // Risk level thresholds (score 0–100)
-  LOW_MAX:   39,   // 0–39  = LOW
-  HIGH_MIN:  70,   // 70–100 = HIGH  |  40–69 = MODERATE
-
-  // Acceleration magnitude (g) prototype thresholds
-  ACCEL_NORMAL_MAX:   1.30,
-  ACCEL_ELEVATED:     1.50,
-  ACCEL_HIGH:         2.50,
-
-  // Angular velocity magnitude (°/s) prototype thresholds
-  GYRO_NORMAL_MAX:    20.0,
-  GYRO_ELEVATED:      30.0,
-  GYRO_HIGH:          80.0,
-
-  // Sudden acceleration change (g delta)
-  SUDDEN_DELTA:       0.40,
-
-  // Tilt magnitude (degrees, combined pitch+roll)
-  TILT_ELEVATED:       8.0,
-  TILT_HIGH:          15.0,
-
-  // Chart / buffer settings
-  CHART_MAX_SAMPLES:  200,  // rolling window (~20s @ 10Hz)
-  TREND_MAX_SAMPLES:   60,
-  ACCEL_Y_RANGE:        3,  // ±3g
-  GYRO_Y_RANGE:       120,  // ±120 °/s
-
-  DEMO_INTERVAL_MS:   400,
-  MAX_EVENTS:          20,
-  FALL_RISK_PATH:  'fallRisk',
-};
-
 // IntelliStride design colours
 const C = {
   primary:  '#7a2e3a',
@@ -60,80 +29,6 @@ const C = {
 };
 
 // ═══════════════════════════════════════════════════════
-//  FALL RISK ENGINE  (pure function — swap for ML later)
-// ═══════════════════════════════════════════════════════
-export function fallRiskEngine({ accel, gyro, orientation, prevAccelMag = null }) {
-  const ax = +( accel?.x  ?? 0);
-  const ay = +( accel?.y  ?? 0);
-  const az = +( accel?.z  ?? 1);
-  const gx = +( gyro?.x   ?? 0);
-  const gy = +( gyro?.y   ?? 0);
-  const gz = +( gyro?.z   ?? 0);
-  const pitch = +(orientation?.pitch ?? 0);
-  const roll  = +(orientation?.roll  ?? 0);
-
-  const accelMag = Math.sqrt(ax*ax + ay*ay + az*az);
-  const gyroMag  = Math.sqrt(gx*gx + gy*gy + gz*gz);
-  const tilt     = Math.sqrt(pitch*pitch + roll*roll);
-  const sudden   = prevAccelMag !== null ? Math.abs(accelMag - prevAccelMag) : 0;
-
-  const feat = {
-    accelMag:   { value: accelMag, unit: 'g',   status: 'NORMAL' },
-    gyroMag:    { value: gyroMag,  unit: '°/s', status: 'NORMAL' },
-    tilt:       { value: tilt,     unit: '°',   status: 'NORMAL' },
-    sudden:     { value: sudden,   unit: 'g',   status: 'NOT DETECTED' },
-    instability:{ value: 0,        unit: '',    status: 'NORMAL' },
-  };
-
-  let score = 0;
-
-  // 1. Acceleration magnitude  (max 40 pts)
-  if      (accelMag >= FR_CONFIG.ACCEL_HIGH)     { score += 40; feat.accelMag.status = 'HIGH';     }
-  else if (accelMag >= FR_CONFIG.ACCEL_ELEVATED)  { score += 25; feat.accelMag.status = 'ELEVATED'; }
-  else if (accelMag >= FR_CONFIG.ACCEL_NORMAL_MAX){ score += 10; feat.accelMag.status = 'ELEVATED'; }
-
-  // 2. Angular velocity magnitude  (max 40 pts)
-  if      (gyroMag >= FR_CONFIG.GYRO_HIGH)       { score += 40; feat.gyroMag.status = 'HIGH';     }
-  else if (gyroMag >= FR_CONFIG.GYRO_ELEVATED)    { score += 20; feat.gyroMag.status = 'ELEVATED'; }
-  else if (gyroMag >= FR_CONFIG.GYRO_NORMAL_MAX)  { score +=  8; feat.gyroMag.status = 'ELEVATED'; }
-
-  // 3. Sudden acceleration change  (max 15 pts)
-  if (sudden >= FR_CONFIG.SUDDEN_DELTA) { score += 15; feat.sudden.status = 'DETECTED'; }
-
-  // 4. Tilt  (max 10 pts)
-  if      (tilt >= FR_CONFIG.TILT_HIGH)     { score += 10; feat.tilt.status = 'HIGH';     }
-  else if (tilt >= FR_CONFIG.TILT_ELEVATED) { score +=  5; feat.tilt.status = 'ELEVATED'; }
-
-  score = Math.min(100, Math.round(score));
-  feat.instability.value = score / 100;
-  if      (score >= FR_CONFIG.HIGH_MIN)    feat.instability.status = 'HIGH';
-  else if (score >= FR_CONFIG.LOW_MAX + 1) feat.instability.status = 'ELEVATED';
-
-  const level = score >= FR_CONFIG.HIGH_MIN   ? 'HIGH'
-              : score >= FR_CONFIG.LOW_MAX + 1 ? 'MODERATE' : 'LOW';
-
-  let explanation;
-  if (level === 'LOW') {
-    explanation = 'Current movement pattern is within normal walking range. No significant instability detected.';
-  } else if (level === 'MODERATE') {
-    if (feat.gyroMag.status !== 'NORMAL' && feat.accelMag.status !== 'NORMAL') {
-      explanation = 'Elevated angular velocity and acceleration variance detected. Increased rotational and linear instability.';
-    } else if (feat.gyroMag.status !== 'NORMAL') {
-      explanation = 'Elevated angular velocity detected. Movement shows increased rotational instability — monitor closely.';
-    } else if (feat.sudden.status === 'DETECTED') {
-      explanation = 'Sudden acceleration change detected. Brief movement spike may indicate gait perturbation.';
-    } else {
-      explanation = 'Elevated acceleration variance detected. Movement deviating from steady-state walking baseline.';
-    }
-  } else {
-    explanation = feat.sudden.status === 'DETECTED'
-      ? 'Sudden acceleration change and high angular velocity detected. Haptic warning recommended. Verify patient safety.'
-      : 'High acceleration magnitude and angular velocity detected. Emergency alert threshold reached.';
-  }
-
-  return { score, level, features: feat, explanation, accelMag, gyroMag };
-}
-
 // ═══════════════════════════════════════════════════════
 //  MODULE STATE
 // ═══════════════════════════════════════════════════════
@@ -141,6 +36,7 @@ let frInited       = false;
 const frUnsubs     = [];
 let frDemoInterval = null;
 let frHwConnected  = true;
+let frLive          = false;   // true only after a real /fallRisk snapshot arrives
 let frPrevAccelMag = null;
 let frLastLevel    = null;
 let frLastEventTs  = 0;
@@ -188,12 +84,9 @@ function push(arr, v, N) { arr.push(v); if (arr.length > N) arr.shift(); }
 function renderGauge(score, level) {
   const fill = fr$('fr-gauge-fill');
   if (!fill) return;
-  const R    = 100;
-  const half = Math.PI * R;   // 314.16
-  const full = 2 * Math.PI * R; // 628.32
-  const len  = (score / 100) * half;
-  fill.setAttribute('stroke-dasharray',  `${len.toFixed(2)} ${full.toFixed(2)}`);
-  fill.setAttribute('stroke', level === 'HIGH' ? C.alert : level === 'MODERATE' ? C.moderate : C.primary);
+  // Single semicircle path with pathLength=100: every length is a plain score.
+  fill.setAttribute('stroke-dasharray', score > 0 ? `${score} 200` : '0 200');   // 200 gap avoids a stray end-cap dot
+  fill.setAttribute('stroke', level === 'HIGH' ? C.alert : level === 'MODERATE' ? C.moderate : C.safe);
 
   frSet('fr-risk-score', score);
   const badge = fr$('fr-risk-level-badge');
@@ -242,9 +135,10 @@ function drawLineChart(canvas, ctx, series, yRange) {
   ctx.beginPath(); ctx.moveTo(0, yMid); ctx.lineTo(W, yMid); ctx.stroke();
 
   if (N < 2) return;
-  series.forEach(({ data, color }) => {
+  series.forEach(({ data, color, dash }) => {
     ctx.strokeStyle = color;
-    ctx.lineWidth   = 1.5;
+    ctx.setLineDash(dash || []);
+    ctx.lineWidth   = 2;
     ctx.lineJoin    = 'round';
     ctx.lineCap     = 'round';
     ctx.beginPath();
@@ -254,6 +148,7 @@ function drawLineChart(canvas, ctx, series, yRange) {
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.stroke();
+    ctx.setLineDash([]);
   });
 }
 
@@ -400,7 +295,7 @@ function updateEmergency(level) {
   if (!sEl) return;
   if (level === 'HIGH') {
     sEl.textContent = 'EMERGENCY'; sEl.className = 'fr-status-value fr-emergency-critical';
-    if (dEl) dEl.textContent = 'Fall-like event detected. Emergency alert initiated. Verify patient status immediately.';
+    if (dEl) dEl.textContent = 'Fall-like event detected. Emergency alert initiated. Verify wearer status immediately.';
     if (lEl) lEl.textContent = 'Now — ' + new Date().toLocaleTimeString();
   } else if (level === 'MODERATE') {
     sEl.textContent = 'WARNING'; sEl.className = 'fr-status-value fr-emergency-warning';
@@ -438,7 +333,7 @@ function renderTable() {
   const cEl = fr$('fr-events-count');
   if (cEl) cEl.textContent = riskEvents.length;
   const bEl = fr$('fr-events-badge');
-  if (bEl) bEl.textContent = frHwConnected ? 'LIVE DATA' : 'SIMULATED DATA';
+  if (bEl) bEl.textContent = frLive ? 'LIVE DATA' : 'SIMULATED DATA';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -463,10 +358,10 @@ function processReading(data) {
   push(tB.s, score, tB.N);
 
   drawLineChart(accelCanvas, accelCtx,
-    [{ data: aB.x, color: C.primary }, { data: aB.y, color: C.blush }, { data: aB.z, color: C.muted }],
+    [{ data: aB.x, color: '#7a2e3a' }, { data: aB.y, color: '#B8722A' }, { data: aB.z, color: '#3E7C8C', dash: [6, 3] }],
     FR_CONFIG.ACCEL_Y_RANGE);
   drawLineChart(gyroCanvas, gyroCtx,
-    [{ data: gB.x, color: C.primary }, { data: gB.y, color: C.blush }, { data: gB.z, color: C.muted }],
+    [{ data: gB.x, color: '#7a2e3a' }, { data: gB.y, color: '#B8722A' }, { data: gB.z, color: '#3E7C8C', dash: [6, 3] }],
     FR_CONFIG.GYRO_Y_RANGE);
   drawTrend();
 
@@ -497,11 +392,13 @@ function updateConnectionUI(fbOnline, hwConn, simulated) {
   }
   const mpuBadge = fr$('fr-mpu-badge');
   if (mpuBadge) {
-    mpuBadge.textContent = 'MPU6050 • CONNECTED';
-    Object.assign(mpuBadge.style, { background:'rgba(90,154,110,0.12)', color:'#2d6b45', borderColor:'rgba(90,154,110,0.3)' });
+    mpuBadge.textContent = frLive ? 'MPU6050 • LIVE' : 'MPU6050 • NOT CONNECTED';
+    Object.assign(mpuBadge.style, frLive
+      ? { background:'rgba(90,154,110,0.12)', color:'#2d6b45', borderColor:'rgba(90,154,110,0.3)' }
+      : { background:'transparent', color:'#7B6C66', borderColor:'#C9B8B2' });
   }
   const simEl = fr$('fr-sim-banner');
-  if (simEl) simEl.classList.toggle('visible', false);
+  if (simEl) simEl.classList.toggle('visible', !frLive);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -582,7 +479,6 @@ export function initFallRisk() {
   frUnsubs.push(() => window.removeEventListener('resize', onResize));
 
   // Seed table & gauge
-  riskEvents.push({ timeStr:'—', score:32, level:'LOW', accelMag:0.98, gyroMag:5.6, action:'None' });
   renderTable();
   renderGauge(0, 'LOW');
 
@@ -607,7 +503,7 @@ export function initFallRisk() {
   // Firebase: /fallRisk/ — live MPU6050 data from ESP32
   frUnsubs.push(onValue(ref(db, FR_CONFIG.FALL_RISK_PATH), snap => {
     const d = snap.val();
-    if (d?.accelerometer || d?.gyroscope) { stopDemo(); processReading(d); }
+    if (d?.accelerometer || d?.gyroscope) { stopDemo(); frLive = true; updateConnectionUI(fbOnline, true, false); processReading(d); }
   }));
 
   // Always start demo
@@ -617,7 +513,7 @@ export function initFallRisk() {
 export function cleanupFallRisk() {
   frUnsubs.forEach(u => u && u()); frUnsubs.length = 0;
   stopDemo();
-  frInited = false; frPrevAccelMag = null; frLastLevel = null;
+  frInited = false; frLive = false; frPrevAccelMag = null; frLastLevel = null;
   aB.x.length = aB.y.length = aB.z.length = 0;
   gB.x.length = gB.y.length = gB.z.length = 0;
   tB.s.length = 0; riskEvents.length = 0;

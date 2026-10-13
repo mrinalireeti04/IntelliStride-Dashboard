@@ -11,18 +11,25 @@
  *  • Soft telemetry flash on value update
  */
 
-import {
-  seedIfEmpty,
-  onConnectionChange,
-  onSessionChange,
-  onTelemetryChange,
-  onSensorsChange,
-  onGyroChange,
-  writeSessionPause,
-  writeFlagEvent,
-} from './firebase.js';
+import { initLiveReadings } from './live-readings.js';
 
-import { initFallRisk, cleanupFallRisk } from './fall-risk.js';
+// Firebase is loaded lazily so the router and all static pages keep working
+// even if the network blocks the Firebase CDN.
+let _fb = null;
+async function loadFirebase() {
+  if (!_fb) _fb = await import('./firebase.js');
+  return _fb;
+}
+let _fr = null;
+async function startFallRisk() {
+  try {
+    _fr = _fr || await import('./fall-risk.js');
+    _fr.initFallRisk();
+  } catch (e) {
+    console.error('[IntelliStride] Fall Risk module unavailable:', e);
+    toast('Could not load Fall Risk module (network?)', 'warning', 5000);
+  }
+}
 
 // ─────────────────────────────────────────────
 //  SPA View Management
@@ -30,12 +37,38 @@ import { initFallRisk, cleanupFallRisk } from './fall-risk.js';
 const views = {
   landing:   document.getElementById('view-landing'),
   dashboard: document.getElementById('view-dashboard'),
+  livereadings: document.getElementById('view-livereadings'),
   fallrisk:  document.getElementById('view-fallrisk'),
   documentation: document.getElementById('view-documentation'),
   hardware:  document.getElementById('view-hardware'),
   history:   document.getElementById('view-history'),
   analytics: document.getElementById('view-analytics')
 };
+
+// Single source of truth for the dashboard sidebar (rendered into every .dash-sidebar)
+const NAV = [
+  ['dashboard',    'speed',         'Live Telemetry'],
+  ['livereadings', 'monitor_heart', 'Live Readings'],
+  ['fallrisk',     'crisis_alert',  'Fall Risk Analysis'],
+  ['analytics',    'analytics',     'Session Analytics'],
+  ['history',      'history',       'Session History'],
+  ['hardware',     'sensors',       'Hardware &amp; Insoles'],
+  ['documentation','library_books', 'Documentation'],
+  ['landing',      'home',          'Return to Overview'],
+];
+function renderSidebar() {
+  document.querySelectorAll('.dash-sidebar .sidebar-nav').forEach(nav => {
+    nav.innerHTML = NAV.map(([v, icon, label]) =>
+      `<a href="#" class="sidebar-link${v === _currentView ? ' active' : ''}" data-view="${v}" onclick="switchView('${v}'); return false;">` +
+      `<span class="material-symbols-outlined">${icon}</span>${label}</a>`).join('');
+  });
+}
+
+function applyHeaderVisibility() {
+  const header = document.getElementById('site-header');
+  if (header) header.style.display = (_currentView === 'landing' || window.innerWidth <= 960) ? 'block' : 'none';
+}
+window.addEventListener('resize', applyHeaderVisibility);
 
 let _currentView = 'landing';
 window.switchView = function (viewName) {
@@ -46,19 +79,16 @@ window.switchView = function (viewName) {
   if (views[viewName]) views[viewName].classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Hide the landing page header if not on landing
-  const header = document.getElementById('site-header');
-  if (header) {
-    header.style.display = viewName === 'landing' ? 'block' : 'none';
-  }
+  applyHeaderVisibility();
 
   document.querySelectorAll('[data-view]').forEach(link => {
     link.classList.toggle('active', link.dataset.view === viewName);
   });
 
-  if (viewName === 'dashboard') initDashboard();
-  if (viewName === 'fallrisk')  initFallRisk();
-  if (prev === 'fallrisk' && viewName !== 'fallrisk') cleanupFallRisk();
+  if (viewName === 'dashboard')    initDashboard();
+  if (viewName === 'livereadings') initLiveReadings();
+  if (viewName === 'fallrisk')     startFallRisk();
+  if (prev === 'fallrisk' && viewName !== 'fallrisk') _fr?.cleanupFallRisk();
 };
 
 // ─────────────────────────────────────────────
@@ -159,16 +189,9 @@ function updateConnectionUI(isOnline) {
 //  Firebase → DOM Bindings
 // ─────────────────────────────────────────────
 function bindSession(data) {
+  // D-1: patient/condition fields are never shown. The session chip stays static
+  // ("Test Session — Demo Wearer"); only the REC reference is bound if present.
   if (!data) return;
-  const info = $('patient-info');
-  if (info) {
-    const txt = `Subject #${data.patientId} — ${data.patientName} (${data.condition})`;
-    if (info.textContent !== txt) { flashUpdate(info); info.textContent = txt; }
-  }
-  const liveText = $('live-stream-label');
-  if (liveText && data.streamHz) {
-    liveText.textContent = `LIVE STREAMING — ${data.streamHz} Hz`;
-  }
   const sessionRef = $('session-ref');
   if (sessionRef && data.sessionRef) sessionRef.textContent = `| REC #${data.sessionRef}`;
 }
@@ -178,121 +201,54 @@ function bindTelemetry(data) {
 
   // Cadence
   const cadEl = $('cadence-readout');
-  if (cadEl && cadEl.textContent !== String(data.cadence)) {
+  if (cadEl && data.cadence != null && cadEl.textContent !== String(data.cadence)) {
     flashUpdate(cadEl);
     cadEl.textContent = data.cadence;
   }
 
-  // Mathematical Simulation for Right Shoe
-  let rPmax = data.rightPmax;
-  let rContact = data.rightContactArea;
-  let rBi = data.bilateralRight;
-  let lBi = data.bilateralLeft;
-  
-  if (isRightSimulated) {
-    const lPmax = data.leftPmax || 274;
-    rPmax = Math.round(lPmax * 1.05); // slight offset
-    const lContact = data.leftContactArea || 118;
-    rContact = Math.round(lContact * 0.98); // slight offset
-    lBi = 51.2;
-    rBi = 48.8;
-  }
-
   // Pass to particle engine
   if (window.sharedTelemetry) {
-    window.sharedTelemetry.leftPmax = data.leftPmax || 0;
-    window.sharedTelemetry.rightPmax = rPmax || 0;
+    window.sharedTelemetry.leftPmax  = data.leftPmax  || 0;
+    window.sharedTelemetry.rightPmax = data.rightPmax || 0;
   }
 
-  // Symmetry
-  setText('symmetry-value',     data.symmetryIndex?.toFixed(1));
-  setText('bilateral-left-pct', lBi?.toFixed(1) + '%');
-  setText('bilateral-right-pct',rBi?.toFixed(1) + '%');
-
-  // Bilateral bar fills
-  setWidth('bilateral-fill-left',  lBi  ?? 49.1);
-  setWidth('bilateral-fill-right', rBi ?? 50.9);
-
-  // Bilateral labels
-  const lblLeft  = $('bilateral-label-left');
-  const lblRight = $('bilateral-label-right');
-  if (lblLeft)  { flashUpdate(lblLeft);  lblLeft.textContent  = ` Left Stride (${(lBi  ?? 49.1).toFixed(1)}%)`; }
-  if (lblRight) { flashUpdate(lblRight); lblRight.textContent = `Right Stride (${(rBi ?? 50.9).toFixed(1)}%) `; }
+  // Symmetry (only values actually present in the data)
+  if (data.symmetryIndex != null) setText('symmetry-value', data.symmetryIndex.toFixed(1));
+  if (data.bilateralLeft != null && data.bilateralRight != null) {
+    setText('bilateral-left-pct',  data.bilateralLeft.toFixed(1)  + '%');
+    setText('bilateral-right-pct', data.bilateralRight.toFixed(1) + '%');
+    setWidth('bilateral-fill-left',  data.bilateralLeft);
+    setWidth('bilateral-fill-right', data.bilateralRight);
+    setText('bilateral-label-left',  ` Left Stride (${data.bilateralLeft.toFixed(1)}%)`);
+    setText('bilateral-label-right', `Right Stride (${data.bilateralRight.toFixed(1)}%) `);
+  }
 
   // Stride + Stance
-  setText('stride-value',     data.strideLength?.toFixed(2));
-  setText('stride-variance',  `±${data.strideVariance?.toFixed(2)}m`);
-  setText('stance-value',     data.stanceDuration?.toFixed(2));
-  setText('stance-cycle-pct', `${data.stanceCyclePct?.toFixed(1)}% cycle phase`);
+  if (data.strideLength != null)   setText('stride-value',    data.strideLength.toFixed(2));
+  if (data.strideVariance != null) setText('stride-variance', `±${data.strideVariance.toFixed(2)}m`);
+  if (data.stanceDuration != null) setText('stance-value',    data.stanceDuration.toFixed(2));
+  if (data.stanceCyclePct != null) setText('stance-cycle-pct', `${data.stanceCyclePct.toFixed(1)}% cycle phase`);
 
-  // Pressure badge
-  setText('peak-pressure-badge', `Peak: ${Math.max(data.leftPmax||0, rPmax||0)} kPa`);
-
-  // Left insole kPa tags
-  setText('left-pmax-heel',  `${data.leftPmax} kPa`);
-  setText('left-pmax-meta',  `${Math.round((data.leftPmax ?? 274) * 0.69)} kPa`); // ~metatarsal
-  setText('left-contact-area', `Contact Area: `);
-  const lcaEl = $('left-contact-area-val');
-  if (lcaEl) { flashUpdate(lcaEl); lcaEl.textContent = `${data.leftContactArea} cm²`; }
-  const lfEl = $('left-footer-pmax');
-  if (lfEl) { flashUpdate(lfEl); lfEl.textContent = `${data.leftPmax} kPa`; }
-
-  // Right insole kPa tags
-  setText('right-pmax-heel', `${rPmax} kPa`);
-  setText('right-pmax-meta', `${Math.round((rPmax ?? 318) * 0.68)} kPa`);
-  const rcaEl = $('right-contact-area-val');
-  if (rcaEl) { flashUpdate(rcaEl); rcaEl.textContent = `${rContact} cm²`; }
-  const rfEl = $('right-footer-pmax');
-  if (rfEl) { flashUpdate(rfEl); rfEl.textContent = `${rPmax} kPa`; }
-
-  // vGRF / Tibial
-  setText('vgrf-value',     `${data.vgrf?.toFixed(2)} BW`);
-  setText('tibial-value',   `${data.tibialShock?.toFixed(1)} g`);
-  
-  // Tier 3 grid mock simulation stream
-  if (!window.tier3JitterInterval) {
-    window.tier3JitterInterval = setInterval(() => {
-      if (document.hidden) return; // Pause when hidden
-
-      const jitter = (val, amt) => (val + (Math.random() * amt - amt/2)).toFixed(1);
-
-      // Left
-      setText('left-battery', `${Math.floor(88 - (Date.now() % 100000) / 50000)}%`);
-      setText('left-rssi', `${Math.round(-42 + (Math.random() * 4 - 2))} dBm`);
-      setText('left-temp', `${jitter(24.2, 0.4)}°C`);
-
-      // Right
-      setText('right-battery', `${Math.floor(84 - (Date.now() % 120000) / 60000)}%`);
-      setText('right-rssi', `${Math.round(-45 + (Math.random() * 4 - 2))} dBm`);
-      setText('right-temp', `${jitter(24.5, 0.4)}°C`);
-
-      // Gyro
-      setText('gyro-yaw', `${(2.4 + (Math.random() * 0.8 - 0.4)).toFixed(1)}°/s`);
-      setText('gyro-pitch', `${(-0.8 + (Math.random() * 0.6 - 0.3)).toFixed(1)}°/s`);
-      setText('gyro-roll', `${(1.2 + (Math.random() * 0.4 - 0.2)).toFixed(1)}°/s`);
-    }, 200);
+  // Raw FSR ADC only (D-3): no kPa, no contact area, no simulated right foot.
+  if (data.leftPmax != null) {
+    setText('peak-pressure-badge', `Raw ADC: ${data.leftPmax}`);
+    setText('left-pmax-heel', `Heel ${data.leftPmax}`);
+    setText('left-footer-pmax', `ADC: ${data.leftPmax}`);
   }
-
-  // Kin metrics
-  setText('loading-rate',     `${data.loadingRate?.toFixed(1)} BW/s`);
-  setText('pushoff-impulse',  `${data.pushOffImpulse} N·s`);
-  setText('lr-diff',          `L/R diff: < ${data.lrDiff?.toFixed(1)}%`);
 
   // Anomaly card
   const anomalyEl = $('anomaly-status');
-  if (anomalyEl) {
-    const wasNominal = anomalyEl.textContent.includes('NOMINAL');
-    const isNominal  = data.anomalyStatus === 'NOMINAL';
+  if (anomalyEl && data.anomalyStatus) {
+    const isNominal = data.anomalyStatus === 'NOMINAL';
     if (anomalyEl.textContent !== `STATUS: ${data.anomalyStatus}`) {
       flashUpdate(anomalyEl);
       anomalyEl.textContent = `STATUS: ${data.anomalyStatus}`;
       anomalyEl.className = isNominal ? 'mono-sm primary-text' : 'mono-sm alert-text';
-      // Alert dot
       const dot = $('anomaly-dot');
       if (dot) dot.style.background = isNominal ? 'var(--color-primary)' : 'var(--color-alert)';
     }
   }
-  setText('anomaly-desc', data.anomalyDesc);
+  if (data.anomalyDesc) setText('anomaly-desc', data.anomalyDesc);
 }
 
 // ─────────────────────────────────────────────
@@ -309,7 +265,7 @@ function updateHardwareConnectionUI() {
   if (hubPill) {
     if (isHardwareConnected) {
       if (hubText) { 
-        hubText.textContent = isRightSimulated ? 'Connected: StridePod 4-L (R-Sim)' : 'Connected: StridePod 4-L/R'; 
+        hubText.textContent = 'Connected: ESP32-DevKit-01'; 
         hubText.className = 'label-text primary-text'; 
       }
       if (hubDot) { hubDot.style.background = 'var(--color-primary)'; hubDot.style.animation = ''; }
@@ -329,7 +285,7 @@ function updateHardwareConnectionUI() {
       if (streamText) {
         streamText.className = 'label-text white-text upper';
         if (!streamText.textContent.includes('LIVE STREAMING')) {
-           streamText.textContent = `LIVE STREAMING — 120 Hz`;
+           streamText.textContent = `LIVE STREAM — rate TBC`;
         }
       }
       if (streamDot) streamDot.style.display = 'inline-flex';
@@ -376,7 +332,7 @@ function bindGyro(data) {
   setText('gyro-yaw',   fmt(data.yaw));
   setText('gyro-pitch', fmt(data.pitch));
   setText('gyro-roll',  fmt(data.roll));
-  setText('gyro-heading', data.heading ?? '');
+  // no magnetometer on MPU6050: no heading shown
 }
 
 // ─────────────────────────────────────────────
@@ -384,7 +340,7 @@ function bindGyro(data) {
 //  from Firebase startTime when available)
 // ─────────────────────────────────────────────
 let timerRAF  = null;
-let sessionStartTime = Date.now() - (24 * 60 * 1000 + 18 * 1000 + 420);
+let sessionStartTime = Date.now();
 let isPaused = false;
 
 function startStopwatch() {
@@ -407,7 +363,7 @@ function startStopwatch() {
 // ─────────────────────────────────────────────
 //  Dashboard Event Handlers
 // ─────────────────────────────────────────────
-let flagCount = 13;
+let flagCount = 0;
 
 function initPauseButton() {
   const btn = $('btn-pause');
@@ -428,11 +384,11 @@ function initPauseButton() {
       btn.innerHTML = btn.innerHTML.replace('Resume Stream', 'Pause Capture');
       btn.style.background = '';
       btn.style.color = '';
-      toast('Stream resumed — 120Hz capture active', 'success');
+      toast('Stream resumed — capture active', 'success');
     }
     updateHardwareConnectionUI();
     // Write pause state back to Firebase
-    try { await writeSessionPause(isPaused); } catch (e) {
+    try { await (await loadFirebase()).writeSessionPause(isPaused); } catch (e) {
       console.warn('[IntelliStride] Could not write pause state to Firebase:', e);
     }
   });
@@ -449,7 +405,7 @@ function initFlagButton() {
     btn.style.color = 'var(--color-on-primary)';
     toast(`Event flag #${flagCount} recorded`, 'success', 2000);
 
-    try { await writeFlagEvent(flagCount); } catch (e) {
+    try { await (await loadFirebase()).writeFlagEvent(flagCount); } catch (e) {
       console.warn('[IntelliStride] Could not write flag to Firebase:', e);
     }
 
@@ -471,14 +427,6 @@ async function initDashboard() {
   if (dashInited) return;
   dashInited = true;
 
-  // Seed Firebase with default data if the DB is empty
-  try {
-    await seedIfEmpty();
-  } catch (e) {
-    toast('Could not reach Firebase — using demo values', 'warning', 5000);
-    console.error('[IntelliStride] Firebase seed error:', e);
-  }
-
   // Start local stopwatch
   startStopwatch();
 
@@ -486,16 +434,25 @@ async function initDashboard() {
   initPauseButton();
   initFlagButton();
 
-  // Subscribe to all Firebase paths
+  // Firebase is loaded lazily so static pages work even if its CDN is blocked.
+  let fb;
+  try {
+    fb = await loadFirebase();
+  } catch (e) {
+    toast('Could not reach Firebase — live values unavailable', 'warning', 5000);
+    console.error('[IntelliStride] Firebase load error:', e);
+    return;
+  }
+
   unsubs.push(
-    onConnectionChange(isOnline => {
+    fb.onConnectionChange(isOnline => {
       updateConnectionUI(isOnline);
       if (isOnline) toast('Firebase Realtime Database connected', 'success', 2500);
     }),
-    onSessionChange(data   => { if (data) bindSession(data);    }),
-    onTelemetryChange(data => { if (data) bindTelemetry(data);  }),
-    onSensorsChange(data   => { if (data) bindSensors(data);    }),
-    onGyroChange(data      => { if (data) bindGyro(data);       }),
+    fb.onSessionChange(data   => { if (data) bindSession(data);    }),
+    fb.onTelemetryChange(data => { if (data) bindTelemetry(data);  }),
+    fb.onSensorsChange(data   => { if (data) bindSensors(data);    }),
+    fb.onGyroChange(data      => { if (data) bindGyro(data);       }),
   );
 }
 
@@ -581,6 +538,7 @@ function initAnchorScroll() {
 //  Bootstrap
 // ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  renderSidebar();
   initScrollAnimations();
   initStickyHeader();
   initCtaForm();

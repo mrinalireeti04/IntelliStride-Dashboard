@@ -28,6 +28,7 @@ export const fsrTotal = f => f.forefoot + f.midfoot + f.hindfoot;
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${+d} ${MONTHS[+m - 1]} ${y}`; };
 const toSec = t => { const [h, m, s] = t.split(':').map(Number); return h * 3600 + m * 60 + s; };
+const shortDate = iso => { const [, m, d] = iso.split('-'); return `${+d} ${MONTHS[+m - 1]}`; };
 const $ = id => document.getElementById(id);
 const LEVEL_COLOR = { LOW: '#5a9a6e', MODERATE: '#B8722A', HIGH: '#A13B3B' };
 const fixed = (v, n) => (+v).toFixed(n);
@@ -76,7 +77,7 @@ function renderCards() {
           <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">speed</span>BMI ${p.bmi}</span>
           <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">footprint</span>UK ${p.footSize}</span>
         </div>
-        <div class="lr-window">${first.t} → ${last.t}</div>
+        <div class="lr-window">${shortDate(p.date)} · ${first.t} → ${last.t}</div>
         <div class="lr-risk-row">${riskBadge(last.result.level)}<span class="lr-score">${last.result.score} / 100</span></div>
         <div class="lr-mini-fsr" aria-label="FSR forefoot, midfoot, hindfoot">${bars}</div>
         <div class="lr-chiprow"><span class="lr-tag ${toneClass(d.tone)}">${d.label} · ${last.distanceCm} cm</span>${gps}</div>
@@ -136,7 +137,7 @@ function renderDetail(animate) {
     <div class="lr-detail-head">
       <div>
         <h2 class="t2-panel-title">${p.name} · ${p.id}</h2>
-        <p class="caption-text muted-text upper">${scenarioText(p)} · ${fmtDate(READINGS_DATE)} · Active telemetry</p>
+        <p class="caption-text muted-text upper">${scenarioText(p)} · ${fmtDate(p.date)} · Active telemetry</p>
       </div>
       <div class="lr-risk-row">${riskBadge(res.level)}<span class="lr-score">${res.score} / 100</span></div>
     </div>
@@ -239,11 +240,11 @@ function renderChips() {
 function renderTable() {
   const rows = [];
   people.forEach(p => p.scored.forEach((r, i) => rows.push({ p, r, i })));
-  rows.sort((a, b) => (READINGS_DATE + 'T' + a.r.t).localeCompare(READINGS_DATE + 'T' + b.r.t));
+  rows.sort((a, b) => (a.p.date + 'T' + a.r.t).localeCompare(b.p.date + 'T' + b.r.t));
   $('lr-tbody').innerHTML = rows.filter(x => filter === 'all' || x.p.id === filter).map(({ p, r, i }) => {
     const sel = p.id === selPerson && i === selIdx;
     return `<tr tabindex="0" data-id="${p.id}" data-i="${i}" class="${sel ? 'selected' : ''}">
-      <td class="fr-td-mono">${r.t}</td><td><strong>${p.name}</strong> <span class="muted-text">(${p.id})</span></td><td>${r.phase}</td>
+      <td class="fr-td-mono"><span class="muted-text">${shortDate(p.date)}</span> ${r.t}</td><td><strong>${p.name}</strong> <span class="muted-text">(${p.id})</span></td><td>${r.phase}</td>
       <td class="fr-td-mono">${r.fsr.forefoot}/${r.fsr.midfoot}/${r.fsr.hindfoot}</td>
       <td class="fr-td-mono">${fixed(r.result.accelMag, 2)}</td><td class="fr-td-mono">${fixed(r.result.gyroMag, 1)}</td>
       <td class="fr-td-mono">${fixed(r.result.features.tilt.value, 1)}</td><td class="fr-td-mono">${r.distanceCm}</td>
@@ -271,8 +272,10 @@ export function initLiveReadings() {
   if (!$('lr-cards')) return;
   inited = true;
   people = PEOPLE.map(p => ({ ...p, scored: scorePerson(p) }));
-  $('lr-date-chip').textContent = `${fmtDate(READINGS_DATE)} · IST`;
-  $('lr-log-date').textContent = fmtDate(READINGS_DATE);
+  const dates = [...new Set(people.map(p => p.date))].sort();
+  const range = dates.length > 1 ? `${fmtDate(dates[0])} – ${fmtDate(dates[dates.length - 1])}` : fmtDate(dates[0]);
+  $('lr-date-chip').textContent = `${range} · IST`;
+  $('lr-log-date').textContent = range;
   $('lr-count-chip').textContent = `${people.length} participants`;
   selPerson = people[0].id;
   selIdx = people[0].scored.length - 1;

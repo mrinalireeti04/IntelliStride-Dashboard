@@ -20,7 +20,8 @@ export const PEOPLE = [
     "bmi": 20.31,
     "bmiCategory": "Normal",
     "footSize": 5,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-09-30",
+    "testedOn": "30 Sep 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -275,7 +276,8 @@ export const PEOPLE = [
     "bmi": 20.7,
     "bmiCategory": "Normal",
     "footSize": 6,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-09-30",
+    "testedOn": "30 Sep 2026",
     "scenario": "Brisk walk with a turn",
     "readings": [
       {
@@ -530,7 +532,8 @@ export const PEOPLE = [
     "bmi": 20.45,
     "bmiCategory": "Normal",
     "footSize": 5,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-09-30",
+    "testedOn": "30 Sep 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -785,7 +788,8 @@ export const PEOPLE = [
     "bmi": 20.57,
     "bmiCategory": "Normal",
     "footSize": 6,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-09-30",
+    "testedOn": "30 Sep 2026",
     "scenario": "Standing, weight shifting",
     "readings": [
       {
@@ -1040,7 +1044,8 @@ export const PEOPLE = [
     "bmi": 21.63,
     "bmiCategory": "Normal",
     "footSize": 8,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-05",
+    "testedOn": "5 Oct 2026",
     "scenario": "Staged stumble (demo only)",
     "readings": [
       {
@@ -1295,7 +1300,8 @@ export const PEOPLE = [
     "bmi": 22.6,
     "bmiCategory": "Normal",
     "footSize": 9,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-05",
+    "testedOn": "5 Oct 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -1550,7 +1556,8 @@ export const PEOPLE = [
     "bmi": 21.45,
     "bmiCategory": "Normal",
     "footSize": 8,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-05",
+    "testedOn": "5 Oct 2026",
     "scenario": "Brisk walk with a turn",
     "readings": [
       {
@@ -1805,7 +1812,8 @@ export const PEOPLE = [
     "bmi": 20.03,
     "bmiCategory": "Normal",
     "footSize": 5,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-05",
+    "testedOn": "5 Oct 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -2060,7 +2068,8 @@ export const PEOPLE = [
     "bmi": 23.46,
     "bmiCategory": "Normal",
     "footSize": 9,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-05",
+    "testedOn": "5 Oct 2026",
     "scenario": "Seated, resting",
     "readings": [
       {
@@ -2315,7 +2324,8 @@ export const PEOPLE = [
     "bmi": 25.47,
     "bmiCategory": "Overweight",
     "footSize": 9,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-09",
+    "testedOn": "9 Oct 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -2570,7 +2580,8 @@ export const PEOPLE = [
     "bmi": 24.49,
     "bmiCategory": "Normal",
     "footSize": 10,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-09",
+    "testedOn": "9 Oct 2026",
     "scenario": "Brisk walk with a turn",
     "readings": [
       {
@@ -2825,7 +2836,8 @@ export const PEOPLE = [
     "bmi": 21.39,
     "bmiCategory": "Normal",
     "footSize": 9,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-09",
+    "testedOn": "9 Oct 2026",
     "scenario": "Standing, weight shifting",
     "readings": [
       {
@@ -3080,7 +3092,8 @@ export const PEOPLE = [
     "bmi": 20.05,
     "bmiCategory": "Normal",
     "footSize": 8,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-09",
+    "testedOn": "9 Oct 2026",
     "scenario": "Normal walk",
     "readings": [
       {
@@ -3335,7 +3348,8 @@ export const PEOPLE = [
     "bmi": 20.31,
     "bmiCategory": "Normal",
     "footSize": 7,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-11",
+    "testedOn": "11 Oct 2026",
     "scenario": "Seated, resting",
     "readings": [
       {
@@ -3590,7 +3604,8 @@ export const PEOPLE = [
     "bmi": 25.31,
     "bmiCategory": "Overweight",
     "footSize": 8,
-    "testedOn": "13 Oct 2026",
+    "date": "2026-10-11",
+    "testedOn": "11 Oct 2026",
     "scenario": "Normal walk",
     "readings": [
       {

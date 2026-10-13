@@ -70,7 +70,7 @@ function renderCards() {
           <div><h3 class="lr-name">${p.name}</h3><span class="lr-tag">${scenarioText(p)}</span></div>
         </div>
         <div class="lr-bio-row">
-          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">female</span>${p.sex || 'Female'} · ${p.age}y</span>
+          <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">person</span>${p.sex ? p.sex + ' · ' : ''}${p.age}y</span>
           <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">straighten</span>${p.heightCm} cm</span>
           <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">monitor_weight</span>${p.weightKg} kg</span>
           <span class="lr-bio-pill"><span class="material-symbols-outlined lr-bio-icon">speed</span>BMI ${p.bmi}</span>
@@ -151,7 +151,7 @@ function renderDetail(animate) {
       <div class="lr-sub lr-sub-biometrics">
         <h3>Participant profile</h3>
         <div class="lr-kv">
-          <span>Biological Sex</span><span>${p.sex || 'Female'}</span>
+          <span>Biological Sex</span><span>${p.sex || 'Not recorded'}</span>
           <span>Age</span><span>${p.age} years</span>
           <span>Height</span><span>${p.heightCm} cm</span>
           <span>Weight</span><span>${p.weightKg} kg</span>

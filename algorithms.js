@@ -154,7 +154,7 @@ function trace(key) {
   highlight(exp); renderScore(exp);
 }
 sel.addEventListener('change', () => trace(sel.value));
-sel.value = 'P4|09:37:07';
+sel.value = readings.reduce((b, x) => (x.engineScore > b.engineScore ? x : b), readings[0]).key;
 trace(sel.value);
 
 // ── Deck: dots, keys, notes, reveal ──

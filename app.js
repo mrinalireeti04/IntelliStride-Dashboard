@@ -12,6 +12,7 @@
  */
 
 import { initLiveReadings } from './live-readings.js?v=2';
+import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=2';
 
 // Firebase is loaded lazily so the router and all static pages keep working
 // even if the network blocks the Firebase CDN.
@@ -36,29 +37,21 @@ async function startFallRisk() {
 // ─────────────────────────────────────────────
 const views = {
   landing:   document.getElementById('view-landing'),
+  login:     document.getElementById('view-login'),
   dashboard: document.getElementById('view-dashboard'),
   livereadings: document.getElementById('view-livereadings'),
   fallrisk:  document.getElementById('view-fallrisk'),
-  documentation: document.getElementById('view-documentation'),
-  hardware:  document.getElementById('view-hardware'),
-  history:   document.getElementById('view-history'),
-  analytics: document.getElementById('view-analytics')
+  analytics: document.getElementById('view-analytics'),
+  mlresults: document.getElementById('view-mlresults'),
+  wearer:    document.getElementById('view-wearer'),
+  caretaker: document.getElementById('view-caretaker'),
+  howto:     document.getElementById('view-howto')
 };
 
-// Single source of truth for the dashboard sidebar (rendered into every .dash-sidebar)
-const NAV = [
-  ['dashboard',    'speed',         'Live Telemetry'],
-  ['livereadings', 'monitor_heart', 'Live Readings'],
-  ['fallrisk',     'crisis_alert',  'Fall Risk Analysis'],
-  ['analytics',    'analytics',     'Session Analytics'],
-  ['history',      'history',       'Session History'],
-  ['hardware',     'sensors',       'Hardware &amp; Insoles'],
-  ['documentation','library_books', 'Documentation'],
-  ['landing',      'home',          'Return to Overview'],
-];
+// Sidebar items depend on the signed-in role (see roles.js)
 function renderSidebar() {
   document.querySelectorAll('.dash-sidebar .sidebar-nav').forEach(nav => {
-    nav.innerHTML = NAV.map(([v, icon, label]) =>
+    nav.innerHTML = navItems().map(([v, icon, label]) =>
       `<a href="#" class="sidebar-link${v === _currentView ? ' active' : ''}" data-view="${v}" onclick="switchView('${v}'); return false;">` +
       `<span class="material-symbols-outlined">${icon}</span>${label}</a>`).join('');
   });
@@ -72,6 +65,11 @@ window.addEventListener('resize', applyHeaderVisibility);
 
 let _currentView = 'landing';
 window.switchView = function (viewName) {
+  if (!canView(viewName)) {
+    // Not signed in for this page: send to login, or to the role's own home
+    viewName = currentRole() ? homeView() : 'login';
+    if (viewName === 'login') toast('Please sign in to open that page', 'info', 2500);
+  }
   const prev = _currentView;
   _currentView = viewName;
 
@@ -85,6 +83,13 @@ window.switchView = function (viewName) {
     link.classList.toggle('active', link.dataset.view === viewName);
   });
 
+  renderSidebar();
+  refreshChrome();
+  if (viewName === 'login' && window.pickRole) window.pickRole(currentRole() || 'wearer');
+  stopReplays(viewName);
+  if (viewName === 'wearer')       renderWearer();
+  if (viewName === 'caretaker')    renderCaretaker();
+  if (viewName === 'analytics')    renderAnalytics();
   if (viewName === 'dashboard')    initDashboard();
   if (viewName === 'livereadings') initLiveReadings();
   if (viewName === 'fallrisk')     startFallRisk();
@@ -539,6 +544,7 @@ function initAnchorScroll() {
 // ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderSidebar();
+  refreshChrome();
   initScrollAnimations();
   initStickyHeader();
   initCtaForm();

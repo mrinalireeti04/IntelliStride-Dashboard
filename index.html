@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="roles.css?v=2" />
 </head>
 <body>
 
@@ -30,16 +31,14 @@
         </a>
         <nav class="desktop-nav">
           <a href="#" class="nav-link active" data-view="landing" onclick="switchView('landing')">Overview</a>
-          <a href="#" class="nav-link" data-view="dashboard" onclick="switchView('dashboard')">Live Telemetry</a>
-          <a href="#" class="nav-link" data-view="fallrisk" onclick="switchView('fallrisk')">Fall Risk</a>
-          <a href="#features" class="nav-link">Technology</a>
-          <a href="#how-it-works" class="nav-link">Protocol</a>
+          <a href="#" class="nav-link" data-view="howto" onclick="switchView('howto'); return false;">How to Use</a>
+          <a href="#" class="nav-link" data-view="login" id="nav-signin" onclick="switchView('login'); return false;">Sign In</a>
           
         </nav>
       </div>
       <div class="nav-right">
         
-        <button class="btn-primary" onclick="switchView('dashboard')">Explore Live Telemetry</button>
+        <button class="btn-primary" id="nav-cta" onclick="switchView('login')">Sign In</button>
         <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
           <span class="material-symbols-outlined">menu</span>
         </button>
@@ -47,16 +46,10 @@
     </div>
     <!-- Mobile Nav -->
     <div class="mobile-nav" id="mobile-nav">
-      <a href="#" onclick="switchView('landing'); toggleMobileMenu()" class="mobile-nav-link">Overview</a>
-      <a href="#" onclick="switchView('dashboard'); toggleMobileMenu()" class="mobile-nav-link">Live Telemetry</a>
-      <a href="#" onclick="switchView('livereadings'); toggleMobileMenu()" class="mobile-nav-link">Live Readings</a>
-      <a href="#" onclick="switchView('fallrisk'); toggleMobileMenu()" class="mobile-nav-link">Fall Risk Analysis</a>
-      <a href="#" onclick="switchView('analytics'); toggleMobileMenu()" class="mobile-nav-link">Session Analytics</a>
-      <a href="#" onclick="switchView('history'); toggleMobileMenu()" class="mobile-nav-link">Session History</a>
-      <a href="#" onclick="switchView('hardware'); toggleMobileMenu()" class="mobile-nav-link">Hardware &amp; Insoles</a>
-      <a href="#" onclick="switchView('documentation'); toggleMobileMenu()" class="mobile-nav-link">Documentation</a>
-      <a href="#features" onclick="toggleMobileMenu()" class="mobile-nav-link">Technology</a>
-      <a href="#how-it-works" onclick="toggleMobileMenu()" class="mobile-nav-link">Protocol</a>
+      <a href="#" onclick="switchView('landing'); toggleMobileMenu(); return false;" class="mobile-nav-link">Overview</a>
+      <a href="#" onclick="switchView('howto'); toggleMobileMenu(); return false;" class="mobile-nav-link">How to Use</a>
+      <a href="#" onclick="switchView('login'); toggleMobileMenu(); return false;" class="mobile-nav-link" id="mnav-signin">Sign In</a>
+      <div id="mobile-role-nav"></div>
     </div>
   </header>
 
@@ -82,131 +75,44 @@
           Next-generation pressure-sensing insoles paired with sub-millimeter inertial measurement units for laboratory-grade gait analysis outside the clinic.
         </p>
         <div class="hero-ctas fade-in-up delay-3">
-          <button class="btn-primary btn-lg landing-btn-primary" onclick="switchView('dashboard')" style="pointer-events: auto;">
-            EXPLORE LIVE TELEMETRY
+          <button class="btn-primary btn-lg landing-btn-primary" onclick="switchView('login')" style="pointer-events: auto;">
+            SIGN IN
             <span class="material-symbols-outlined">arrow_forward</span>
           </button>
-          <button class="btn-ghost btn-lg landing-btn-secondary" style="pointer-events: auto;">
-            <span class="material-symbols-outlined">description</span>
-            PROJECT REPORT (PDF)
+          <button class="btn-ghost btn-lg landing-btn-secondary" onclick="switchView('howto')" style="pointer-events: auto;">
+            <span class="material-symbols-outlined">menu_book</span>
+            HOW TO USE
           </button>
         </div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-      <div class="container">
-        <div class="section-header two-col">
-          <div>
-            <span class="eyebrow-label">Engineered Precision</span>
-            <h2 class="section-heading">Sub-surface biomechanics.<br/>No laboratory ceiling.</h2>
-          </div>
-          
-          <div class="tech-readout">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-              <span class="pulse-dot" style="background: var(--color-accent)"></span>
-              <span class="mono-sm" style="color: var(--color-accent); font-weight: 600; letter-spacing: 1px;">SYSTEM STATUS: ONLINE</span>
-            </div>
-            <p class="section-body" style="font-size: 0.9rem; line-height: 1.6; border-left: 2px solid var(--color-accent); padding-left: 12px; opacity: 0.9;">
-              An ESP32-powered telemetry module designed to capture real-time gait data for engineering analysis, completely untethered from the laboratory.
-            </p>
-          </div>
-        </div>
-        <div class="feature-cards">
-          <div class="feature-card observe">
-            <div class="feature-icon">
-              <span class="material-symbols-outlined">speed</span>
-            </div>
-            <h3>Real-Time IMU Sensing</h3>
-            <p>MPU6050 6-axis inertial measurement providing accelerometer and gyroscope data for gait and motion analysis.</p>
-            <div class="feature-stat">
-              <span class="caption-text muted-text block">Sampling Precision</span>
-              <span class="mono-sm primary-text">to be characterized</span>
-            </div>
-          </div>
-          <div class="feature-card observe">
-            <div class="feature-icon">
-              <span class="material-symbols-outlined">grid_view</span>
-            </div>
-            <h3>Foot Pressure Mapping</h3>
-            <p>FSR-based pressure sensing across the insole, tracking left/right/total force distribution during gait.</p>
-            <div class="feature-stat">
-              <span class="caption-text muted-text block">Active Contact Points</span>
-              <span class="mono-sm primary-text">3 FSR Sensors (Prototype)</span>
-            </div>
-          </div>
-          <div class="feature-card observe">
-            <div class="feature-icon">
-              <span class="material-symbols-outlined">neurology</span>
-            </div>
-            <h3>Prototype Fall-Risk Scoring</h3>
-            <p>On-device motion analysis flagging elevated acceleration, angular velocity, and orientation changes — an engineering prototype, not a clinical diagnostic tool.</p>
-            <div class="feature-stat">
-              <span class="caption-text muted-text block">Classification Accuracy</span>
-              <span class="mono-sm primary-text">Status: Prototype — Not Clinically Validated</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-section" id="how-it-works">
+    <!-- Portals (replaces Technology + Protocol) -->
+    <section class="rp-portals">
       <div class="container">
         <div class="section-header center">
-          <span class="eyebrow-label">Seamless Protocol</span>
-          <h2 class="section-heading">Ambulatory deployment in 4 steps</h2>
+          <span class="eyebrow-label">One shoe, three portals</span>
+          <h2 class="section-heading">Everyone sees what they need</h2>
         </div>
-        <div class="steps-grid">
-          <div class="step-card observe" style="text-align: center;">
-            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">01</span>
-            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
-              <span class="material-symbols-outlined" style="font-size: 48px;">pest_control</span>
-            </div>
-            <h4>Attach the Insole</h4>
-            <p>Position the FSR/IMU insole module inside the shoe.</p>
-            <div class="step-badge" style="justify-content: center;">
-              <span class="material-symbols-outlined">check_circle</span>
-              Universal shoe sizing
-            </div>
-          </div>
-          <div class="step-card observe" style="text-align: center;">
-            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">02</span>
-            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
-              <span class="material-symbols-outlined" style="font-size: 48px;">bluetooth_connected</span>
-            </div>
-            <h4>Connect to Wi-Fi/Firebase</h4>
-            <p>ESP32 connects to Firebase Realtime Database over Wi-Fi.</p>
-            <div class="step-badge" style="justify-content: center;">
-              <span class="material-symbols-outlined">wifi</span>
-              Wi-Fi Sync
-            </div>
-          </div>
-          <div class="step-card observe" style="text-align: center;">
-            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">03</span>
-            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
-              <span class="material-symbols-outlined" style="font-size: 48px;">stream</span>
-            </div>
-            <h4>Live Telemetry Streaming</h4>
-            <p>Continuous sensor data streams to the dashboard in real time.</p>
-            <div class="step-badge" style="justify-content: center;">
-              <span class="material-symbols-outlined">sensors</span>
-              Real-time feedback
-            </div>
-          </div>
-          <div class="step-card observe" style="text-align: center;">
-            <span class="step-num" style="display: block; margin-bottom: var(--sp-2);">04</span>
-            <div style="font-size: 3rem; color: var(--color-primary); margin: var(--sp-4) 0;">
-              <span class="material-symbols-outlined" style="font-size: 48px;">description</span>
-            </div>
-            <h4>Session Export</h4>
-            <p>Export session data as CSV/JSON for later analysis.</p>
-            <div class="step-badge" style="justify-content: center;">
-              <span class="material-symbols-outlined">summarize</span>
-              Instant export
-            </div>
-          </div>
+        <div class="rp-portal-grid">
+          <button class="rp-portal-card" onclick="openLogin('wearer')">
+            <span class="material-symbols-outlined">directions_walk</span>
+            <h3>Wearer</h3>
+            <p>Your walking today in plain words: status, pressure balance, alerts and tips.</p>
+            <span class="rp-link">Sign in as wearer &rarr;</span>
+          </button>
+          <button class="rp-portal-card" onclick="openLogin('caretaker')">
+            <span class="material-symbols-outlined">family_restroom</span>
+            <h3>Caretaker</h3>
+            <p>Live status of the person you look after, every alert with its time, and where they are.</p>
+            <span class="rp-link">Sign in as caretaker &rarr;</span>
+          </button>
+          <button class="rp-portal-card" onclick="openLogin('doctor')">
+            <span class="material-symbols-outlined">stethoscope</span>
+            <h3>Doctor / Admin</h3>
+            <p>All participants, live telemetry, fall-risk analysis, session analytics and ML model results.</p>
+            <span class="rp-link">Sign in as doctor &rarr;</span>
+          </button>
         </div>
       </div>
     </section>
@@ -242,17 +148,14 @@
         <div class="footer-col">
           <span class="footer-col-title">Platform</span>
           <a href="#" onclick="switchView('landing')" class="footer-link">Overview</a>
-          <a href="#" onclick="switchView('dashboard')" class="footer-link">Live Telemetry</a>
-          <a href="#features" class="footer-link">Technology</a>
-          <a href="#how-it-works" class="footer-link">Protocol</a>
+          <a href="#" onclick="switchView('howto'); return false;" class="footer-link">How to Use</a>
+          <a href="#" onclick="switchView('login'); return false;" class="footer-link">Sign In</a>
         </div>
         <div class="footer-col">
-          <span class="footer-col-title">Documentation</span>
-          <a href="#" class="footer-link">Documentation</a>
-          <a href="#" class="footer-link">About This Project</a>
-          
-          <a href="#" class="footer-link">Sensor Status</a>
-        </div>
+          <span class="footer-col-title">Project</span>
+          <a href="#" onclick="switchView('mlresults'); return false;" class="footer-link">ML Model Results</a>
+          <a href="algorithms.html" class="footer-link">How IntelliStride Decides</a>
+          </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 IntelliStride — Capstone Project.</span>
@@ -275,36 +178,7 @@
             </svg>
             <span class="wordmark sm">IntelliStride</span>
           </div>
-          <nav class="sidebar-nav">
-            <a href="#" class="sidebar-link active">
-              <span class="material-symbols-outlined">speed</span>
-              Live Telemetry
-            </a>
-            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
-              <span class="material-symbols-outlined">crisis_alert</span>
-              Fall Risk Analysis
-            </a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
-              <span class="material-symbols-outlined">analytics</span>
-              Session Analytics
-            </a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link">
-              <span class="material-symbols-outlined">history</span>
-              Session History
-            </a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
-              <span class="material-symbols-outlined">sensors</span>
-              Hardware &amp; Insoles
-            </a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
-              <span class="material-symbols-outlined">library_books</span>
-              Documentation
-            </a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link">
-              <span class="material-symbols-outlined">home</span>
-              Return to Overview
-            </a>
-          </nav>
+          <nav class="sidebar-nav"></nav>
         </div>
         <div class="sidebar-hub-card">
           <div class="hub-status">
@@ -669,36 +543,7 @@
             </svg>
             <span class="wordmark sm">IntelliStride</span>
           </div>
-          <nav class="sidebar-nav">
-            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
-              <span class="material-symbols-outlined">speed</span>
-              Live Telemetry
-            </a>
-            <a href="#" class="sidebar-link active">
-              <span class="material-symbols-outlined">crisis_alert</span>
-              Fall Risk Analysis
-            </a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
-              <span class="material-symbols-outlined">analytics</span>
-              Session Analytics
-            </a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link">
-              <span class="material-symbols-outlined">history</span>
-              Session History
-            </a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
-              <span class="material-symbols-outlined">sensors</span>
-              Hardware &amp; Insoles
-            </a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
-              <span class="material-symbols-outlined">library_books</span>
-              Documentation
-            </a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link">
-              <span class="material-symbols-outlined">home</span>
-              Return to Overview
-            </a>
-          </nav>
+          <nav class="sidebar-nav"></nav>
         </div>
         <div class="sidebar-hub-card">
           <div class="hub-status">
@@ -1097,429 +942,379 @@
     </div>
   </div>
 
+
+  <!-- ===== LOGIN VIEW ===== -->
+  <main id="view-login" class="view">
+    <div class="rp-login-wrap">
+      <div class="rp-login-card">
+        <a href="#" class="rp-back" onclick="switchView('landing'); return false;"><span class="material-symbols-outlined">arrow_back</span>Overview</a>
+        <div class="sidebar-wordmark rp-login-brand">
+          <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          <span class="wordmark sm">IntelliStride</span>
+        </div>
+        <h1 class="rp-login-title">Sign in</h1>
+        <p class="caption-text muted-text">Choose who you are. Each portal opens a different dashboard.</p>
+        <div class="rp-role-tabs" role="tablist">
+          <button class="rp-role-tab" data-role="wearer" onclick="pickRole('wearer')"><span class="material-symbols-outlined">directions_walk</span>Wearer</button>
+          <button class="rp-role-tab" data-role="caretaker" onclick="pickRole('caretaker')"><span class="material-symbols-outlined">family_restroom</span>Caretaker</button>
+          <button class="rp-role-tab" data-role="doctor" onclick="pickRole('doctor')"><span class="material-symbols-outlined">stethoscope</span>Doctor / Admin</button>
+        </div>
+        <form class="rp-login-form" onsubmit="doLogin(event)">
+          <label>Username<input id="login-user" autocomplete="username" required /></label>
+          <label>Password<input id="login-pass" type="password" autocomplete="current-password" required /></label>
+          <p class="rp-login-error" id="login-error" hidden>Wrong username or password for this portal.</p>
+          <button class="btn-primary btn-lg rp-login-btn" type="submit">Sign in <span class="material-symbols-outlined">arrow_forward</span></button>
+        </form>
+        <div class="rp-demo-note">
+          <span class="material-symbols-outlined">info</span>
+          <span>Demo login for the capstone prototype. Credentials are filled in for you: <b id="login-hint"></b></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== WEARER: MY DAY ===== -->
+  <main id="view-wearer" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div id="wearer-root" class="rp-page"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== CARETAKER: WEARER STATUS ===== -->
+  <main id="view-caretaker" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div id="care-root" class="rp-page"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== SESSION ANALYTICS (merged with Session History) ===== -->
+  <main id="view-analytics" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div id="analytics-root" class="rp-page"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== ML MODEL RESULTS ===== -->
+  <main id="view-mlresults" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div class="rp-page">
+  <header class="rp-head">
+    <span class="eyebrow-label">Predictive analysis</span>
+    <h1 class="fr-page-title">ML Model Results</h1>
+    <p class="body-text">We trained four models on public research datasets, then tested each one only on people it had never seen. Two are strong, two are moderate, and every number below was measured, not estimated.</p>
+  </header>
+
+  <section class="t2-panel">
+    <h2 class="t2-panel-title">At a glance</h2>
+    <div class="rp-table-wrap">
+      <table class="rp-table">
+        <thead><tr><th>Model</th><th>Question it answers</th><th>Tested on</th><th>Key result</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td><b>1 · Fall detection</b></td><td>Is this a fall?</td><td>SisFall · 38 people · 53,204 windows</td><td>Catches <b>94.2%</b> of falls at <b>99.9%</b> specificity (AUC 0.997)</td><td><span class="rp-pill good">Strong</span></td></tr>
+          <tr><td><b>2 · Activity + gait</b></td><td>What is the wearer doing? What is their cadence?</td><td>HuGaDB · 18 people · 12,032 windows</td><td><b>97–98%</b> on walking, running and stairs; <b>98.4%</b> over 5 classes after merging sit + stand</td><td><span class="rp-pill good">Strong</span></td></tr>
+          <tr><td><b>3 · Freezing of gait</b></td><td>Has the wearer frozen mid-walk?</td><td>Daphnet · 10 patients · 17,790 windows</td><td>Catches <b>80–92%</b> of 225 freeze episodes, median <b>0.7 s</b> after onset</td><td><span class="rp-pill mid">Moderate</span></td></tr>
+          <tr><td><b>4 · Pressure stability</b></td><td>Is the gait irregular or lopsided?</td><td>PhysioNet gaitpdb · 165 people · 5,923 windows</td><td>Subject-level AUC <b>0.83</b>; stance asymmetry differs strongly between groups (p = 1.5×10⁻⁸)</td><td><span class="rp-pill mid">Moderate</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="t2-panel">
+    <h2 class="t2-panel-title">How the models were built and tested</h2>
+    <ol class="rp-steps">
+      <li><b>Public data, matched to the shoe.</b> Each dataset was converted to the shoe's units (g, deg/s, raw pressure zones), rotated to the shoe's axes and resampled to 50 Hz.</li>
+      <li><b>Short windows.</b> Signals were cut into 2-second windows (10 s for pressure, since variability needs several strides).</li>
+      <li><b>Two models per task.</b> A Random Forest on hand-made features (means, peaks, jerk, frequencies) and a small 1D-CNN on the raw signal.</li>
+      <li><b>Tested on unseen people.</b> 5-fold cross-validation split <i>by person</i>: no one appears in both training and testing, so the scores reflect new users.</li>
+      <li><b>Exported for the browser.</b> The final CNNs were exported to ONNX (raw window in, probabilities out) and checked to give the same answers as the training code (difference below 10⁻⁶).</li>
+    </ol>
+    <p class="caption-text muted-text">Trained on Kaggle GPUs, 22–25 Nov 2026. Datasets: <a href="https://doi.org/10.3390/s17010198" target="_blank" rel="noopener">SisFall</a>, <a href="https://archive.ics.uci.edu/dataset/245/daphnet+freezing+of+gait" target="_blank" rel="noopener">Daphnet</a>, <a href="https://github.com/romanchereshnev/HuGaDB" target="_blank" rel="noopener">HuGaDB</a>, <a href="https://physionet.org/content/gaitpdb/1.0.0/" target="_blank" rel="noopener">PhysioNet gaitpdb</a>.</p>
+  </section>
+
+  <!-- ===== Model 1 ===== -->
+  <section class="t2-panel">
+    <div class="rp-model-head"><h2 class="t2-panel-title">1 · Fall detection</h2><span class="rp-pill good">Strong</span></div>
+    <p class="body-text"><b>Output:</b> probability that the last 2 s contained a fall, from the 6 IMU channels. An alert fires above the chosen threshold.</p>
+    <div class="rp-table-wrap"><table class="rp-table">
+      <thead><tr><th>Model</th><th>Falls caught (sensitivity)</th><th>Specificity</th><th>AUC</th><th>False-alarm windows / hour of daily activity</th></tr></thead>
+      <tbody>
+        <tr><td>Random Forest</td><td>90.4%</td><td>99.97%</td><td>0.999</td><td>1.1</td></tr>
+        <tr><td>1D-CNN (exported)</td><td><b>94.2%</b></td><td>99.9%</td><td>0.997</td><td>4.1</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rp-figs">
+      <figure><img src="ml/figures/fall_cm_cnn.png" alt="Fall CNN confusion matrix" loading="lazy"><figcaption>CNN: 3,389 of 3,596 fall windows caught; 57 false alarms in 49,608 normal windows.</figcaption></figure>
+      <figure><img src="ml/figures/fall_false_alarms_by_adl.png" alt="False alarms by daily activity" loading="lazy"><figcaption>Which daily activities fool it: rolling over while lying (D14), stumbling while walking (D18), fast stairs (D06), dropping into a chair (D10).</figcaption></figure>
+    </div>
+    <div class="rp-takeaways">
+      <p><b>What it shows.</b> Falls are very distinct in IMU data, so both models do well. The CNN catches more falls; the RF raises fewer false alarms. Older participants' daily activities caused twice as many false alarms (6.3/h vs 3.0/h for young adults), and 9 of the 57 CNN false alarms came from "stumble while walking", which a stumble detector arguably should flag.</p>
+      <p><b>Limits.</b> SisFall's sensor sat on the waist, ours sits on the foot. Falls were performed by young adults onto mats.</p>
+    </div>
+  </section>
+
+  <!-- ===== Model 2 ===== -->
+  <section class="t2-panel">
+    <div class="rp-model-head"><h2 class="t2-panel-title">2 · Activity recognition + gait events</h2><span class="rp-pill good">Strong</span></div>
+    <p class="body-text"><b>Output:</b> the current activity (walking, running, stairs up, stairs down, sitting, standing), plus heel-strike and toe-off times from the gyroscope, which give cadence and stride variability.</p>
+    <div class="rp-table-wrap"><table class="rp-table">
+      <thead><tr><th>Activity (CNN, F1 score)</th><th>Walking</th><th>Running</th><th>Stairs up</th><th>Stairs down</th><th>Sitting</th><th>Standing</th></tr></thead>
+      <tbody><tr><td>Per class</td><td>0.98</td><td>0.99</td><td>0.97</td><td>0.98</td><td>0.39</td><td>0.63</td></tr></tbody>
+    </table></div>
+    <div class="rp-stat-row">
+      <div class="rp-stat"><span class="rp-stat-num">0.70</span><span class="rp-stat-label">Macro-F1, all 7 classes as trained</span></div>
+      <div class="rp-stat"><span class="rp-stat-num">98.4%</span><span class="rp-stat-label">Accuracy with sitting + standing merged into "stationary"</span></div>
+      <div class="rp-stat"><span class="rp-stat-num">129</span><span class="rp-stat-label">Median cadence, steps/min (132 walking segments)</span></div>
+      <div class="rp-stat"><span class="rp-stat-num">5.0%</span><span class="rp-stat-label">Median stride-time variability</span></div>
+    </div>
+    <div class="rp-figs">
+      <figure><img src="ml/figures/activity_cm_cnn.png" alt="Activity CNN confusion matrix" loading="lazy"><figcaption>Moving activities sit on the diagonal. The red block bottom-right is sitting vs standing.</figcaption></figure>
+      <figure><img src="ml/figures/activity_gait_events.png" alt="Detected heel strikes and toe-offs" loading="lazy"><figcaption>Detected heel strikes (red) and toe-offs (green) on a real walking trace: one heel strike per stride.</figcaption></figure>
+    </div>
+    <div class="rp-takeaways">
+      <p><b>What it shows.</b> The headline 0.70 hides a simple fact: a foot sensor at rest looks the same whether you sit or stand, because the foot is flat on the floor either way. Everything that moves is recognised almost perfectly. Our pressure sensors could separate the two later (standing loads the foot, sitting mostly doesn't).</p>
+      <p><b>Limits.</b> 18 healthy young adults. The "transition" class (sitting down / standing up) had only 32 windows and was never recognised.</p>
+    </div>
+  </section>
+
+  <!-- ===== Model 3 ===== -->
+  <section class="t2-panel">
+    <div class="rp-model-head"><h2 class="t2-panel-title">3 · Freezing-of-gait detection</h2><span class="rp-pill mid">Moderate</span></div>
+    <p class="body-text"><b>Output:</b> probability that the wearer is in a freeze (a sudden inability to take the next step), from the accelerometer. Two high windows in a row would trigger a cue.</p>
+    <div class="rp-table-wrap"><table class="rp-table">
+      <thead><tr><th>Model</th><th>Freeze episodes caught (of 225)</th><th>Median delay after onset</th><th>AUC</th><th>Sensitivity / specificity at a balanced threshold</th></tr></thead>
+      <tbody>
+        <tr><td>Freeze index (classic baseline)</td><td>90%</td><td>0.68 s</td><td>0.74</td><td>60% / 75%</td></tr>
+        <tr><td>Random Forest</td><td><b>92%</b></td><td>0.72 s</td><td><b>0.87</b></td><td><b>82% / 79%</b></td></tr>
+        <tr><td>1D-CNN (exported)</td><td>80%</td><td>0.68 s</td><td>0.85</td><td>78% / 75%</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rp-figs one">
+      <figure><img src="ml/figures/fog_timeline.png" alt="Freeze probability over time" loading="lazy"><figcaption>One patient's walk: CNN freeze probability (blue) against the true freezes (red). Most freezes are caught, but there are spikes during normal walking too.</figcaption></figure>
+    </div>
+    <div class="rp-takeaways">
+      <p><b>What it shows.</b> Counted per freeze episode, the models catch most freezes within about 0.7 s. Counted per 2-s window, they are weaker and vary a lot between patients (balanced accuracy 0.51 to 1.0). Here the simpler Random Forest beat the CNN. The target of 80% sensitivity and 90% specificity was not met.</p>
+      <p><b>Limits.</b> Only 10 patients. This model does not detect or diagnose Parkinson's.</p>
+    </div>
+  </section>
+
+  <!-- ===== Model 4 ===== -->
+  <section class="t2-panel">
+    <div class="rp-model-head"><h2 class="t2-panel-title">4 · Pressure-based gait stability</h2><span class="rp-pill mid">Moderate</span></div>
+    <p class="body-text"><b>Output:</b> a 0–100 gait-irregularity score from the three pressure zones of both shoes, plus the left–right asymmetry and stride variability behind it. The research insoles' 8 sensors were collapsed to our 3 zones.</p>
+    <div class="rp-table-wrap"><table class="rp-table">
+      <thead><tr><th>Measure (per person)</th><th>Regular gait (controls)</th><th>Irregular gait (PD group)</th><th>Difference significant?</th></tr></thead>
+      <tbody>
+        <tr><td>Stance-time asymmetry</td><td>1.9%</td><td>3.1%</td><td><b>Yes</b>, p = 1.5×10⁻⁸</td></tr>
+        <tr><td>Stride-time variability</td><td>3.2%</td><td>4.1%</td><td><b>Yes</b>, p = 0.001</td></tr>
+        <tr><td>Peak-load asymmetry</td><td>3.6%</td><td>4.5%</td><td><b>Yes</b>, p = 0.003</td></tr>
+        <tr><td>Stride-time asymmetry</td><td>0.37%</td><td>0.49%</td><td><b>Yes</b>, p = 0.006</td></tr>
+        <tr><td>Heel-to-toe roll-over time</td><td>0.41 s</td><td>0.42 s</td><td>No, p = 0.19</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rp-stat-row">
+      <div class="rp-stat"><span class="rp-stat-num">0.83</span><span class="rp-stat-label">Subject-level AUC, Random Forest</span></div>
+      <div class="rp-stat"><span class="rp-stat-num">0.79</span><span class="rp-stat-label">Subject-level AUC, CNN (exported)</span></div>
+      <div class="rp-stat"><span class="rp-stat-num">71% / 79%</span><span class="rp-stat-label">CNN sensitivity / specificity per window at a balanced threshold</span></div>
+    </div>
+    <div class="rp-figs">
+      <figure><img src="ml/figures/pressure_boxplots.png" alt="Stride variability and asymmetry box plots" loading="lazy"><figcaption>Stride-time variability and asymmetry, per person: higher in the irregular-gait group.</figcaption></figure>
+      <figure><img src="ml/figures/pressure_rf_importance.png" alt="Random Forest feature importance" loading="lazy"><figcaption>What the Random Forest relied on: stance time and peak load first.</figcaption></figure>
+    </div>
+    <div class="rp-takeaways">
+      <p><b>What it shows.</b> Even reduced to three pressure zones like ours, the insole data still separates regular from irregular gait, with asymmetry and variability as the clearest signs. The classifier itself is moderate (target AUC 0.85, reached 0.83), and the CNN overfitted its training data.</p>
+      <p><b>Limits.</b> The Parkinson's label is only a stand-in for "irregular gait". This is not a diagnosis. Research insoles are not identical to our FSRs.</p>
+    </div>
+  </section>
+
+  <section class="t2-panel">
+    <h2 class="t2-panel-title">How the models fit into IntelliStride</h2>
+    <div class="rp-table-wrap"><table class="rp-table">
+      <thead><tr><th>Model</th><th>Who it is for</th><th>Where it would appear</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Fall detection</td><td>Caretaker, doctor</td><td>Fall alert next to the rule-based fall-risk score</td><td>Trained and exported (ONNX)</td></tr>
+        <tr><td>Activity + gait</td><td>Wearer, doctor</td><td>Current activity, cadence and stride variability</td><td>Trained and exported (ONNX + gait-event script)</td></tr>
+        <tr><td>Freezing of gait</td><td>Caretaker, doctor</td><td>Freeze alert and cue event</td><td>Trained and exported (ONNX)</td></tr>
+        <tr><td>Pressure stability</td><td>Doctor</td><td>Irregularity score, asymmetry and variability across both shoes</td><td>Trained and exported (ONNX)</td></tr>
+      </tbody>
+    </table></div>
+    <p class="body-text">The dashboards today run the rule-based fall-risk engine on recorded readings. Running the four models live needs the shoes to stream continuous 50 Hz data, which is the next firmware step, followed by testing on our own volunteers.</p>
+  </section>
+
+  <section class="t2-panel">
+    <h2 class="t2-panel-title">What we learned</h2>
+    <ul class="rp-list">
+      <li><b>Simple can win.</b> The Random Forest matched or beat the CNN on three of the four tasks.</li>
+      <li><b>Sensor position matters.</b> A foot sensor cannot tell sitting from standing, and models trained on waist or ankle sensors will lose accuracy on a shoe.</li>
+      <li><b>How you count changes the story.</b> Freeze detection looks weak per window but catches most real freeze episodes.</li>
+      <li><b>Three pressure zones carry real information.</b> Asymmetry and variability separate regular from irregular gait.</li>
+    </ul>
+  </section>
+
+  <p class="rp-disclaimer"><span class="material-symbols-outlined">info</span> All results come from public research data, tested on unseen people. None are clinically validated, and our own shoes have not been tested with these models yet.</p>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== HOW TO USE ===== -->
+  <main id="view-howto" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div class="rp-page">
+  <header class="rp-head">
+    <span class="eyebrow-label">How to use</span>
+    <h1 class="fr-page-title">Using IntelliStride</h1>
+    <p class="body-text">Set up the shoes once, then each person signs in to their own portal.</p>
+  </header>
+
+  <section class="t2-panel">
+    <h2 class="t2-panel-title">Set up (everyone)</h2>
+    <ol class="rp-steps">
+      <li><b>Power on both shoes.</b> Each shoe has its own ESP32 module. Charge the power module before a session.</li>
+      <li><b>Put the shoes on.</b> Check the insole lies flat so all three pressure sensors (heel, midfoot, forefoot) touch the foot.</li>
+      <li><b>Let them connect.</b> The shoes join the configured Wi-Fi and send readings to Firebase on their own. Left and right shoes are stored separately.</li>
+      <li><b>Sign in.</b> Open this site, press <i>Sign In</i> and choose your portal: Wearer, Caretaker or Doctor / Admin.</li>
+      <li><b>Walk normally.</b> Readings appear on the dashboard within seconds. Nothing needs to be pressed during the walk.</li>
+    </ol>
+  </section>
+
+  <div class="rp-howto-grid">
+    <section class="t2-panel">
+      <h2 class="t2-panel-title"><span class="material-symbols-outlined">directions_walk</span> Wearer</h2>
+      <ul class="rp-list">
+        <li><b>My Day</b> shows your status, your foot-pressure balance and today's alerts in plain words.</li>
+        <li><b>Green / amber / red</b> is the prototype fall-risk level: low, moderate, high.</li>
+        <li>If you see red often, sit down, rest and tell your caretaker or doctor.</li>
+        <li>An obstacle warning means the toe sensor sees something closer than 1 m ahead.</li>
+      </ul>
+    </section>
+    <section class="t2-panel">
+      <h2 class="t2-panel-title"><span class="material-symbols-outlined">family_restroom</span> Caretaker</h2>
+      <ul class="rp-list">
+        <li><b>Wearer Status</b> shows the current risk level and when the last reading arrived.</li>
+        <li><b>Alerts</b> lists every moderate and high reading with its time. Mark each one as checked once you've followed up.</li>
+        <li><b>Location</b> shows the last GPS fix from the shoe, with a link to open it in maps.</li>
+        <li>Fall Risk Analysis gives the full breakdown behind each score.</li>
+      </ul>
+    </section>
+    <section class="t2-panel">
+      <h2 class="t2-panel-title"><span class="material-symbols-outlined">stethoscope</span> Doctor / Admin</h2>
+      <ul class="rp-list">
+        <li><b>Live Telemetry</b> and <b>Live Readings</b> show raw sensor values for every participant.</li>
+        <li><b>Fall Risk Analysis</b> explains the rule-based score feature by feature.</li>
+        <li><b>Session Analytics</b> compares all recorded sessions and lists the full session history.</li>
+        <li><b>ML Model Results</b> shows the four trained models, how they were tested and what they found.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="rp-disclaimer"><span class="material-symbols-outlined">info</span> IntelliStride is a student engineering prototype. Scores and model outputs are not clinically validated and must not be used for medical decisions.</p>
+</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <!-- Toast notification container -->
   <div id="toast-container"></div>
 
-  <script type="module" src="app.js?v=2"></script>
+  <script type="module" src="app.js?v=3"></script>
   <script type="module" src="particles.js"></script>
 
-  <!-- ===== DOCUMENTATION VIEW ===== -->
-  <main id="view-documentation" class="view">
-    <div class="dashboard-layout">
-      <!-- Sidebar -->
-      <aside class="dash-sidebar">
-        
-        <div class="sidebar-top">
-          <div class="sidebar-wordmark">
-            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
-              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="wordmark sm">IntelliStride</span>
-          </div>
-          <nav class="sidebar-nav">
-            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
-              <span class="material-symbols-outlined">speed</span>
-              Live Telemetry
-            </a>
-            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
-              <span class="material-symbols-outlined">crisis_alert</span>
-              Fall Risk Analysis
-            </a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
-              <span class="material-symbols-outlined">analytics</span>
-              Session Analytics
-            </a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link">
-              <span class="material-symbols-outlined">history</span>
-              Session History
-            </a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
-              <span class="material-symbols-outlined">sensors</span>
-              Hardware &amp; Insoles
-            </a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
-              <span class="material-symbols-outlined">library_books</span>
-              Documentation
-            </a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link">
-              <span class="material-symbols-outlined">home</span>
-              Return to Overview
-            </a>
-          </nav>
-        </div>
-
-      </aside>
-      
-      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
-        <div class="section-header">
-          <h2 class="section-heading" style="color: var(--color-primary)">Documentation</h2>
-          <p class="caption-text muted-text">How IntelliStride works, what it currently does, and what's still in progress.</p>
-        </div>
-        
-        <div class="t3-card" style="margin-bottom: 2rem;">
-          <h3 class="t2-panel-title">About This Project</h3>
-          <p class="body-text">IntelliStride is a capstone engineering project exploring smart assistive footwear. It combines pressure sensing, inertial motion tracking, obstacle detection, and location data into a real-time telemetry dashboard, with an experimental prototype for fall-risk scoring.</p>
-          <p class="caption-text muted-text" style="margin-top: 1rem;">Built by [Team Name(s)], [Program], [Semester/Year] — fill in before final submission.</p>
-        </div>
-
-        <div class="t3-card" style="margin-bottom: 2rem;">
-          <h3 class="t2-panel-title">How Data Flows</h3>
-          <div style="padding: 1rem; background: var(--color-surface-blush); border-radius: 8px; margin-bottom: 1rem;">
-            <code class="mono-sm primary-text">ESP32 + Sensors → Firebase Realtime Database → Web Dashboard → Real-Time Visualization</code>
-          </div>
-          <ol class="body-text" style="padding-left: 1.5rem; line-height: 1.8;">
-            <li>ESP32 reads sensor values from FSR, MPU6050, GPS, and ultrasonic modules on a <span class="muted-text waiting-text">[TBD - to be confirmed from firmware]</span> cycle.</li>
-            <li>Sensor readings are written to Firebase Realtime Database over secure Wi-Fi / WebSockets.</li>
-            <li>The web dashboard listens for database changes using Firebase's real-time listeners.</li>
-            <li>New data updates the dashboard instantly, without a page refresh.</li>
-          </ol>
-        </div>
-
-        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Hardware Components</h3>
-        <div class="tier3-grid" style="margin-bottom: 2rem;">
-          <div class="t3-card">
-            <span class="label-text heading-text">FSR (Force Sensitive Resistors)</span>
-            <p class="caption-text body-text" style="margin-top: 0.5rem;">Measures pressure/force distribution across the foot. Current build: 3 sensors (Forefoot, Midfoot, Hindfoot).</p>
-          </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">MPU6050 (6-Axis IMU)</span>
-            <p class="caption-text body-text" style="margin-top: 0.5rem;">Provides accelerometer (X/Y/Z) and gyroscope (X/Y/Z) readings for motion and orientation tracking.</p>
-          </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">GPS Module</span>
-            <p class="caption-text body-text" style="margin-top: 0.5rem;">Provides latitude, longitude, and satellite count for location tracking.</p>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #8e9a5a; background: linear-gradient(to right, #f6f8f4, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #8e9a5a; margin-right: 8px;">radar</span><span class="label-text heading-text">Ultrasonic Sensor</span></div>
-            <p class="caption-text body-text" style="margin-top: 0.5rem;">Measures distance to nearby obstacles for basic collision awareness.</p>
-          </div>
-        </div>
-
-        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Current Capabilities vs. Planned Work</h3>
-        <div class="table-card" style="margin-bottom: 2rem;">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>Working Today</th>
-                <th>In Progress / Planned</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Real-time FSR, IMU, GPS, and ultrasonic telemetry</td>
-                <td class="muted-text">Derived gait metrics (cadence, symmetry, stride length)</td>
-              </tr>
-              <tr>
-                <td>Live Firebase-synced dashboard</td>
-                <td class="muted-text">On-device fall detection with validated thresholds</td>
-              </tr>
-              <tr>
-                <td>Rule-based fall-risk scoring (real-time IMU evaluation)</td>
-                <td class="muted-text">Calibrated pressure-to-force conversion (kPa)</td>
-              </tr>
-              <tr>
-                <td>—</td>
-                <td class="muted-text">Clinical-style PDF session export</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="t3-card" style="margin-bottom: 2rem; border-left: 4px solid var(--color-primary);">
-          <h3 class="t2-panel-title">What This Is — and Isn't</h3>
-          <p class="body-text">IntelliStride is a student engineering prototype built for a capstone course. It is not a certified medical device, has not undergone clinical validation, and its fall-risk scoring uses prototype thresholds that require further calibration with real experimental data. Nothing in this system should be used for medical diagnosis or treatment decisions.</p>
-        </div>
-
-        <div style="display: flex; gap: 1rem;">
-          <button class="btn-primary sm" onclick="window.location.href='https://github.com/mrinalireeti04/IntelliStride-Dashboard'">View Source on GitHub</button>
-          <button class="btn-ghost sm">Project Report / Poster</button>
-          <button class="btn-ghost sm" onclick="window.location.href='algorithms.html'">View algorithm diagrams</button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- ===== HARDWARE & INSOLES VIEW ===== -->
-  <main id="view-hardware" class="view">
-    <div class="dashboard-layout">
-      <!-- Sidebar -->
-      <aside class="dash-sidebar">
-        
-        <div class="sidebar-top">
-          <div class="sidebar-wordmark">
-            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
-              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="wordmark sm">IntelliStride</span>
-          </div>
-          <nav class="sidebar-nav">
-            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
-              <span class="material-symbols-outlined">speed</span>
-              Live Telemetry
-            </a>
-            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
-              <span class="material-symbols-outlined">crisis_alert</span>
-              Fall Risk Analysis
-            </a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
-              <span class="material-symbols-outlined">analytics</span>
-              Session Analytics
-            </a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link">
-              <span class="material-symbols-outlined">history</span>
-              Session History
-            </a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
-              <span class="material-symbols-outlined">sensors</span>
-              Hardware &amp; Insoles
-            </a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
-              <span class="material-symbols-outlined">library_books</span>
-              Documentation
-            </a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link">
-              <span class="material-symbols-outlined">home</span>
-              Return to Overview
-            </a>
-          </nav>
-        </div>
-
-      </aside>
-      
-      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
-        <div class="section-header">
-          <h2 class="section-heading" style="color: var(--color-primary)">Hardware & Insoles</h2>
-          <p class="caption-text muted-text">The physical sensor module and its current build status.</p>
-        </div>
-
-        <div class="t3-card" style="margin-bottom: 2rem; max-width: 600px;">
-          <div class="t3-header">
-            <div class="t3-title">
-              <span class="pulse-dot sm" style="background: var(--color-waiting)"></span>
-              <span class="label-text heading-text">IntelliStride Insole Module</span>
-            </div>
-          </div>
-          <div class="t3-rows">
-            <div class="t3-row"><span class="caption-text muted-text">Device Status</span><span class="mono-sm heading-text">Online</span></div>
-            <div class="t3-row"><span class="caption-text muted-text">Last Update</span><span class="mono-sm heading-text">Live Data</span></div>
-            <div class="t3-row"><span class="caption-text muted-text">Firebase Connection</span><span class="mono-sm heading-text">Connected</span></div>
-          </div>
-        </div>
-
-        <h3 class="t2-panel-title" style="margin-bottom: 1rem;">Sensor Breakdown</h3>
-        <div class="tier3-grid" style="margin-bottom: 2rem;">
-          <div class="t3-card" style="border-left: 4px solid #d94a61; background: linear-gradient(to right, #fff8f6, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #d94a61; margin-right: 8px;">step</span><span class="label-text heading-text">FSR Sensors (x3)</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Measures:</strong> Pressure/force distribution</li>
-              <li><strong>Placement:</strong> Forefoot, midfoot, hindfoot</li>
-              <li><strong>Units:</strong> Raw ADC (0–4095) — kg/N conversion pending calibration</li>
-              <li><strong>Status:</strong> Active</li>
-            </ul>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #7a2e3a; background: linear-gradient(to right, #fff8f6, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #7a2e3a; margin-right: 8px;">memory</span><span class="label-text heading-text">ESP32 DevKit (WROOM-32)</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Role:</strong> Main controller</li>
-              <li><strong>Placement:</strong> Central midfoot, upper side of shoe</li>
-              <li><strong>Notes:</strong> Balances wiring runs to front and rear sensors</li>
-            </ul>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #a35d68; background: linear-gradient(to right, #fff8f6, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #a35d68; margin-right: 8px;">3d_rotation</span><span class="label-text heading-text">MPU6050</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Measures:</strong> Acceleration (X/Y/Z), angular velocity (X/Y/Z)</li>
-              <li><strong>Placement:</strong> Built-in/adjacent to main board</li>
-              <li><strong>Units:</strong> Raw sensor units</li>
-            </ul>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #5a8a9a; background: linear-gradient(to right, #f4f8fa, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #5a8a9a; margin-right: 8px;">satellite_alt</span><span class="label-text heading-text">GPS module + antenna</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Measures:</strong> Latitude, longitude, satellite count</li>
-              <li><strong>Placement:</strong> Outer/lateral midfoot, front half</li>
-              <li><strong>Notes:</strong> Antenna exposed toward top/outside for reception</li>
-            </ul>
-          </div>
-          <div class="t3-card">
-            <span class="label-text heading-text">Ultrasonic Sensor</span>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Measures:</strong> Distance to obstacle</li>
-              <li><strong>Placement:</strong> Front/upper shoe region (toe area)</li>
-              <li><strong>Units:</strong> Centimeters</li>
-            </ul>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #9a6d5a; background: linear-gradient(to right, #fbf7f5, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #9a6d5a; margin-right: 8px;">battery_charging_full</span><span class="label-text heading-text">Power supply / regulator</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Role:</strong> Regulates battery supply</li>
-              <li><strong>Placement:</strong> Outer side, near rear/midfoot</li>
-            </ul>
-          </div>
-          <div class="t3-card" style="border-left: 4px solid #555; background: linear-gradient(to right, #fafafa, #ffffff);">
-            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;"><span class="material-symbols-outlined" style="color: #555; margin-right: 8px;">cable</span><span class="label-text heading-text">Wiring harness</span></div>
-            <ul class="caption-text body-text" style="margin-top: 1rem; padding-left: 1rem; line-height: 1.6;">
-              <li><strong>Role:</strong> Connects components securely</li>
-              <li><strong>Placement:</strong> Along lateral/upper perimeter</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="t3-card" style="margin-bottom: 2rem;">
-          <h3 class="t2-panel-title">Firmware & Data Pipeline</h3>
-          <p class="body-text">ESP32 firmware reads all sensors on a <span class="waiting-text muted-text">[TBD - to be confirmed from firmware]</span> cycle and writes values to Firebase Realtime Database over secure Wi-Fi / WebSockets. No on-device processing is currently performed beyond raw sensor reads.</p>
-        </div>
-
-        <div class="t3-card" style="margin-bottom: 2rem;">
-          <h3 class="t2-panel-title">Known Limitations</h3>
-          <ul class="body-text" style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
-            <li>GPS accuracy is reduced indoors — outdoor testing recommended for location features.</li>
-            <li>FSR values are currently raw ADC readings; force/pressure calibration (kg or kPa) is planned but not yet implemented.</li>
-            <li>Battery monitoring is not yet implemented in firmware.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- ===== SESSION HISTORY VIEW ===== -->
-  <main id="view-history" class="view">
-    <div class="dashboard-layout">
-      <!-- Sidebar -->
-      <aside class="dash-sidebar">
-        
-        <div class="sidebar-top">
-          <div class="sidebar-wordmark">
-            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
-              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="wordmark sm">IntelliStride</span>
-          </div>
-          <nav class="sidebar-nav">
-            <a href="#" onclick="switchView('dashboard')" class="sidebar-link">
-              <span class="material-symbols-outlined">speed</span>
-              Live Telemetry
-            </a>
-            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link">
-              <span class="material-symbols-outlined">crisis_alert</span>
-              Fall Risk Analysis
-            </a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link">
-              <span class="material-symbols-outlined">analytics</span>
-              Session Analytics
-            </a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link">
-              <span class="material-symbols-outlined">history</span>
-              Session History
-            </a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link">
-              <span class="material-symbols-outlined">sensors</span>
-              Hardware &amp; Insoles
-            </a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link">
-              <span class="material-symbols-outlined">library_books</span>
-              Documentation
-            </a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link">
-              <span class="material-symbols-outlined">home</span>
-              Return to Overview
-            </a>
-          </nav>
-        </div>
-
-      </aside>
-      
-      <div class="dash-content" style="padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-        <div style="text-align: center; max-width: 400px;">
-          <span class="material-symbols-outlined waiting-text" style="font-size: 64px; margin-bottom: 1rem;">history</span>
-          <h2 class="section-heading" style="color: var(--color-primary); margin-bottom: 1rem;">Session History</h2>
-          <p class="body-text waiting-text" style="margin-bottom: 2rem;">Session logging is a planned feature — the current build focuses on live real-time telemetry. Check back as this feature is developed.</p>
-          <button class="btn-primary" onclick="switchView('dashboard')">View Live Telemetry</button>
-        </div>
-      </div>
-    </div>
-  </main>
 
 
-  <!-- ===== SESSION ANALYTICS VIEW ===== -->
-  <main id="view-analytics" class="view">
-    <div class="dashboard-layout">
-      <!-- Sidebar -->
-      <aside class="dash-sidebar">
-        <div class="sidebar-top">
-          <div class="sidebar-wordmark">
-            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
-              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
-              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="wordmark sm">IntelliStride</span>
-          </div>
-          <nav class="sidebar-nav">
-            <a href="#" onclick="switchView('dashboard')" class="sidebar-link"><span class="material-symbols-outlined">speed</span>Live Telemetry</a>
-            <a href="#" onclick="switchView('fallrisk')" class="sidebar-link"><span class="material-symbols-outlined">crisis_alert</span>Fall Risk Analysis</a>
-            <a href="#" onclick="switchView('analytics')" class="sidebar-link"><span class="material-symbols-outlined">analytics</span>Session Analytics</a>
-            <a href="#" onclick="switchView('history')" class="sidebar-link"><span class="material-symbols-outlined">history</span>Session History</a>
-            <a href="#" onclick="switchView('hardware')" class="sidebar-link"><span class="material-symbols-outlined">sensors</span>Hardware &amp; Insoles</a>
-            <a href="#" onclick="switchView('documentation')" class="sidebar-link"><span class="material-symbols-outlined">library_books</span>Documentation</a>
-            <a href="#" onclick="switchView('landing')" class="sidebar-link"><span class="material-symbols-outlined">home</span>Return to Overview</a>
-          </nav>
-        </div>
-      </aside>
-      
-      <div class="dash-content" style="padding: 2rem; overflow-y: auto;">
-        <div class="section-header" style="margin-bottom: 2rem;">
-          <h2 class="section-heading" style="color: var(--color-primary)">Session Analytics</h2>
-          <p class="caption-text muted-text">Aggregate telemetry and historical data trends across your recent recordings.</p>
-        </div>
-        
-        <div class="tier3-grid" style="margin-bottom: 2rem;">
-          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
-            <div class="t3-header">
-              <span class="material-symbols-outlined primary-text">timeline</span>
-              <span class="label-text heading-text" style="margin-left: 8px;">Total Sessions</span>
-            </div>
-            <div>
-              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">12</div>
-              <span class="caption-text muted-text">Calculated from recent logs</span>
-            </div>
-          </div>
-          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
-            <div class="t3-header">
-              <span class="material-symbols-outlined primary-text">speed</span>
-              <span class="label-text heading-text" style="margin-left: 8px;">Avg. Gait Speed</span>
-            </div>
-            <div>
-              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">1.1 <span style="font-size: 1rem;">m/s</span></div>
-              <span class="caption-text muted-text">Calculated from recent logs</span>
-            </div>
-          </div>
-          <div class="t3-card" style="background: linear-gradient(135deg, var(--color-surface-blush) 0%, rgba(255,255,255,0.8) 100%); border-top: 4px solid var(--color-primary); display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;">
-            <div class="t3-header">
-              <span class="material-symbols-outlined primary-text">directions_walk</span>
-              <span class="label-text heading-text" style="margin-left: 8px;">Avg. Cadence</span>
-            </div>
-            <div>
-              <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary); line-height: 1;">105 <span style="font-size: 1rem;">SPM</span></div>
-              <span class="caption-text muted-text">Steps per minute</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="t3-card" style="padding: 3rem 2rem; text-align: center; border: 2px dashed #d1b8bc; background: transparent;">
-          <span class="material-symbols-outlined muted-text" style="font-size: 48px; margin-bottom: 1rem;">construction</span>
-          <h3 class="t2-panel-title">Advanced Metrics Coming Soon</h3>
-          <p class="body-text muted-text" style="max-width: 500px; margin: 0 auto;">The analytics module is currently a mockup for the engineering prototype. Future updates will include longitudinal tracking and symmetry indices.</p>
-        </div>
-      </div>
-    </div>
-  </main>
+
+
+
+
+
 
   <!-- ===== LIVE READINGS VIEW ===== -->
   <main id="view-livereadings" class="view">

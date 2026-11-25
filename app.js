@@ -12,7 +12,8 @@
  */
 
 import { initLiveReadings } from './live-readings.js?v=2';
-import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=2';
+import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=3';
+import { renderLiveShoes, stopLiveView } from './live-view.js?v=1';
 
 // Firebase is loaded lazily so the router and all static pages keep working
 // even if the network blocks the Firebase CDN.
@@ -38,6 +39,7 @@ async function startFallRisk() {
 const views = {
   landing:   document.getElementById('view-landing'),
   login:     document.getElementById('view-login'),
+  live:      document.getElementById('view-live'),
   dashboard: document.getElementById('view-dashboard'),
   livereadings: document.getElementById('view-livereadings'),
   fallrisk:  document.getElementById('view-fallrisk'),
@@ -90,6 +92,7 @@ window.switchView = function (viewName) {
   if (viewName === 'wearer')       renderWearer();
   if (viewName === 'caretaker')    renderCaretaker();
   if (viewName === 'analytics')    renderAnalytics();
+  if (viewName === 'live')         renderLiveShoes(); else stopLiveView();
   if (viewName === 'dashboard')    initDashboard();
   if (viewName === 'livereadings') initLiveReadings();
   if (viewName === 'fallrisk')     startFallRisk();

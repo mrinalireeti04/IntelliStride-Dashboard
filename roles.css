@@ -151,3 +151,25 @@
 #view-landing section.rp-portals .rp-portal-card p { color: var(--color-text-body) !important; }
 #view-landing section.rp-portals .rp-portal-card .rp-link,
 #view-landing section.rp-portals .rp-portal-card .material-symbols-outlined { color: var(--color-primary) !important; }
+
+/* ---------- Live Shoes ---------- */
+.lv-summary { display: flex; gap: .5rem; flex-wrap: wrap; }
+.lv-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 99px; font-size: .72rem; font-weight: 700; letter-spacing: .03em; white-space: nowrap; }
+.lv-pill.live { background: rgba(90,154,110,.15); color: #2d6b45; }
+.lv-pill.off { background: var(--color-bg-blush); color: var(--color-text-body); }
+.lv-shoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.25rem; }
+.lv-card-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.lv-risk { padding: .8rem 1rem; }
+.lv-risk .material-symbols-outlined { font-size: 30px; }
+.lv-risk b { font-size: 1rem; }
+.lv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem 1.5rem; }
+.lv-sub { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-heading); margin: 0 0 .4rem; font-weight: 700; }
+.lv-sub .muted-text { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.lv-kv li { padding: .35rem 0; font-size: .82rem; }
+.lv-sparks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.lv-spark { width: 100%; height: 46px; background: var(--color-bg); border-radius: 8px; }
+.lv-spark-empty { height: 46px; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: var(--color-text-muted); background: var(--color-bg); border-radius: 8px; }
+.lv-warn { background: rgba(184,114,42,.08); border: 1px solid rgba(184,114,42,.3); border-radius: 10px; padding: .7rem .9rem; font-size: .8rem; color: #8a5520; }
+.lv-warn ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+#w-source, #c-source { margin-top: .4rem; }
+@media (max-width: 960px) { .lv-shoes { grid-template-columns: 1fr; } .lv-sparks { grid-template-columns: 1fr; } }

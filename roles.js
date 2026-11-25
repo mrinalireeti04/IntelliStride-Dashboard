@@ -5,6 +5,7 @@
  */
 import { PEOPLE } from './live-readings-data.js?v=2';
 import { scorePerson, distanceStatus } from './live-readings.js?v=2';
+import { startLive, snapshot, ago } from './live.js?v=1';
 
 // ── Roles ────────────────────────────────────────────────
 export const ROLES = {
@@ -18,8 +19,8 @@ export const ROLES = {
           ['howto', 'menu_book', 'How to Use']],
   },
   doctor: {
-    label: 'Doctor / Admin', user: 'doctor', pass: 'doctor123', home: 'dashboard',
-    nav: [['dashboard', 'speed', 'Live Telemetry'], ['livereadings', 'monitor_heart', 'Live Readings'],
+    label: 'Doctor / Admin', user: 'doctor', pass: 'doctor123', home: 'live',
+    nav: [['live', 'sensors', 'Live Shoes'], ['livereadings', 'monitor_heart', 'Recorded Readings'],
           ['fallrisk', 'crisis_alert', 'Fall Risk Analysis'], ['analytics', 'analytics', 'Session Analytics'],
           ['mlresults', 'model_training', 'ML Model Results'], ['howto', 'menu_book', 'How to Use']],
   },
@@ -125,13 +126,35 @@ function pressureBars(sp) {
   </div>`;
 }
 
-// Replays a recorded session as if live: one reading every 4 s, looping.
+// Live shoe data when a shoe is sending; otherwise replays the recorded session (one reading every 4 s).
+function liveReading() {
+  const fresh = snapshot().shoes.filter(x => x.fresh && x.reading);
+  if (!fresh.length) return null;
+  const worst = fresh.reduce((a, b) => (b.reading.result.score > a.reading.result.score ? b : a));
+  return { ...worst.reading, shoeLabel: fresh.length === 2 ? 'both shoes' : worst.label };
+}
+function lastShoeData() {
+  const t = snapshot().shoes.map(x => x.changedAt || (x.reading?.lastUpdate > 1.6e12 ? x.reading.lastUpdate : 0));
+  return Math.max(0, ...t) || null;
+}
+function sourceBadge(isLive, r) {
+  return isLive
+    ? `<span class="lv-pill live"><span class="pulse-dot sm"></span>LIVE from ${r.shoeLabel}</span>`
+    : `<span class="lv-pill off">Shoes offline (last data ${ago(lastShoeData())}) · replaying recorded session</span>`;
+}
 const timers = {};
 function replay(key, person, onTick) {
   clearInterval(timers[key]);
-  let i = 0;
-  onTick(person.scored[0], 0);
-  timers[key] = setInterval(() => { i = (i + 1) % person.scored.length; onTick(person.scored[i], i); }, 4000);
+  startLive();
+  let i = 0, n = 0;
+  const tick = () => {
+    const live = liveReading();
+    if (live) { onTick(live, -1, true); return; }
+    onTick(person.scored[i], i, false);
+    if (++n % 4 === 0) i = (i + 1) % person.scored.length;
+  };
+  tick();
+  timers[key] = setInterval(tick, 1000);
 }
 export function stopReplays(except) { Object.keys(timers).forEach(k => { if (k !== except) { clearInterval(timers[k]); delete timers[k]; } }); }
 
@@ -144,7 +167,8 @@ export function renderWearer() {
     <header class="rp-head">
       <span class="eyebrow-label">My Day · ${esc(p.testedOn)}</span>
       <h1 class="fr-page-title">Hi ${esc(p.name.split(' ')[0])}</h1>
-      <p class="body-text">This is your walking session, explained simply. Readings replay from your recorded session.</p>
+      <p class="body-text">Your walking, explained simply. Shows your shoes live when they are on; otherwise your last recorded session.</p>
+      <div id="w-source"></div>
     </header>
     <section class="rp-status" id="w-status"></section>
     <div class="rp-two">
@@ -177,15 +201,16 @@ export function renderWearer() {
       </ul>
       <button class="btn-ghost sm" onclick="switchView('howto')"><span class="material-symbols-outlined">menu_book</span>How to use</button>
     </section>`;
-  replay('wearer', p, r => {
-    const lvl = r.result.level, d = distanceStatus(r.distanceCm);
+  replay('wearer', p, (r, _i, isLive) => {
+    $('w-source').innerHTML = sourceBadge(isLive, r);
+    const lvl = r.result.level, d = distanceStatus(r.distanceCm < 0 ? 999 : r.distanceCm);
     $('w-status').className = `rp-status ${LEVEL[lvl].tone}`;
     $('w-status').innerHTML = `<span class="material-symbols-outlined">${lvl === 'LOW' ? 'check_circle' : lvl === 'MODERATE' ? 'warning' : 'error'}</span>
       <div><b>${lvl === 'LOW' ? 'You are walking steadily' : lvl === 'MODERATE' ? 'Take it a little slower' : 'Please stop and steady yourself'}</b>
       <span>Fall-risk level: ${LEVEL[lvl].word} (score ${r.result.score}/100) · reading at ${r.t}</span></div>`;
     $('w-now').innerHTML = `<p class="body-text">Step phase: <b>${esc(plainPhase(r.phase))}</b></p>
       ${pressureBars(pressureSplit(r.fsr))}
-      <p class="body-text rp-obstacle ${d.tone}"><span class="material-symbols-outlined">sensors</span>Path ahead: <b>${d.label}</b> (${r.distanceCm} cm)</p>`;
+      <p class="body-text rp-obstacle ${d.tone}"><span class="material-symbols-outlined">sensors</span>Path ahead: <b>${r.distanceCm < 0 ? 'no reading' : d.label}</b>${r.distanceCm < 0 ? '' : ` (${r.distanceCm} cm)`}</p>`;
   });
 }
 
@@ -194,9 +219,15 @@ const checked = new Set();
 let careId = ROLES.caretaker.person;
 window.careSelect = function (id) { careId = id; renderCaretaker(); };
 window.careCheck = function (key) { checked.has(key) ? checked.delete(key) : checked.add(key); renderCaretakerAlerts(); };
+function liveAlerts() {
+  return snapshot().shoes.flatMap(x => (x.history || []).filter(r => r.result.level !== 'LOW').map(r => ({ ...r, t: `${r.t} · ${x.label}` })))
+    .sort((a, b) => b.t.localeCompare(a.t)).slice(0, 30);
+}
+let careLive = false;
 function renderCaretakerAlerts() {
   const p = personById(careId);
-  const alerts = p.scored.filter(r => r.result.level !== 'LOW').slice().reverse();
+  const alerts = careLive ? liveAlerts() : p.scored.filter(r => r.result.level !== 'LOW').slice().reverse();
+  if (!$('c-alerts')) return;
   const open = alerts.filter(r => !checked.has(p.id + r.t)).length;
   $('c-alert-count').textContent = open ? `${open} unchecked` : 'All checked';
   $('c-alerts').innerHTML = alerts.length ? alerts.map(r => {
@@ -204,7 +235,7 @@ function renderCaretakerAlerts() {
     return `<li class="${LEVEL[r.result.level].tone}${done ? ' done' : ''}"><b>${r.t}</b> ${badge(r.result.level)}
       <span>${esc(r.result.explanation || 'Unusual movement detected.')}</span>
       <button class="btn-ghost sm" onclick="careCheck('${k}')">${done ? 'Undo' : 'Mark checked'}</button></li>`;
-  }).join('') : '<li class="low"><span>No alerts in this session.</span></li>';
+  }).join('') : `<li class="low"><span>${careLive ? 'No alerts since the shoes came online.' : 'No alerts in this session.'}</span></li>`;
 }
 export function renderCaretaker() {
   const p = personById(careId);
@@ -213,7 +244,8 @@ export function renderCaretaker() {
       <div>
         <span class="eyebrow-label">Caretaker portal</span>
         <h1 class="fr-page-title">Wearer status</h1>
-        <p class="body-text">Readings replay from the wearer's recorded session (${esc(p.testedOn)}).</p>
+        <p class="body-text">Live from the shoes while they are on; otherwise the wearer's recorded session (${esc(p.testedOn)}).</p>
+        <div id="c-source"></div>
       </div>
       <label class="rp-select">Wearer
         <select onchange="careSelect(this.value)">${allScored().map(q => `<option value="${q.id}"${q.id === p.id ? ' selected' : ''}>${esc(q.name)} (${q.id})</option>`).join('')}</select>
@@ -241,19 +273,24 @@ export function renderCaretaker() {
       </section>
     </div>`;
   renderCaretakerAlerts();
-  replay('caretaker', p, r => {
-    const lvl = r.result.level, d = distanceStatus(r.distanceCm), g = r.gps;
+  replay('caretaker', p, (r, _i, isLive) => {
+    $('c-source').innerHTML = sourceBadge(isLive, r);
+    if (isLive !== careLive || isLive) { careLive = isLive; renderCaretakerAlerts(); }
+    const lvl = r.result.level, d = distanceStatus(r.distanceCm < 0 ? 999 : r.distanceCm), g = r.gps;
     $('c-status').className = `rp-status ${LEVEL[lvl].tone}`;
     $('c-status').innerHTML = `<span class="material-symbols-outlined">${lvl === 'LOW' ? 'check_circle' : lvl === 'MODERATE' ? 'warning' : 'emergency'}</span>
       <div><b>${esc(p.name)} · ${LEVEL[lvl].word} fall risk</b><span>Score ${r.result.score}/100 · last reading ${r.t} · ${esc(r.phase)}</span></div>`;
     $('c-now').innerHTML = `${pressureBars(pressureSplit(r.fsr))}
-      <p class="body-text rp-obstacle ${d.tone}"><span class="material-symbols-outlined">sensors</span>Obstacle sensor: <b>${d.label}</b> (${r.distanceCm} cm)</p>`;
+      <p class="body-text rp-obstacle ${d.tone}"><span class="material-symbols-outlined">sensors</span>Obstacle sensor: <b>${r.distanceCm < 0 ? 'no reading' : d.label}</b>${r.distanceCm < 0 ? '' : ` (${r.distanceCm} cm)`}</p>`;
+    if (isLive && !g.fix) { $('c-loc').innerHTML = `<p class="body-text">The shoes are live but have no GPS fix yet (${g.sats} satellites). GPS needs open sky; the map appears once it locks.</p>`; $('c-loc').dataset.pos = ''; return; }
+    if ($('c-loc').dataset.pos === `${g.lat},${g.lon}`) return;
+    $('c-loc').dataset.pos = `${g.lat},${g.lon}`;
     const bbox = [g.lon - 0.003, g.lat - 0.002, g.lon + 0.003, g.lat + 0.002].join(',');
     $('c-loc').innerHTML = `<iframe class="rp-map" title="Wearer location" loading="lazy"
         src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${g.lat},${g.lon}"></iframe>
       <p class="caption-text muted-text">${g.lat.toFixed(5)}, ${g.lon.toFixed(5)} · ${g.fix ? `GPS fix, ${g.sats} satellites` : 'No GPS fix'} ·
         <a href="https://www.openstreetmap.org/?mlat=${g.lat}&mlon=${g.lon}#map=18/${g.lat}/${g.lon}" target="_blank" rel="noopener">Open in maps</a></p>
-      <p class="caption-text muted-text">Coordinates in the recorded sessions are placeholders until the GPS module is logged.</p>`;
+      ${isLive ? '' : '<p class="caption-text muted-text">Coordinates in the recorded sessions are placeholders until the GPS module is logged.</p>'}`;
   });
 }
 

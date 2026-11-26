@@ -5,7 +5,7 @@
  * IntelliStride_Participants_Readings.xlsx (per-phase averages of pressure, motion and tilt),
  * with noise added. The page always labels this mode as "Demo stream".
  */
-import { PEOPLE, GPS_ORIGIN } from './live-readings-data.js?v=3';
+import { PEOPLE, GPS_ORIGIN } from './live-readings-data.js?v=4';
 import { SHOES, toReading } from './live.js?v=1';
 
 const G = 9.80665, RAD2DEG = 57.2958;

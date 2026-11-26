@@ -3,7 +3,7 @@
  * All scores come from the real fallRiskEngine; nothing here is measured.
  */
 import { fallRiskEngine } from './fall-risk-engine.js';
-import { PEOPLE, READINGS_DATE } from './live-readings-data.js?v=3';
+import { PEOPLE, READINGS_DATE } from './live-readings-data.js?v=4';
 
 // ── Derived values ───────────────────────────────────────
 // Score each person's readings IN ORDER so "sudden change" uses the previous reading.
@@ -32,13 +32,7 @@ const shortDate = iso => { const [, m, d] = iso.split('-'); return `${+d} ${MONT
 const $ = id => document.getElementById(id);
 const LEVEL_COLOR = { LOW: '#5a9a6e', MODERATE: '#B8722A', HIGH: '#A13B3B' };
 const fixed = (v, n) => (+v).toFixed(n);
-const initials = p => {
-  if (p.name.startsWith('[')) return p.id;
-  const parts = p.name.trim().split(/\s+/);
-  return parts.length > 1
-    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-    : parts[0].slice(0, 2).toUpperCase();
-};
+const initials = p => p.id;
 const scenarioText = p => p.scenario;
 const riskBadge = (level, small) =>
   `<span class="fr-risk-badge ${level.toLowerCase()}"${small ? ' style="font-size:.6rem;padding:2px 8px;"' : ''}>${small ? level : level + ' RISK'}</span>`;
@@ -136,7 +130,7 @@ function renderDetail(animate) {
   $('lr-detail').innerHTML = `
     <div class="lr-detail-head">
       <div>
-        <h2 class="t2-panel-title">${p.name} · ${p.id}</h2>
+        <h2 class="t2-panel-title">${p.id}</h2>
         <p class="caption-text muted-text upper">${scenarioText(p)} · ${fmtDate(p.date)} · Active telemetry</p>
       </div>
       <div class="lr-risk-row">${riskBadge(res.level)}<span class="lr-score">${res.score} / 100</span></div>
@@ -229,7 +223,7 @@ function renderDetail(animate) {
 
 // ── Log table ────────────────────────────────────────────
 function renderChips() {
-  const items = [['all', 'All'], ...people.map(p => [p.id, `${p.name} (${p.id})`])];
+  const items = [['all', 'All'], ...people.map(p => [p.id, p.id])];
   $('lr-chips').innerHTML = items.map(([id, lab]) =>
     `<button type="button" class="lr-chip" data-f="${id}" aria-pressed="${filter === id}">${lab}</button>`).join('');
   $('lr-chips').querySelectorAll('.lr-chip').forEach(b => b.addEventListener('click', () => {
@@ -244,7 +238,7 @@ function renderTable() {
   $('lr-tbody').innerHTML = rows.filter(x => filter === 'all' || x.p.id === filter).map(({ p, r, i }) => {
     const sel = p.id === selPerson && i === selIdx;
     return `<tr tabindex="0" data-id="${p.id}" data-i="${i}" class="${sel ? 'selected' : ''}">
-      <td class="fr-td-mono"><span class="muted-text">${shortDate(p.date)}</span> ${r.t}</td><td><strong>${p.name}</strong> <span class="muted-text">(${p.id})</span></td><td>${r.phase}</td>
+      <td class="fr-td-mono"><span class="muted-text">${shortDate(p.date)}</span> ${r.t}</td><td><strong>${p.id}</strong></td><td>${r.phase}</td>
       <td class="fr-td-mono">${r.fsr.forefoot}/${r.fsr.midfoot}/${r.fsr.hindfoot}</td>
       <td class="fr-td-mono">${fixed(r.result.accelMag, 2)}</td><td class="fr-td-mono">${fixed(r.result.gyroMag, 1)}</td>
       <td class="fr-td-mono">${fixed(r.result.features.tilt.value, 1)}</td><td class="fr-td-mono">${r.distanceCm}</td>

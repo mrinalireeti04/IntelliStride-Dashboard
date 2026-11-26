@@ -11,10 +11,10 @@
  *  • Soft telemetry flash on value update
  */
 
-import { initLiveReadings } from './live-readings.js?v=3';
-import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=4';
-import { renderLiveShoes, stopLiveView } from './live-view.js?v=4';
-import { renderMlSheet } from './ml-sheet.js?v=1';
+import { initLiveReadings } from './live-readings.js?v=4';
+import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=5';
+import { renderLiveShoes, stopLiveView } from './live-view.js?v=5';
+import { renderMlSheet } from './ml-sheet.js?v=2';
 
 // Firebase is loaded lazily so the router and all static pages keep working
 // even if the network blocks the Firebase CDN.

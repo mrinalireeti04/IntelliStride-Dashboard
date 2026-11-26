@@ -12,7 +12,7 @@ export const GPS_ORIGIN = { lat: 28.613900, lon: 77.209000 };
 export const PEOPLE = [
   {
     "id": "P1",
-    "name": "Vidula Nijhawan",
+    "name": "P1",
     "sex": "Female",
     "age": 20,
     "heightCm": 160,
@@ -268,7 +268,7 @@ export const PEOPLE = [
   },
   {
     "id": "P2",
-    "name": "Rishika Gupta",
+    "name": "P2",
     "sex": "Female",
     "age": 20,
     "heightCm": 163,
@@ -524,7 +524,7 @@ export const PEOPLE = [
   },
   {
     "id": "P3",
-    "name": "Vishav Gupta",
+    "name": "P3",
     "sex": "Male",
     "age": 21,
     "heightCm": 174,
@@ -780,7 +780,7 @@ export const PEOPLE = [
   },
   {
     "id": "P4",
-    "name": "Vedant Singh",
+    "name": "P4",
     "sex": "Male",
     "age": 21,
     "heightCm": 178,
@@ -1036,7 +1036,7 @@ export const PEOPLE = [
   },
   {
     "id": "P5",
-    "name": "Daksh Jain",
+    "name": "P5",
     "sex": "Male",
     "age": 20,
     "heightCm": 172,
@@ -1292,7 +1292,7 @@ export const PEOPLE = [
   },
   {
     "id": "P6",
-    "name": "Sudeep",
+    "name": "P6",
     "sex": "Male",
     "age": 22,
     "heightCm": 176,
@@ -1548,7 +1548,7 @@ export const PEOPLE = [
   },
   {
     "id": "P7",
-    "name": "Dhairya",
+    "name": "P7",
     "sex": "Male",
     "age": 21,
     "heightCm": 170,
@@ -1804,7 +1804,7 @@ export const PEOPLE = [
   },
   {
     "id": "P8",
-    "name": "Sanjana",
+    "name": "P8",
     "sex": "Female",
     "age": 20,
     "heightCm": 158,
@@ -2060,7 +2060,7 @@ export const PEOPLE = [
   },
   {
     "id": "P9",
-    "name": "Aniket",
+    "name": "P9",
     "sex": "Male",
     "age": 21,
     "heightCm": 180,
@@ -2316,7 +2316,7 @@ export const PEOPLE = [
   },
   {
     "id": "P10",
-    "name": "Raghav Garg",
+    "name": "P10",
     "sex": "Male",
     "age": 21,
     "heightCm": 175,
@@ -2572,7 +2572,7 @@ export const PEOPLE = [
   },
   {
     "id": "P11",
-    "name": "Kushal Thakur",
+    "name": "P11",
     "sex": "Male",
     "age": 22,
     "heightCm": 183,
@@ -2828,7 +2828,7 @@ export const PEOPLE = [
   },
   {
     "id": "P12",
-    "name": "Manjot Singh",
+    "name": "P12",
     "sex": "Male",
     "age": 21,
     "heightCm": 177,
@@ -3084,7 +3084,7 @@ export const PEOPLE = [
   },
   {
     "id": "P13",
-    "name": "Tejnoor Singh",
+    "name": "P13",
     "sex": "Male",
     "age": 20,
     "heightCm": 173,
@@ -3340,7 +3340,7 @@ export const PEOPLE = [
   },
   {
     "id": "P14",
-    "name": "Ramit Joshi",
+    "name": "P14",
     "sex": "Male",
     "age": 21,
     "heightCm": 169,
@@ -3596,7 +3596,7 @@ export const PEOPLE = [
   },
   {
     "id": "P15",
-    "name": "Kirtan Borana",
+    "name": "P15",
     "sex": "Male",
     "age": 22,
     "heightCm": 171,

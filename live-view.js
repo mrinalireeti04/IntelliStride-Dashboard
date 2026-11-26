@@ -5,7 +5,7 @@
  * Pause / End / time-up stop it, Reset clears it.
  */
 import { ago, FSR_MAP, SHOES } from './live.js?v=1';
-import { onDemo, resetDemo } from './live-demo.js?v=2';
+import { onDemo, resetDemo } from './live-demo.js?v=3';
 
 const $ = id => document.getElementById(id);
 const LV = { LOW: ['low', 'Low'], MODERATE: ['moderate', 'Moderate'], HIGH: ['high', 'High'] };

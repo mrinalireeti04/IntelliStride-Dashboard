@@ -10,7 +10,7 @@
  * The sheet's values are sample values (see the sheet's Read me), so these results show the pipeline working,
  * not clinical accuracy.
  */
-import { PEOPLE } from './live-readings-data.js?v=3';
+import { PEOPLE } from './live-readings-data.js?v=4';
 import { fallRiskEngine } from './fall-risk-engine.js';
 
 // ---------------- features ----------------
@@ -227,7 +227,7 @@ function results(res) {
     <div class="rp-table-wrap"><table class="rp-table">
       <thead><tr><th>Person</th><th>Recorded activity</th><th>C predicts</th><th>D regularity score</th><th>Stumble alerts</th><th>Peak rule score</th></tr></thead>
       <tbody>${res.summ.map(o => `<tr>
-        <td>P${o.pi + 1} · ${o.p.name}</td><td>${o.p.scenario}</td>
+        <td>${o.p.name}</td><td>${o.p.scenario}</td>
         <td>${o.seen ? (o.pred === o.act ? '✓ ' : '✗ ') : '<span class="muted-text">n/a </span>'}${o.pred}</td>
         <td>${o.reg ? `<div class="rp-pbar ml-reg"><div class="rp-pbar-track"><div class="rp-pbar-fill" style="width:${o.reg.score}%;background:${o.reg.score > 50 ? '#A13B3B' : o.reg.score > 25 ? '#B8722A' : '#5a9a6e'}"></div></div><b>${o.reg.score}</b></div>` : '<span class="muted-text">no stance phases</span>'}</td>
         <td>${o.flags ? `<span class="fr-risk-badge high">${o.flags}</span>` : '0'}</td><td>${o.ruleMax}</td></tr>`).join('')}</tbody>
@@ -237,7 +237,7 @@ function results(res) {
 
   <section class="t2-panel">
     <div class="ml-head-row"><h2 class="t2-panel-title">Every reading, every model output</h2>
-      <label class="rp-select">Person <select id="ml-person"><option value="all">All 15</option>${PEOPLE.map((p, i) => `<option value="${i}">P${i + 1} · ${p.name}</option>`).join('')}</select></label></div>
+      <label class="rp-select">Person <select id="ml-person"><option value="all">All 15</option>${PEOPLE.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}</select></label></div>
     <div id="ml-readings">${readingTable(res, 'all')}</div>
   </section>`;
 }

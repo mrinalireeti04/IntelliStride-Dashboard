@@ -3,14 +3,14 @@
  * Session Analytics pages. Demo-grade auth for the capstone prototype:
  * credentials live in this file and the session lives in sessionStorage.
  */
-import { PEOPLE } from './live-readings-data.js?v=3';
-import { scorePerson, distanceStatus } from './live-readings.js?v=3';
+import { PEOPLE } from './live-readings-data.js?v=4';
+import { scorePerson, distanceStatus } from './live-readings.js?v=4';
 import { startLive, snapshot, ago } from './live.js?v=1';
 
 // ── Roles ────────────────────────────────────────────────
 export const ROLES = {
   wearer: {
-    label: 'Wearer', user: 'vidula', pass: 'wearer123', person: 'P1', home: 'wearer',
+    label: 'Wearer', user: 'p1', pass: 'wearer123', person: 'P1', home: 'wearer',
     nav: [['wearer', 'directions_walk', 'My Day'], ['howto', 'menu_book', 'How to Use']],
   },
   caretaker: {
@@ -248,7 +248,7 @@ export function renderCaretaker() {
         <div id="c-source"></div>
       </div>
       <label class="rp-select">Wearer
-        <select onchange="careSelect(this.value)">${allScored().map(q => `<option value="${q.id}"${q.id === p.id ? ' selected' : ''}>${esc(q.name)} (${q.id})</option>`).join('')}</select>
+        <select onchange="careSelect(this.value)">${allScored().map(q => `<option value="${q.id}"${q.id === p.id ? ' selected' : ''}>${esc(q.id)}</option>`).join('')}</select>
       </label>
     </header>
     <section class="rp-status" id="c-status"></section>
@@ -342,7 +342,7 @@ export function renderAnalytics() {
       <h2 class="t2-panel-title">Session history</h2>
       <div class="rp-table-wrap"><table class="rp-table">
         <thead><tr><th>Date</th><th>Start</th><th>Participant</th><th>Activity</th><th>Readings</th><th>Duration</th><th>Mean score</th><th>Highest risk</th></tr></thead>
-        <tbody>${rows.map(p => `<tr><td>${esc(p.testedOn)}</td><td>${p.readings[0].t}</td><td>${esc(p.name)} <span class="muted-text">(${p.id}, ${p.age}, ${esc(p.sex)})</span></td>
+        <tbody>${rows.map(p => `<tr><td>${esc(p.testedOn)}</td><td>${p.readings[0].t}</td><td>${esc(p.id)} <span class="muted-text">(${p.age}, ${esc(p.sex)})</span></td>
           <td>${esc(p.scenario)}</td><td>${p.readings.length}</td><td>${durationText(p)}</td>
           <td>${(p.scored.reduce((a, r) => a + r.result.score, 0) / p.scored.length).toFixed(1)}</td><td>${badge(maxLevel(p))}</td></tr>`).join('')}</tbody>
       </table></div>

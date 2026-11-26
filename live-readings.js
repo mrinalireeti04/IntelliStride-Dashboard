@@ -3,7 +3,7 @@
  * All scores come from the real fallRiskEngine; nothing here is measured.
  */
 import { fallRiskEngine } from './fall-risk-engine.js';
-import { PEOPLE, READINGS_DATE } from './live-readings-data.js?v=2';
+import { PEOPLE, READINGS_DATE } from './live-readings-data.js?v=3';
 
 // ── Derived values ───────────────────────────────────────
 // Score each person's readings IN ORDER so "sudden change" uses the previous reading.

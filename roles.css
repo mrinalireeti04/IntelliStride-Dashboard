@@ -173,3 +173,47 @@
 .lv-warn ul { margin: .3rem 0 0; padding-left: 1.1rem; }
 #w-source, #c-source { margin-top: .4rem; }
 @media (max-width: 960px) { .lv-shoes { grid-template-columns: 1fr; } .lv-sparks { grid-template-columns: 1fr; } }
+
+/* ---------- Live Shoes: source toggle + session timer ---------- */
+.lv-pill.demo { background: rgba(122,46,58,.1); color: var(--color-primary); }
+.lv-card-meta { display: flex; align-items: center; gap: .6rem; }
+.lv-fast { transition: width .2s linear; }
+.lv-toggle { display: inline-flex; border: 1px solid var(--color-border); border-radius: 99px; padding: 3px; background: var(--color-surface); }
+.lv-toggle button { font: inherit; font-size: .74rem; font-weight: 600; border: 0; background: none; padding: 5px 12px; border-radius: 99px; color: var(--color-text-body); cursor: pointer; }
+.lv-toggle button.on { background: var(--color-primary); color: #fff8f6; }
+.lv-session { display: flex; flex-direction: column; gap: .9rem; }
+.lv-sess-top { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start; }
+.lv-sess-clock { font-family: var(--font-serif); font-size: 2.4rem; color: var(--color-text-heading); line-height: 1.1; margin: .35rem 0 .15rem; font-variant-numeric: tabular-nums; }
+.lv-sess-clock span { font-size: 1.1rem; color: var(--color-text-muted); }
+.lv-sess-ctrl { display: flex; align-items: flex-end; gap: .8rem; flex-wrap: wrap; }
+.lv-sess-dur { display: flex; flex-direction: column; gap: 4px; font-size: .72rem; font-weight: 600; color: var(--color-text-body); }
+.lv-sess-dur span { display: flex; align-items: center; gap: 6px; font-weight: 400; }
+.lv-sess-dur input { width: 70px; font: inherit; font-size: .9rem; padding: .45rem .55rem; border-radius: 10px; border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text-heading); }
+.lv-sess-presets { display: flex; gap: 4px; }
+.lv-chip { font: inherit; font-size: .74rem; font-weight: 600; padding: .45rem .65rem; border-radius: 10px; border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text-body); cursor: pointer; }
+.lv-chip.on { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-surface-blush); }
+.lv-chip:disabled, .lv-sess-dur input:disabled { opacity: .5; cursor: not-allowed; }
+.lv-sess-btns { display: flex; gap: .5rem; }
+.lv-btn { cursor: pointer; }
+.lv-sess-bar { height: 8px; border-radius: 99px; background: var(--color-bg-blush); overflow: hidden; }
+.lv-sess-bar div { height: 100%; background: var(--color-primary); border-radius: 99px; transition: width .9s linear; }
+.lv-sess-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .6rem; }
+.lv-sess-stats div { background: var(--color-surface-blush); border-radius: 12px; padding: .6rem .9rem; display: flex; flex-direction: column; }
+.lv-sess-stats b { font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-primary); font-weight: 500; }
+.lv-sess-stats span { font-size: .72rem; color: var(--color-text-body); }
+@media (max-width: 600px) { .lv-shoes { grid-template-columns: 1fr; } }
+
+/* ---------- ML: models run on the participant sheet ---------- */
+.ml-section-title { font-family: var(--font-serif); font-weight: 500; font-size: 1.5rem; color: var(--color-text-heading); margin: 1rem 0 0; }
+.ml-head-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+.ml-run { border-top: 3px solid var(--color-primary); }
+.ml-progress { height: 8px; border-radius: 99px; background: var(--color-bg-blush); overflow: hidden; }
+.ml-progress div { height: 100%; width: 0; background: var(--color-primary); transition: width .05s linear; }
+.ml-ticker { display: flex; flex-direction: column; gap: 3px; font-size: .78rem; color: var(--color-text-body); font-variant-numeric: tabular-nums; }
+.ml-ticker div { padding: 3px 8px; border-radius: 6px; background: var(--color-bg); }
+.ml-ticker div.miss { background: rgba(161,59,59,.08); }
+.ml-chart { width: 100%; height: auto; background: var(--color-bg); border-radius: 10px; }
+.ml-cm td, .ml-cm th { text-align: center; }
+.ml-cm tbody th { text-align: left; font-size: .75rem; color: var(--color-text-heading); text-transform: none; letter-spacing: 0; }
+.ml-scroll { max-height: 460px; overflow: auto; }
+.ml-reg { grid-template-columns: 1fr 34px; min-width: 140px; }

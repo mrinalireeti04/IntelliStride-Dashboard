@@ -3,7 +3,7 @@
  * Thresholds come from FR_CONFIG (the code is the truth). No Firebase.
  */
 import { FR_CONFIG as C, fallRiskEngine } from './fall-risk-engine.js';
-import { PEOPLE } from './live-readings-data.js?v=2';
+import { PEOPLE } from './live-readings-data.js?v=3';
 
 const $ = id => document.getElementById(id);
 

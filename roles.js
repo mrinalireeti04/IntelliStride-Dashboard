@@ -3,8 +3,8 @@
  * Session Analytics pages. Demo-grade auth for the capstone prototype:
  * credentials live in this file and the session lives in sessionStorage.
  */
-import { PEOPLE } from './live-readings-data.js?v=2';
-import { scorePerson, distanceStatus } from './live-readings.js?v=2';
+import { PEOPLE } from './live-readings-data.js?v=3';
+import { scorePerson, distanceStatus } from './live-readings.js?v=3';
 import { startLive, snapshot, ago } from './live.js?v=1';
 
 // ── Roles ────────────────────────────────────────────────

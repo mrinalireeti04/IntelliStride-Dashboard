@@ -11,9 +11,10 @@
  *  • Soft telemetry flash on value update
  */
 
-import { initLiveReadings } from './live-readings.js?v=2';
-import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=3';
-import { renderLiveShoes, stopLiveView } from './live-view.js?v=1';
+import { initLiveReadings } from './live-readings.js?v=3';
+import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=4';
+import { renderLiveShoes, stopLiveView } from './live-view.js?v=2';
+import { renderMlSheet } from './ml-sheet.js?v=1';
 
 // Firebase is loaded lazily so the router and all static pages keep working
 // even if the network blocks the Firebase CDN.
@@ -93,6 +94,7 @@ window.switchView = function (viewName) {
   if (viewName === 'caretaker')    renderCaretaker();
   if (viewName === 'analytics')    renderAnalytics();
   if (viewName === 'live')         renderLiveShoes(); else stopLiveView();
+  if (viewName === 'mlresults')    renderMlSheet();
   if (viewName === 'dashboard')    initDashboard();
   if (viewName === 'livereadings') initLiveReadings();
   if (viewName === 'fallrisk')     startFallRisk();

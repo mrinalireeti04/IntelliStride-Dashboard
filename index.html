@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css?v=2" />
-  <link rel="stylesheet" href="roles.css?v=3" />
+  <link rel="stylesheet" href="roles.css?v=5" />
 </head>
 <body>
 
@@ -1097,6 +1097,10 @@
     <p class="body-text">We trained four models on public research datasets, then tested each one only on people it had never seen. Two are strong, two are moderate, and every number below was measured, not estimated.</p>
   </header>
 
+  <div id="ml-sheet-root"></div>
+
+  <h2 class="ml-section-title">Models trained on public research datasets</h2>
+
   <section class="t2-panel">
     <h2 class="t2-panel-title">At a glance</h2>
     <div class="rp-table-wrap">
@@ -1309,7 +1313,7 @@
     <section class="t2-panel">
       <h2 class="t2-panel-title"><span class="material-symbols-outlined">stethoscope</span> Doctor / Admin</h2>
       <ul class="rp-list">
-        <li><b>Live Shoes</b> shows both shoes in real time: pressure, motion, obstacle sensor, GPS and fall risk, plus sensor checks.</li>
+        <li><b>Live Shoes</b> shows both shoes in real time: pressure, motion, obstacle sensor, GPS and fall risk, with a session timer you can set in minutes and a demo stream for when the shoes are offline.</li>
         <li><b>Recorded Readings</b> shows every participant's recorded session.</li>
         <li><b>Fall Risk Analysis</b> explains the rule-based score feature by feature.</li>
         <li><b>Session Analytics</b> compares all recorded sessions and lists the full session history.</li>
@@ -1328,7 +1332,7 @@
   <!-- Toast notification container -->
   <div id="toast-container"></div>
 
-  <script type="module" src="app.js?v=4"></script>
+  <script type="module" src="app.js?v=5"></script>
   <script type="module" src="particles.js"></script>
 
 

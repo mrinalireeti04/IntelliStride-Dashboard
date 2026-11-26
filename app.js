@@ -13,7 +13,7 @@
 
 import { initLiveReadings } from './live-readings.js?v=3';
 import { canView, navItems, homeView, refreshChrome, currentRole, renderWearer, renderCaretaker, renderAnalytics, stopReplays } from './roles.js?v=4';
-import { renderLiveShoes, stopLiveView } from './live-view.js?v=3';
+import { renderLiveShoes, stopLiveView } from './live-view.js?v=4';
 import { renderMlSheet } from './ml-sheet.js?v=1';
 
 // Firebase is loaded lazily so the router and all static pages keep working

@@ -217,3 +217,4 @@
 .ml-cm tbody th { text-align: left; font-size: .75rem; color: var(--color-text-heading); text-transform: none; letter-spacing: 0; }
 .ml-scroll { max-height: 460px; overflow: auto; }
 .ml-reg { grid-template-columns: 1fr 34px; min-width: 140px; }
+.lv-idle p { display: flex; align-items: center; gap: 8px; } .lv-idle .material-symbols-outlined { color: var(--color-primary); }

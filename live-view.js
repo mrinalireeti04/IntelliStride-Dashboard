@@ -1,18 +1,16 @@
 /**
  * live-view.js — "Live Shoes" page (doctor / admin): both shoes side by side.
- * Two sources:
- *   demo     — continuous simulated stream built from the recorded participant sheet (live-demo.js)
- *   firebase — the real shoes writing to IntelliStride/Shoe1 and IntelliStride/Shoe2
- * Includes a session timer with a settable duration.
+ * Shows the demo stream (live-demo.js), simulated from the recorded participant sheet.
+ * The stream runs only while a session is recording: Start / Resume turn it on,
+ * Pause / End / time-up stop it, Reset clears it.
  */
-import { onLive, startLive, ago, FSR_MAP } from './live.js?v=1';
-import { onDemo } from './live-demo.js?v=1';
+import { ago, FSR_MAP, SHOES } from './live.js?v=1';
+import { onDemo, resetDemo } from './live-demo.js?v=2';
 
 const $ = id => document.getElementById(id);
 const LV = { LOW: ['low', 'Low'], MODERATE: ['moderate', 'Moderate'], HIGH: ['high', 'High'] };
 let unsub = null;
 
-const source = 'demo';
 
 // ---------- Session ----------
 const session = { state: 'idle', durationMin: 10, startedAt: 0, pausedMs: 0, pausedAt: 0, steps: {}, alerts: {}, last: {}, endedElapsed: 0 };
@@ -34,8 +32,14 @@ function sessionTrack(snap) {
   });
   if (session.state === 'running' && elapsedMs() >= session.durationMin * 60000) {
     session.endedElapsed = session.durationMin * 60000; session.state = 'done';
+    streamOff();
   }
 }
+
+// The demo stream only runs while a session is recording.
+let lastSnap = null;
+function streamOn() { if (!unsub) unsub = onDemo(update); }
+function streamOff() { if (unsub) { unsub(); unsub = null; } }
 
 function sessionPanel() {
   const el = elapsedMs(), dur = session.durationMin * 60000;
@@ -76,12 +80,14 @@ function sessionPanel() {
 
 function sessionAction(act) {
   const now = Date.now();
-  if (act === 'start') Object.assign(session, { state: 'running', startedAt: now, pausedMs: 0, steps: {}, alerts: {} });
+  if (act === 'start') { resetDemo(); lastSnap = null; Object.assign(session, { state: 'running', startedAt: now, pausedMs: 0, steps: {}, alerts: {}, last: {} }); }
   if (act === 'pause') Object.assign(session, { state: 'paused', pausedAt: now });
   if (act === 'resume') { session.pausedMs += now - session.pausedAt; session.state = 'running'; }
   if (act === 'stop') { session.endedElapsed = elapsedMs(); session.state = 'done'; }
-  if (act === 'reset') Object.assign(session, { state: 'idle', steps: {}, alerts: {} });
+  if (act === 'reset') { resetDemo(); lastSnap = null; Object.assign(session, { state: 'idle', steps: {}, alerts: {}, last: {} }); }
+  if (session.state === 'running') streamOn(); else streamOff();
   $('lv-session').innerHTML = sessionPanel();
+  paint(lastSnap);
 }
 
 // ---------- Shoe cards ----------
@@ -100,7 +106,9 @@ function shoeCard(s, demo) {
   const lastSeen = s.changedAt || (r.lastUpdate > 1.6e12 ? r.lastUpdate : null);
   const tot = r.fsr.forefoot + r.fsr.midfoot + r.fsr.hindfoot || 1;
   const hist = s.history || [];
-  const pill = s.fresh
+  const pill = demo && session.state === 'paused' ? '<span class="lv-pill off">Paused</span>'
+    : demo && session.state === 'done' ? '<span class="lv-pill off">Session ended</span>'
+    : s.fresh
     ? `<span class="lv-pill live"><span class="pulse-dot sm"></span>${demo ? 'DEMO STREAM' : 'LIVE'}</span>`
     : `<span class="lv-pill off">Offline · last data ${ago(lastSeen)}</span>`;
   return `<section class="t2-panel lv-card">
@@ -185,31 +193,33 @@ function renderShell(root) {
 }
 
 let lastSessPaint = 0;
+// Draws the header pills and shoe cards. snap = null means no session has streamed yet.
+function paint(snap) {
+  if (!$('lv-shoes')) return;
+  const streaming = session.state === 'running';
+  $('lv-sub').innerHTML = 'Continuous readings for both shoes, modelled on the gait patterns recorded in our participant sheet.';
+  $('lv-pills').innerHTML = `<span class="lv-pill ${streaming ? 'live' : 'off'}">${streaming ? '2/2 shoes streaming' : session.state === 'paused' ? 'Stream paused' : session.state === 'done' ? 'Stream stopped' : 'Ready'}</span><span class="lv-pill demo">Simulated data</span>`;
+  $('lv-note').innerHTML = '';
+  $('lv-shoes').innerHTML = snap
+    ? snap.shoes.map(s => shoeCard(s, true)).join('')
+    : SHOES.map(s => `<section class="t2-panel lv-card lv-idle"><div class="lv-card-head"><h2 class="t2-panel-title">${s.label}</h2><span class="lv-pill off">Waiting</span></div>
+        <p class="body-text"><span class="material-symbols-outlined">play_circle</span> Press <b>Start session</b> to begin streaming.</p></section>`).join('');
+}
+
 function update(snap) {
   if (!document.getElementById('view-live')?.classList.contains('active')) return;
   sessionTrack(snap);
-  const demo = !!snap.demo;
-  const live = snap.shoes.filter(s => s.fresh).length;
-  $('lv-sub').innerHTML = demo
-    ? 'Continuous readings for both shoes, modelled on the gait patterns recorded in our participant sheet.'
-    : 'Straight from Firebase (<code>IntelliStride/Shoe1</code>, <code>IntelliStride/Shoe2</code>). Updates the moment a shoe writes.';
-  $('lv-pills').innerHTML = demo
-    ? `<span class="lv-pill live">2/2 shoes streaming</span><span class="lv-pill demo">Simulated data</span>`
-    : `<span class="lv-pill ${snap.connected ? 'live' : 'off'}">${snap.connected ? 'Firebase connected' : snap.error ? 'Firebase error' : 'Connecting…'}</span>
-       <span class="lv-pill ${live ? 'live' : 'off'}">${live}/2 shoes sending</span>`;
-  $('lv-note').innerHTML = (!demo && snap.error ? `<p class="rp-login-error">Firebase: ${snap.error}</p>` : '')
-    + (!demo && !live && snap.shoes.some(s => s.loaded) ? `<p class="rp-disclaimer"><span class="material-symbols-outlined">info</span> No shoe is sending right now; showing the last values stored in Firebase.</p>` : '');
-  $('lv-shoes').innerHTML = snap.shoes.map(s => shoeCard(s, demo)).join('');
+  lastSnap = snap;
+  paint(snap);
   // Repaint the session panel about once a second, but never while the user is typing in it.
   const now = Date.now();
-  if (now - lastSessPaint > 900 && document.activeElement?.id !== 'lv-dur') { $('lv-session').innerHTML = sessionPanel(); lastSessPaint = now; }
+  if ((now - lastSessPaint > 900 || session.state !== 'running') && document.activeElement?.id !== 'lv-dur') { $('lv-session').innerHTML = sessionPanel(); lastSessPaint = now; }
 }
 
 export function renderLiveShoes() {
-  const root = $('live-root');
-  if (unsub) unsub();
-  renderShell(root);
-  if (source === 'demo') unsub = onDemo(update);
-  else { startLive(); unsub = onLive(update); }
+  streamOff();
+  renderShell($('live-root'));
+  paint(lastSnap);
+  if (session.state === 'running') streamOn();
 }
-export function stopLiveView() { if (unsub) { unsub(); unsub = null; } }
+export function stopLiveView() { streamOff(); }

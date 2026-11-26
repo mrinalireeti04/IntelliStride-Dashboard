@@ -124,6 +124,11 @@ export function demoSnapshot() {
   };
 }
 
+/** Clear the sparkline history and counters so a new session starts fresh. */
+export function resetDemo() {
+  sim.shoes.forEach(sh => { sh.history = []; sh.steps = 0; sh.alerts = 0; sh.prevMag = null; sh.lastPhase = null; });
+}
+
 export function onDemo(fn) {
   sim.listeners.add(fn);
   if (!sim.timer) { tick(); sim.timer = setInterval(tick, TICK_MS); }

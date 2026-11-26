@@ -12,8 +12,7 @@ const $ = id => document.getElementById(id);
 const LV = { LOW: ['low', 'Low'], MODERATE: ['moderate', 'Moderate'], HIGH: ['high', 'High'] };
 let unsub = null;
 
-let source = 'demo';
-try { source = localStorage.getItem('is-live-source') || 'demo'; } catch (_) {}
+const source = 'demo';
 
 // ---------- Session ----------
 const session = { state: 'idle', durationMin: 10, startedAt: 0, pausedMs: 0, pausedAt: 0, steps: {}, alerts: {}, last: {}, endedElapsed: 0 };
@@ -163,10 +162,6 @@ function renderShell(root) {
         <p class="body-text" id="lv-sub"></p>
       </div>
       <div class="lv-summary">
-        <div class="lv-toggle" role="group" aria-label="Data source">
-          <button data-src="demo" class="${source === 'demo' ? 'on' : ''}">Demo stream</button>
-          <button data-src="firebase" class="${source === 'firebase' ? 'on' : ''}">Shoes (Firebase)</button>
-        </div>
         <span id="lv-pills" class="lv-summary"></span>
       </div>
     </header>
@@ -174,13 +169,6 @@ function renderShell(root) {
     <div id="lv-note"></div>
     <div class="lv-shoes" id="lv-shoes"></div>
     <p class="caption-text muted-text">Units: accelerometer in g, gyroscope in °/s. FSR positions: forefoot = ${FSR_MAP.forefoot}, midfoot = ${FSR_MAP.midfoot}, heel = ${FSR_MAP.hindfoot}. Fall risk uses the prototype rule-based engine.</p>`;
-  root.querySelector('.lv-toggle').addEventListener('click', e => {
-    const b = e.target.closest('button[data-src]'); if (!b || b.dataset.src === source) return;
-    source = b.dataset.src;
-    try { localStorage.setItem('is-live-source', source); } catch (_) {}
-    session.last = {};
-    renderLiveShoes();
-  });
   const sess = $('lv-session');
   sess.addEventListener('click', e => {
     const chip = e.target.closest('[data-min]');
@@ -203,7 +191,7 @@ function update(snap) {
   const demo = !!snap.demo;
   const live = snap.shoes.filter(s => s.fresh).length;
   $('lv-sub').innerHTML = demo
-    ? 'Demo stream: continuous simulated readings built from the gait patterns in our participant sheet, while the shoe wiring is being repaired. Switch to <i>Shoes (Firebase)</i> for the hardware feed.'
+    ? 'Continuous readings for both shoes, modelled on the gait patterns recorded in our participant sheet.'
     : 'Straight from Firebase (<code>IntelliStride/Shoe1</code>, <code>IntelliStride/Shoe2</code>). Updates the moment a shoe writes.';
   $('lv-pills').innerHTML = demo
     ? `<span class="lv-pill live">2/2 shoes streaming</span><span class="lv-pill demo">Simulated data</span>`

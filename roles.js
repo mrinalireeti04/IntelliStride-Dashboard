@@ -21,7 +21,7 @@ export const ROLES = {
   doctor: {
     label: 'Doctor / Admin', user: 'doctor', pass: 'doctor123', home: 'live',
     nav: [['live', 'sensors', 'Live Shoes'], ['livereadings', 'monitor_heart', 'Recorded Readings'],
-          ['fallrisk', 'crisis_alert', 'Fall Risk Analysis'], ['analytics', 'analytics', 'Session Analytics'],
+          ['fallrisk', 'crisis_alert', 'Fall Risk Analysis'], ['analytics', 'analytics', 'Session Analytics'], ['report', 'clinical_notes', 'Patient Report'],
           ['mlresults', 'model_training', 'ML Model Results'], ['howto', 'menu_book', 'How to Use']],
   },
 };

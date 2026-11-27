@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css?v=2" />
-  <link rel="stylesheet" href="roles.css?v=6" />
+  <link rel="stylesheet" href="roles.css?v=7" />
 </head>
 <body>
 
@@ -1072,6 +1072,30 @@
     </div>
   </main>
 
+  <!-- ===== PATIENT REPORT (doctor) ===== -->
+  <main id="view-report" class="view">
+    <div class="dashboard-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-wordmark">
+            <svg class="logo-mark sm" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="#7a2e3a"/>
+              <path d="M10 26 L18 10 L26 26" stroke="#fff8f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.5 20 L22.5 20" stroke="#ffb2b9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="wordmark sm">IntelliStride</span>
+          </div>
+          <nav class="sidebar-nav"></nav>
+        </div>
+      </aside>
+      <div class="dash-content">
+        <div class="dash-scroll rp-scroll">
+<div id="report-root" class="rp-page"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <!-- ===== ML MODEL RESULTS ===== -->
   <main id="view-mlresults" class="view">
     <div class="dashboard-layout">
@@ -1317,6 +1341,7 @@
         <li><b>Recorded Readings</b> shows every participant's recorded session.</li>
         <li><b>Fall Risk Analysis</b> explains the rule-based score feature by feature.</li>
         <li><b>Session Analytics</b> compares all recorded sessions and lists the full session history.</li>
+        <li><b>Patient Report</b> gives a printable summary for one participant: overall status, where the foot pressure goes, the session timeline, motion, model detections and suggested follow-up.</li>
         <li><b>ML Model Results</b> shows the four trained models, how they were tested and what they found.</li>
       </ul>
     </section>
@@ -1332,7 +1357,7 @@
   <!-- Toast notification container -->
   <div id="toast-container"></div>
 
-  <script type="module" src="app.js?v=8"></script>
+  <script type="module" src="app.js?v=10"></script>
   <script type="module" src="particles.js"></script>
 
 
